@@ -1,0 +1,1956 @@
+﻿/******************************************************************************
+ *
+ *  ASAP2 file:     speedgoat_test_SN5659_R2021b_IO612.a2l
+ *
+ * 
+ *
+ * Code generation for model "speedgoat_test_SN5659_R2021b_IO612".
+ *
+ * Model version              : 3.5
+ * Simulink Coder version : 10.4 R2021b
+ * C source code generated on : Fri Apr 08 17:08:59 2022
+ *
+ * Target selection: slrealtime.tlc
+ * Embedded hardware selection: Intel->x86-64 (Linux 64)
+ * Code generation objectives: Unspecified
+ * Validation result: Not run
+ *
+ * (add additional file header information here)
+ *
+ ******************************************************************************/
+ASAP2_VERSION  1 71  
+/begin PROJECT ProjectName "Project Comment Goes Here"
+
+  /begin HEADER "Header Comments go here"
+
+  /end HEADER
+
+  /begin MODULE ModuleName  "Module Comment Goes Here"
+
+    /begin A2ML
+
+      struct Protocol_Layer {
+        uint;  /* XCP protocol layer version, current 0x100 */
+        uint;  /* T1 [ms] */
+        uint;  /* T2 [ms] */
+        uint;  /* T3 [ms] */
+        uint;  /* T4 [ms] */
+        uint;  /* T5 [ms] */
+        uint;  /* T6 [ms] */
+        uint;  /* T7 [ms] */
+        uchar;  /* MAX_CTO */
+        uint;  /* MAX_DTO */
+        enum {
+          "BYTE_ORDER_MSB_LAST" = 0,
+          "BYTE_ORDER_MSB_FIRST" = 1
+        };
+        enum {
+          "ADDRESS_GRANULARITY_BYTE" = 1,
+          "ADDRESS_GRANULARITY_WORD" = 2,
+          "ADDRESS_GRANULARITY_DWORD" = 4
+        };
+        taggedstruct {
+          ("OPTIONAL_CMD" enum {
+            "GET_COMM_MODE_INFO" = 251,
+            "GET_ID" = 250,
+            "SET_REQUEST" = 249,
+            "GET_SEED" = 248,
+            "UNLOCK" = 247,
+            "SET_MTA" = 246,
+            "UPLOAD" = 245,
+            "SHORT_UPLOAD" = 244,
+            "BUILD_CHECKSUM" = 243,
+            "TRANSPORT_LAYER_CMD" = 242,
+            "USER_CMD" = 241,
+            "DOWNLOAD" = 240,
+            "DOWNLOAD_NEXT" = 239,
+            "DOWNLOAD_MAX" = 238,
+            "SHORT_DOWNLOAD" = 237,
+            "MODIFY_BITS" = 236,
+            "SET_CAL_PAGE" = 235,
+            "GET_CAL_PAGE" = 234,
+            "GET_PAG_PROCESSOR_INFO" = 233,
+            "GET_SEGMENT_INFO" = 232,
+            "GET_PAGE_INFO" = 231,
+            "SET_SEGMENT_MODE" = 230,
+            "GET_SEGMENT_MODE" = 229,
+            "COPY_CAL_PAGE" = 228,
+            "CLEAR_DAQ_LIST" = 227,
+            "SET_DAQ_PTR" = 226,
+            "WRITE_DAQ" = 225,
+            "SET_DAQ_LIST_MODE" = 224,
+            "GET_DAQ_LIST_MODE" = 223,
+            "START_STOP_DAQ_LIST" = 222,
+            "START_STOP_SYNCH" = 221,
+            "GET_DAQ_CLOCK" = 220,
+            "READ_DAQ" = 219,
+            "GET_DAQ_PROCESSOR_INFO" = 218,
+            "GET_DAQ_RESOLUTION_INFO" = 217,
+            "GET_DAQ_LIST_INFO" = 216,
+            "GET_DAQ_EVENT_INFO" = 215,
+            "FREE_DAQ" = 214,
+            "ALLOC_DAQ" = 213,
+            "ALLOC_ODT" = 212,
+            "ALLOC_ODT_ENTRY" = 211,
+            "PROGRAM_START" = 210,
+            "PROGRAM_CLEAR" = 209,
+            "PROGRAM" = 208,
+            "PROGRAM_RESET" = 207,
+            "GET_PGM_PROCESSOR_INFO" = 206,
+            "GET_SECTOR_INFO" = 205,
+            "PROGRAM_PREPARE" = 204,
+            "PROGRAM_FORMAT" = 203,
+            "PROGRAM_NEXT" = 202,
+            "PROGRAM_MAX" = 201,
+            "PROGRAM_VERIFY" = 200
+          })*;
+          "COMMUNICATION_MODE_SUPPORTED" taggedunion {
+            "BLOCK" taggedstruct {
+              "SLAVE" ;
+              "MASTER" struct {
+                uchar;  /* MAX_BS */
+                uchar;  /* MIN_ST */
+              };
+            };
+            "INTERLEAVED" uchar;  /* QUEUE_SIZE */
+          };
+          "SEED_AND_KEY_EXTERNAL_FUNCTION" char[256];  /* Name of the Seed&Key function */
+        };
+      };
+
+      struct Daq {
+        enum {
+          "STATIC" = 0,
+          "DYNAMIC" = 1
+        };
+        uint;  /* MAX_DAQ */
+        uint;  /* MAX_EVENT_CHANNEL */
+        uchar;  /* MIN_DAQ */
+        enum {
+          "OPTIMISATION_TYPE_DEFAULT" = 0,
+          "OPTIMISATION_TYPE_ODT_TYPE_16" = 1,
+          "OPTIMISATION_TYPE_ODT_TYPE_32" = 2,
+          "OPTIMISATION_TYPE_ODT_TYPE_64" = 3,
+          "OPTIMISATION_TYPE_ODT_TYPE_ALIGNMENT" = 4,
+          "OPTIMISATION_TYPE_MAX_ENTRY_SIZE" = 5
+        };
+        enum {
+          "ADDRESS_EXTENSION_FREE" = 0,
+          "ADDRESS_EXTENSION_ODT" = 1,
+          "ADDRESS_EXTENSION_DAQ" = 3
+        };
+        enum {
+          "IDENTIFICATION_FIELD_TYPE_ABSOLUTE" = 0,
+          "IDENTIFICATION_FIELD_TYPE_RELATIVE_BYTE" = 1,
+          "IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD" = 2,
+          "IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED" = 3
+        };
+        enum {
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE" = 1,
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_WORD" = 2,
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_DWORD" = 4,
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_DLONG" = 8
+        };
+        uchar;  /* MAX_ODT_ENTRY_SIZE_DAQ */
+        enum {
+          "NO_OVERLOAD_INDICATION" = 0,
+          "OVERLOAD_INDICATION_PID" = 1,
+          "OVERLOAD_INDICATION_EVENT" = 2
+        };
+        taggedstruct {
+          "PRESCALER_SUPPORTED" ;
+          "RESUME_SUPPORTED" ;
+          block "STIM" struct {
+            enum {
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE" = 1,
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_WORD" = 2,
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_DWORD" = 4,
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_DLONG" = 8
+            };
+            uchar;  /* MAX_ODT_ENTRY_SIZE_STIM */
+            taggedstruct {
+              "BIT_STIM_SUPPORTED" ;
+            };
+          };
+          block "TIMESTAMP_SUPPORTED" struct {
+            uint;  /* TIMESTAMP_TICKS */
+            enum {
+              "NO_TIME_STAMP" = 0,
+              "SIZE_BYTE" = 1,
+              "SIZE_WORD" = 2,
+              "SIZE_DWORD" = 4
+            };
+            enum {
+              "UNIT_1NS" = 0,
+              "UNIT_10NS" = 1,
+              "UNIT_100NS" = 2,
+              "UNIT_1US" = 3,
+              "UNIT_10US" = 4,
+              "UNIT_100US" = 5,
+              "UNIT_1MS" = 6,
+              "UNIT_10MS" = 7,
+              "UNIT_100MS" = 8,
+              "UNIT_1S" = 9
+            };
+            taggedstruct {
+              "TIMESTAMP_FIXED" ;
+            };
+          };
+          "PID_OFF_SUPPORTED" ;
+          (block "DAQ_LIST" struct {
+            uint;  /* DAQ_LIST_NUMBER */
+            taggedstruct {
+              "DAQ_LIST_TYPE" enum {
+                "DAQ" = 1,
+                "STIM" = 2,
+                "DAQ_STIM" = 3
+              };
+              "MAX_ODT" uchar;
+              "MAX_ODT_ENTRIES" uchar;
+              "FIRST_PID" uchar;
+              "EVENT_FIXED" uint;
+              block "PREDEFINED" taggedstruct {
+                (block "ODT" struct {
+                  uchar;  /* ODT number */
+                  taggedstruct {
+                    ("ODT_ENTRY" struct {
+                      uchar;  /* ODT_ENTRY number */
+                      ulong;  /* address of element */
+                      uchar;  /* address extension of element */
+                      uchar;  /* size of element [AG] */
+                      uchar;  /* BIT_OFFSET */
+                    })*;
+                  };
+                })*;
+              };
+            };
+          })*;
+          (block "EVENT" struct {
+            char[101];  /* EVENT_CHANNEL_NAME       */
+            char[9];  /* EVENT_CHANNEL_SHORT_NAME */
+            uint;  /* EVENT_CHANNEL_NUMBER     */
+            enum {
+              "DAQ" = 1,
+              "STIM" = 2,
+              "DAQ_STIM" = 3
+            };
+            uchar;  /* MAX_DAQ_LIST */
+            uchar;  /* TIME_CYCLE   */
+            uchar;  /* TIME_UNIT    */
+            uchar;  /* PRIORITY     */
+          })*;
+        };
+      };
+
+      taggedunion Daq_Event {
+        "FIXED_EVENT_LIST" taggedstruct {
+          ("EVENT" uint)*;
+        };
+        "VARIABLE" taggedstruct {
+          block "AVAILABLE_EVENT_LIST" taggedstruct {
+            ("EVENT" uint)*;
+          };
+          block "DEFAULT_EVENT_LIST" taggedstruct {
+            ("EVENT" uint)*;
+          };
+        };
+      };
+
+      struct Pag {
+        uchar;  /* MAX_SEGMENTS */
+        taggedstruct {
+          "FREEZE_SUPPORTED" ;
+        };
+      };
+
+      struct Pgm {
+        enum {
+          "PGM_MODE_ABSOLUTE" = 1,
+          "PGM_MODE_FUNCTIONAL" = 2,
+          "PGM_MODE_ABSOLUTE_AND_FUNCTIONAL" = 3
+        };
+        uchar;  /* MAX_SECTORS */
+        uchar;  /* MAX_CTO_PGM */
+        taggedstruct {
+          (block "SECTOR" struct {
+            char[101];  /* SECTOR_NAME */
+            uchar;  /* SECTOR_NUMBER */
+            ulong;  /* Address */
+            ulong;  /* Length  */
+            uchar;  /* CLEAR_SEQUENCE_NUMBER */
+            uchar;  /* PROGRAM_SEQUENCE_NUMBER */
+            uchar;  /* PROGRAM_METHOD */
+          })*;
+          "COMMUNICATION_MODE_SUPPORTED" taggedunion {
+            "BLOCK" taggedstruct {
+              "SLAVE" ;
+              "MASTER" struct {
+                uchar;  /* MAX_BS_PGM */
+                uchar;  /* MIN_ST_PGM */
+              };
+            };
+            "INTERLEAVED" uchar;  /* QUEUE_SIZE_PGM */
+          };
+        };
+      };
+
+      struct Segment {
+        uchar;  /* SEGMENT_NUMBER */
+        uchar;  /* number of pages */
+        uchar;  /* ADDRESS_EXTENSION */
+        uchar;  /* COMPRESSION_METHOD */
+        uchar;  /* ENCRYPTION_METHOD */
+        taggedstruct {
+          block "CHECKSUM" struct {
+            enum {
+              "XCP_ADD_11" = 1,
+              "XCP_ADD_12" = 2,
+              "XCP_ADD_14" = 3,
+              "XCP_ADD_22" = 4,
+              "XCP_ADD_24" = 5,
+              "XCP_ADD_44" = 6,
+              "XCP_CRC_16" = 7,
+              "XCP_CRC_16_CITT" = 8,
+              "XCP_CRC_32" = 9,
+              "XCP_USER_DEFINED" = 255
+            };
+            taggedstruct {
+              "MAX_BLOCK_SIZE" ulong;
+              "EXTERNAL_FUNCTION" char[256];  /* Name of the Checksum.DLL */
+            };
+          };
+          (block "PAGE" struct {
+            uchar;  /* PAGE_NUMBER */
+            enum {
+              "ECU_ACCESS_NOT_ALLOWED" = 0,
+              "ECU_ACCESS_WITHOUT_XCP_ONLY" = 1,
+              "ECU_ACCESS_WITH_XCP_ONLY" = 2,
+              "ECU_ACCESS_DONT_CARE" = 3
+            };
+            enum {
+              "XCP_READ_ACCESS_NOT_ALLOWED" = 0,
+              "XCP_READ_ACCESS_WITHOUT_ECU_ONLY" = 1,
+              "XCP_READ_ACCESS_WITH_ECU_ONLY" = 2,
+              "XCP_READ_ACCESS_DONT_CARE" = 3
+            };
+            enum {
+              "XCP_WRITE_ACCESS_NOT_ALLOWED" = 0,
+              "XCP_WRITE_ACCESS_WITHOUT_ECU_ONLY" = 1,
+              "XCP_WRITE_ACCESS_WITH_ECU_ONLY" = 2,
+              "XCP_WRITE_ACCESS_DONT_CARE" = 3
+            };
+            taggedstruct {
+              "INIT_SEGMENT" uchar;  /* references segment that initialises this page */
+            };
+          })*;
+          (block "ADDRESS_MAPPING" struct {
+            ulong;  /* source address */
+            ulong;  /* destination address */
+            ulong;  /* length */
+          })*;
+          "PGM_VERIFY" ulong;  /* verification value for PGM */
+        };
+      };
+
+      taggedstruct Common_Parameters {
+        block "PROTOCOL_LAYER" struct Protocol_Layer;
+        block "SEGMENT" struct Segment;
+        block "DAQ" struct Daq;
+        block "PAG" struct Pag;
+        block "PGM" struct Pgm;
+        block "DAQ_EVENT" taggedunion Daq_Event;
+      };
+
+      struct CAN_Parameters {
+        uint;  /* XCP on CAN version, currentl 0x0100 */
+        taggedstruct {
+          "CAN_ID_BROADCAST" ulong;  /* Auto-detection CAN-ID */
+          "CAN_ID_MASTER" ulong;  /* CMD/STIM CAN-ID */
+          "CAN_ID_SLAVE" ulong;  /* RES/ERR/EV/SERV/DAQ CAN-ID */
+          "BAUDRATE" ulong;  /* Baudrate in Hz */
+          "SAMPLE_POINT" uchar;  /* Sample point in  of bit time */
+          "SAMPLE_RATE" enum {
+            "SINGLE" = 1,
+            "TRIPLE" = 3
+          };
+          "BTL_CYCLES" uchar;  /* slots per bit time */
+          "SJW" uchar;
+          "SYNC_EDGE" enum {
+            "SINGLE" = 1,
+            "DUAL" = 2
+          };
+          "MAX_DLC_REQUIRED" ;  /* master to slave frames */
+          (block "DAQ_LIST_CAN_ID" struct {
+            uint;  /* reference to DAQ_LIST_NUMBER */
+            taggedstruct {
+              "VARIABLE" ;
+              "FIXED" ulong;  /* this DAQ_LIST always on this CAN_ID */
+            };
+          })*;
+        };
+      };
+
+      struct SxI_Parameters {
+        uint;  /* XCP on SxI version, currently 0x0100 */
+        ulong;  /* BAUDRATE [Hz] */
+        taggedstruct {
+          "ASYNCH_FULL_DUPLEX_MODE" struct {
+            enum {
+              "PARITY_NONE" = 0,
+              "PARITY_ODD" = 1,
+              "PARITY_EVEN" = 2
+            };
+            enum {
+              "ONE_STOP_BIT" = 1,
+              "TWO_STOP_BITS" = 2
+            };
+          };
+          "SYNCH_FULL_DUPLEX_MODE_BYTE" ;
+          "SYNCH_FULL_DUPLEX_MODE_WORD" ;
+          "SYNCH_FULL_DUPLEX_MODE_DWORD" ;
+          "SYNCH_MASTER_SLAVE_MODE_BYTE" ;
+          "SYNCH_MASTER_SLAVE_MODE_WORD" ;
+          "SYNCH_MASTER_SLAVE_MODE_DWORD" ;
+        };
+        enum {
+          "HEADER_LEN_BYTE" = 0,
+          "HEADER_LEN_CTR_BYTE" = 1,
+          "HEADER_LEN_FILL_BYTE" = 2,
+          "HEADER_LEN_WORD" = 3,
+          "HEADER_LEN_CTR_WORD" = 4,
+          "HEADER_LEN_FILL_WORD" = 5
+        };
+        enum {
+          "NO_CHECKSUM" = 0,
+          "CHECKSUM_BYTE" = 1,
+          "CHECKSUM_WORD" = 2
+        };
+      };
+
+      struct TCP_IP_Parameters {
+        uint;  /* XCP on TCP_IP version, currently 0x0100 */
+        uint;  /* PORT */
+        taggedunion {
+          "HOST_NAME" char[256];
+          "ADDRESS" char[15];
+        };
+      };
+
+      struct UDP_Parameters {
+        uint;  /* XCP on UDP version, currently 0x0100 */
+        uint;  /* PORT */
+        taggedunion {
+          "HOST_NAME" char[256];
+          "ADDRESS" char[15];
+        };
+      };
+
+      struct ep_parameters {
+        uchar;  /* ENDPOINT_NUMBER, not endpoint address */
+        enum {
+          "BULK_TRANSFER" = 2,
+          "INTERRUPT_TRANSFER" = 3
+        };
+        uint;  /* wMaxPacketSize: Maximum packet  
+ size of endpoint in bytes       */
+        uchar;  /* bInterval: polling of endpoint  */
+        enum {
+          "MESSAGE_PACKING_SINGLE" = 0,
+          "MESSAGE_PACKING_MULTIPLE" = 1,
+          "MESSAGE_PACKING_STREAMING" = 2
+        };
+        enum {
+          "ALIGNMENT_8_BIT" = 0,
+          "ALIGNMENT_16_BIT" = 1,
+          "ALIGNMENT_32_BIT" = 2,
+          "ALIGNMENT_64_BIT" = 3
+        };
+        taggedstruct {
+          "RECOMMENDED_HOST_BUFSIZE" uint;  /* Recommended size for the host 
+ buffer size. The size is defined
+ as multiple of wMaxPacketSize.  */
+        };
+      };  /* end of ep_parameters */
+
+      struct USB_Parameters {
+        uint;  /* XCP on USB version  
+ e.g. "1.0" = 0x0100 */
+        uint;  /* Vendor ID                       */
+        uint;  /* Product ID                      */
+        uchar;  /* Number of interface             */
+        enum {
+          "HEADER_LEN_BYTE" = 0,
+          "HEADER_LEN_CTR_BYTE" = 1,
+          "HEADER_LEN_FILL_BYTE" = 2,
+          "HEADER_LEN_WORD" = 3,
+          "HEADER_LEN_CTR_WORD" = 4,
+          "HEADER_LEN_FILL_WORD" = 5
+        };
+        taggedunion {
+          block "OUT_EP_CMD_STIM" struct ep_parameters;
+        };
+        taggedunion {
+          block "IN_EP_RESERR_DAQ_EVSERV" struct ep_parameters;
+        };
+        taggedstruct {
+          "ALTERNATE_SETTING_NO" uchar;  /* Number of alternate setting   */
+          "INTERFACE_STRING_DESCRIPTOR" char[101];
+          (block "OUT_EP_ONLY_STIM" struct ep_parameters)*;
+          (block "IN_EP_ONLY_DAQ" struct ep_parameters)*;
+          block "IN_EP_ONLY_EVSERV" struct ep_parameters;
+          (block "DAQ_LIST_USB_ENDPOINT" struct {
+            uint;  /* reference to DAQ_LIST_NUMBER          */
+            taggedstruct {
+              "FIXED_IN" uchar;  /* this DAQ list always                
+ ENDPOINT_NUMBER, not endpoint address */
+              "FIXED_OUT" uchar;  /* this STIM list always               
+ ENDPOINT_NUMBER, not endpoint address */
+            };
+          })*;  /* end of DAQ_LIST_USB_ENDPOINT */
+        };  /* end of optional */
+      };
+
+      struct SIMULINK_Parameters {
+        taggedstruct {
+          "MODEL_NAME" char[64];
+        };
+      };
+
+      enum packet_assignment_type {
+        "NOT_ALLOWED" = 0,
+        "FIXED" = 1,
+        "VARIABLE_INITIALISED" = 2,
+        "VARIABLE" = 3
+      };  /* end of packet_assignment_type */
+
+      struct buffer {
+        uchar;  /* FLX_BUF */
+        taggedstruct {
+          "MAX_FLX_LEN_BUF" taggedunion {
+            "FIXED" uchar;  /* constant value */
+            "VARIABLE" uchar;  /* initial value */
+          };  /* end of MAX_FLX_LEN_BUF */
+          block "LPDU_ID" taggedstruct {
+            "FLX_SLOT_ID" taggedunion {
+              "FIXED" uint;
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" uint;
+              };
+            };  /* end of FLX_SLOT_ID */
+            "OFFSET" taggedunion {
+              "FIXED" uchar;
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" uchar;
+              };
+            };  /* end of OFFSET */
+            "CYCLE_REPETITION" taggedunion {
+              "FIXED" uchar;
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" uchar;
+              };
+            };  /* end of CYCLE_REPETITION */
+            "CHANNEL" taggedunion {
+              "FIXED" enum {
+                "A" = 0,
+                "B" = 1
+              };
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" enum {
+                  "A" = 0,
+                  "B" = 1
+                };
+              };
+            };  /* end of CHANNEL */
+          };  /* end of LPDU_ID */
+          block "XCP_PACKET" taggedstruct {
+            "CMD" enum packet_assignment_type;  /* end of CMD     */
+            "RES_ERR" enum packet_assignment_type;  /* end of RES_ERR */
+            "EV_SERV" enum packet_assignment_type;  /* end of EV_SERV */
+            "DAQ" enum packet_assignment_type;  /* end of DAQ     */
+            "STIM" enum packet_assignment_type;  /* end of STIM    */
+          };  /* end of XCP_PACKET */
+        };
+      };  /* end of buffer */
+
+      struct FLX_Parameters {
+
+        uint;              /* XCP on FlexRay version  */
+                           /* e.g. "1.0" = 0x0100 */
+
+        uint;              /* T1_FLX [ms] */
+
+        char[256];         /* FIBEX-file */
+                           /* including CHI information */
+                           /* including extension */
+                           /* without path */
+
+        char[256];         /* Cluster-ID */
+
+        uchar;             /* NAX */
+
+        enum { 
+          "HEADER_NAX"              = 0,
+          "HEADER_NAX_FILL"         = 1,
+          "HEADER_NAX_CTR"          = 2,
+          "HEADER_NAX_FILL3"        = 3,
+          "HEADER_NAX_CTR_FILL2"    = 4,
+          "HEADER_NAX_LEN"          = 5,
+          "HEADER_NAX_CTR_LEN"      = 6,
+          "HEADER_NAX_FILL2_LEN"    = 7,
+          "HEADER_NAX_CTR_FILL_LEN" = 8
+        };
+        enum {
+          "PACKET_ALIGNMENT_8" = 0,
+          "PACKET_ALIGNMENT_16" = 1,
+          "PACKET_ALIGNMENT_32" = 2
+        };
+        taggedunion {
+          block "INITIAL_CMD_BUFFER" struct buffer;
+        };
+        taggedunion {
+          block "INITIAL_RES_ERR_BUFFER" struct buffer;
+        };
+        taggedstruct {
+          (block "POOL_BUFFER" struct buffer)*;
+        };
+      };
+
+      block "IF_DATA" taggedunion if_data {
+
+        "CANAPE_EXT" struct {
+          int;             /* version number */
+          taggedstruct {
+            "LINK_MAP" struct {
+              char[256];   /* segment name */
+              long;        /* base address of the segment */
+              uint;        /* address extension of the segment */
+              uint;        /* flag: address is relative to DS */
+              long;        /* offset of the segment address */
+              uint;        /* datatypValid */
+              uint;        /* enum datatyp */
+              uint;        /* bit offset of the segment */
+            };
+            "DISPLAY" struct {
+              long;        /* display color */
+              double;      /* minimal display value (phys)*/
+              double;      /* maximal display value (phys)*/
+            };
+            "VIRTUAL_CONVERSION" struct {
+              char[256];   /* name of the conversion formula */
+            };
+          };
+        };
+        "CANAPE_MODULE" struct {
+          taggedstruct {
+            ("RECORD_LAYOUT_STEPSIZE" struct {
+              char[256];   /* name of record layout*/
+              uint;        /* stepsize for FNC_VALUES */
+              uint;        /* stepsize for AXIS_PTS_X */
+              uint;        /* stepsize for AXIS_PTS_Y */
+              uint;        /* stepsize for AXIS_PTS_Z */
+              uint;        /* stepsize for AXIS_PTS_4 */
+              uint;        /* stepsize for AXIS_PTS_5 */
+            })*;
+          };
+        };
+        /*********************************************************/
+        /*   XCP                                                 */
+        /*********************************************************/
+        "XCP" struct {
+          taggedstruct Common_Parameters;  /* default parameters */
+          taggedstruct {
+            block "XCP_ON_CAN" struct {
+              struct CAN_Parameters;  /* specific for CAN */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_SxI" struct {
+              struct SxI_Parameters;  /* specific for SxI */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_TCP_IP" struct {
+              struct TCP_IP_Parameters;  /* specific for TCP_IP */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_UDP_IP" struct {
+              struct UDP_Parameters;  /* specific for UDP */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_USB" struct {
+              struct USB_Parameters;  /* specific for USB      */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_FLX" struct {
+              struct FLX_Parameters;  /* specific for FlexRay  */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+          };
+        };
+      };
+
+    /end A2ML
+
+
+
+    /begin IF_DATA XCP
+      
+      
+      /begin PROTOCOL_LAYER
+        0x0100
+        0x03E8
+        0x00C8
+        0x0000
+        0x0000
+        0x0000
+        0x0000
+        0x0000
+        0xFC
+        0x0578
+        BYTE_ORDER_MSB_LAST
+        ADDRESS_GRANULARITY_BYTE
+        OPTIONAL_CMD ALLOC_ODT_ENTRY
+        OPTIONAL_CMD ALLOC_ODT
+        OPTIONAL_CMD ALLOC_DAQ
+        OPTIONAL_CMD FREE_DAQ
+        OPTIONAL_CMD GET_DAQ_RESOLUTION_INFO
+        OPTIONAL_CMD GET_DAQ_PROCESSOR_INFO
+        OPTIONAL_CMD START_STOP_SYNCH
+        OPTIONAL_CMD START_STOP_DAQ_LIST
+        OPTIONAL_CMD SET_DAQ_LIST_MODE
+        OPTIONAL_CMD WRITE_DAQ
+        OPTIONAL_CMD SET_DAQ_PTR
+        OPTIONAL_CMD GET_CAL_PAGE
+        OPTIONAL_CMD SET_CAL_PAGE
+        OPTIONAL_CMD COPY_CAL_PAGE
+        OPTIONAL_CMD SHORT_DOWNLOAD
+        OPTIONAL_CMD DOWNLOAD_MAX
+        OPTIONAL_CMD DOWNLOAD
+        OPTIONAL_CMD SHORT_UPLOAD
+        OPTIONAL_CMD UPLOAD
+        OPTIONAL_CMD SET_MTA
+      /end PROTOCOL_LAYER
+
+      
+      /begin DAQ
+        DYNAMIC
+        0x0000
+        0x0080
+        0x00
+        OPTIMISATION_TYPE_DEFAULT
+        ADDRESS_EXTENSION_FREE
+        IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED
+        GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE
+        0xFF
+        OVERLOAD_INDICATION_PID
+        PRESCALER_SUPPORTED 
+        
+        /begin STIM
+          GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE
+          0xFF
+          
+        /end STIM
+
+        /begin TIMESTAMP_SUPPORTED
+          0x0001
+          SIZE_DWORD
+          UNIT_1US
+          TIMESTAMP_FIXED 
+        /end TIMESTAMP_SUPPORTED
+
+        
+        /begin EVENT
+          "1 ms"
+          "1 ms"
+          0x0000
+          DAQ
+          0xFF
+          0x01
+          0x06
+          0x00
+        /end EVENT
+
+      /end DAQ
+
+      
+      /begin XCP_ON_UDP_IP
+        0x0100
+        0x15B3
+        ADDRESS "192.168.7.2"
+      /end XCP_ON_UDP_IP
+
+    /end IF_DATA
+
+
+
+    /begin MOD_PAR "MOD PAR Comment Goes Here"
+
+       /begin MEMORY_SEGMENT speedgoat_test_SN5659__cal_impl
+       "speedgoat_test_SN5659__cal_impl"
+       DATA
+       FLASH
+       INTERN
+       0x00295020
+       0xC58
+       -1 -1 -1 -1 -1
+       /begin IF_DATA XCP
+         /begin SEGMENT
+            0x00
+            0x02
+            0x00
+            0x00
+            0x00
+            /begin PAGE
+              0x00
+              ECU_ACCESS_DONT_CARE
+              XCP_READ_ACCESS_DONT_CARE
+              XCP_WRITE_ACCESS_NOT_ALLOWED
+            /end PAGE
+            /begin PAGE
+              0x01
+              ECU_ACCESS_DONT_CARE
+              XCP_READ_ACCESS_DONT_CARE
+              XCP_WRITE_ACCESS_DONT_CARE
+            /end PAGE
+          /end SEGMENT
+        /end IF_DATA
+        /end MEMORY_SEGMENT
+
+    /end MOD_PAR
+
+    /begin MOD_COMMON  "Mod Common Comment Here"
+      BYTE_ORDER     MSB_LAST
+      ALIGNMENT_BYTE 1
+      ALIGNMENT_WORD 2
+      ALIGNMENT_LONG 4
+      ALIGNMENT_FLOAT32_IEEE 4
+      ALIGNMENT_FLOAT64_IEEE 8
+      ALIGNMENT_INT64 8
+    /end MOD_COMMON
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead1_P1 ""  
+    VALUE 0x00295128 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead1_P2 ""  
+    VALUE 0x00295140 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead1_P3 ""  
+    VALUE 0x00295158 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead1_P4 ""  
+    VAL_BLK 0x00295170 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        5 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead1_P5 ""  
+    VALUE 0x002951A8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead1_P6 ""  
+    VALUE 0x002951C0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead1_P7 ""  
+    VALUE 0x002951D8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead_P1 ""  
+    VALUE 0x00295048 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead_P2 ""  
+    VALUE 0x00295060 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead_P3 ""  
+    VALUE 0x00295078 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead_P4 ""  
+    VAL_BLK 0x00295090 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        5 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead_P5 ""  
+    VALUE 0x002950C8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead_P6 ""  
+    VALUE 0x002950E0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANRead_P7 ""  
+    VALUE 0x002950F8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P1 ""  
+    VALUE 0x002951F0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P10 ""  
+    VAL_BLK 0x002952E8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P11 ""  
+    VAL_BLK 0x00295308 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P12 ""  
+    VALUE 0x00295328 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P13 ""  
+    VAL_BLK 0x00295340 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        4 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P14 ""  
+    VAL_BLK 0x00295370 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P15 ""  
+    VAL_BLK 0x00295390 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P16 ""  
+    VALUE 0x002953B0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P17 ""  
+    VAL_BLK 0x002953C8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        4 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P18 ""  
+    VAL_BLK 0x002953F8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P19 ""  
+    VAL_BLK 0x00295418 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P2 ""  
+    VAL_BLK 0x00295208 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P20 ""  
+    VALUE 0x00295438 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P21 ""  
+    VAL_BLK 0x00295450 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        4 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P22 ""  
+    VAL_BLK 0x00295480 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P23 ""  
+    VAL_BLK 0x002954A0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P24 ""  
+    VALUE 0x002954C0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P25 ""  
+    VALUE 0x002954D8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P26 ""  
+    VAL_BLK 0x002954F0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        5 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P27 ""  
+    VALUE 0x00295528 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P28 ""  
+    VAL_BLK 0x00295540 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        4 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P29 ""  
+    VAL_BLK 0x00295570 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        4 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P3 ""  
+    VALUE 0x00295228 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P30 ""  
+    VAL_BLK 0x002955A0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        4 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P31 ""  
+    VALUE 0x002955D0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P4 ""  
+    VALUE 0x00295240 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P5 ""  
+    VALUE 0x00295258 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P6 ""  
+    VALUE 0x00295270 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P7 ""  
+    VALUE 0x00295288 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P8 ""  
+    VALUE 0x002952A0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANSetup_P9 ""  
+    VAL_BLK 0x002952B8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        4 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite1_P1 ""  
+    VALUE 0x00295968 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite1_P2 ""  
+    VALUE 0x00295980 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite1_P3 ""  
+    VALUE 0x00295998 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite1_P4 ""  
+    VALUE 0x002959B0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite1_P5 ""  
+    VAL_BLK 0x002959C8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        5 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite1_P6 ""  
+    VALUE 0x00295A00 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite1_P7 ""  
+    VALUE 0x00295A18 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite1_P8 ""  
+    VALUE 0x00295A30 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite2_P1 ""  
+    VALUE 0x00295738 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite2_P2 ""  
+    VALUE 0x00295750 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite2_P3 ""  
+    VALUE 0x00295768 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite2_P4 ""  
+    VALUE 0x00295780 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite2_P5 ""  
+    VAL_BLK 0x00295798 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        5 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite2_P6 ""  
+    VALUE 0x002957D0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite2_P7 ""  
+    VALUE 0x002957E8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite2_P8 ""  
+    VALUE 0x00295800 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite3_P1 ""  
+    VALUE 0x00295850 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite3_P2 ""  
+    VALUE 0x00295868 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite3_P3 ""  
+    VALUE 0x00295880 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite3_P4 ""  
+    VALUE 0x00295898 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite3_P5 ""  
+    VAL_BLK 0x002958B0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        5 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite3_P6 ""  
+    VALUE 0x002958E8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite3_P7 ""  
+    VALUE 0x00295900 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite3_P8 ""  
+    VALUE 0x00295918 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite4_P1 ""  
+    VALUE 0x00295A80 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite4_P2 ""  
+    VALUE 0x00295A98 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite4_P3 ""  
+    VALUE 0x00295AB0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite4_P4 ""  
+    VALUE 0x00295AC8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite4_P5 ""  
+    VAL_BLK 0x00295AE0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        5 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite4_P6 ""  
+    VALUE 0x00295B18 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite4_P7 ""  
+    VALUE 0x00295B30 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite4_P8 ""  
+    VALUE 0x00295B48 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite5_P1 ""  
+    VALUE 0x00295B98 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite5_P2 ""  
+    VALUE 0x00295BB0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite5_P3 ""  
+    VALUE 0x00295BC8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite5_P4 ""  
+    VALUE 0x00295BE0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite5_P5 ""  
+    VAL_BLK 0x00295BF8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        5 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite5_P6 ""  
+    VALUE 0x00295C30 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite5_P7 ""  
+    VALUE 0x00295C48 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite5_P8 ""  
+    VALUE 0x00295C60 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite_P1 ""  
+    VALUE 0x00295620 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite_P2 ""  
+    VALUE 0x00295638 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite_P3 ""  
+    VALUE 0x00295650 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite_P4 ""  
+    VALUE 0x00295668 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite_P5 ""  
+    VAL_BLK 0x00295680 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        5 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite_P6 ""  
+    VALUE 0x002956B8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite_P7 ""  
+    VALUE 0x002956D0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.CANWrite_P8 ""  
+    VALUE 0x002956E8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.ID100_Signal1_Y0 ""  
+    VALUE 0x00295020 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.ID100_Signal1_Y0_j ""  
+    VALUE 0x00295100 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.ID101_Signal1_Y0 ""  
+    VALUE 0x00295028 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.ID101_Signal1_Y0_o ""  
+    VALUE 0x00295108 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.ID102_Signal1_Y0 ""  
+    VALUE 0x00295030 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.ID102_Signal1_Y0_i ""  
+    VALUE 0x00295110 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.RXSampleTime1_Value ""  
+    VALUE 0x00295C70 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.RXSampleTime_Value ""  
+    VALUE 0x00295C68 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave1_Amp ""  
+    VALUE 0x002956F0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave1_Bias ""  
+    VALUE 0x002956F8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave1_Freq ""  
+    VALUE 0x00295700 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave1_HCos ""  
+    VALUE 0x00295710 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave1_Hsin ""  
+    VALUE 0x00295708 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave1_PCos ""  
+    VALUE 0x00295720 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave1_PSin ""  
+    VALUE 0x00295718 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave2_Amp ""  
+    VALUE 0x00295808 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave2_Bias ""  
+    VALUE 0x00295810 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave2_Freq ""  
+    VALUE 0x00295818 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave2_HCos ""  
+    VALUE 0x00295828 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave2_Hsin ""  
+    VALUE 0x00295820 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave2_PCos ""  
+    VALUE 0x00295838 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave2_PSin ""  
+    VALUE 0x00295830 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave3_Amp ""  
+    VALUE 0x00295920 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave3_Bias ""  
+    VALUE 0x00295928 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave3_Freq ""  
+    VALUE 0x00295930 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave3_HCos ""  
+    VALUE 0x00295940 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave3_Hsin ""  
+    VALUE 0x00295938 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave3_PCos ""  
+    VALUE 0x00295950 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave3_PSin ""  
+    VALUE 0x00295948 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave4_Amp ""  
+    VALUE 0x00295A38 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave4_Bias ""  
+    VALUE 0x00295A40 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave4_Freq ""  
+    VALUE 0x00295A48 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave4_HCos ""  
+    VALUE 0x00295A58 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave4_Hsin ""  
+    VALUE 0x00295A50 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave4_PCos ""  
+    VALUE 0x00295A68 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave4_PSin ""  
+    VALUE 0x00295A60 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave5_Amp ""  
+    VALUE 0x00295B50 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave5_Bias ""  
+    VALUE 0x00295B58 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave5_Freq ""  
+    VALUE 0x00295B60 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave5_HCos ""  
+    VALUE 0x00295B70 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave5_Hsin ""  
+    VALUE 0x00295B68 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave5_PCos ""  
+    VALUE 0x00295B80 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave5_PSin ""  
+    VALUE 0x00295B78 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave_Amp ""  
+    VALUE 0x002955D8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave_Bias ""  
+    VALUE 0x002955E0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave_Freq ""  
+    VALUE 0x002955E8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave_HCos ""  
+    VALUE 0x002955F8 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave_Hsin ""  
+    VALUE 0x002955F0 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave_PCos ""  
+    VALUE 0x00295608 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  speedgoat_test_SN5659__cal_impl.SineWave_PSin ""  
+    VALUE 0x00295600 Scalar_FLOAT64_IEEE 0 speedgoat_test_SN5659_R2021b_IO612_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.CANRead1_o1 ""  
+    UBYTE speedgoat_test_SN5659_R2021b_IO612_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0029AB30
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.CANRead_o1 ""  
+    UBYTE speedgoat_test_SN5659_R2021b_IO612_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0029AB31
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AB00
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack1 ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AB08
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack1_o ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AB20
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack2 ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AB10
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack2_j ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AB28
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack_c ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AB18
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.RXSampleTime ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AAF0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.RXSampleTime1 ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AAF8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.SineWave ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AAC0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.SineWave1 ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AAC8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.SineWave2 ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AAD0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.SineWave3 ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AAD8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.SineWave4 ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AAE0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_B.SineWave5 ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029AAE8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANPack1_ModeSignalID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A984
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANPack2_ModeSignalID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A98C
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANPack3_ModeSignalID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A994
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANPack4_ModeSignalID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A99C
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANPack5_ModeSignalID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9A4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANPack_ModeSignalID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A97C
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack1_ModeSignalID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9B8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack1_ModeSignalID_i ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9D4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack1_StatusPortID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9BC
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack1_StatusPortID_o ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9D8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack2_ModeSignalID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9C0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack2_ModeSignalID_g ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9DC
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack2_StatusPortID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9C4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack2_StatusPortID_m ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9E0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack_ModeSignalID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9B0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack_ModeSignalID_b ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9CC
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack_StatusPortID ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9B4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack_StatusPortID_g ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int_T       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A9D0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastCos ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8A8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastCos_b ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8D8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastCos_c ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8F8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastCos_g ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8B8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastCos_i ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8C8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastCos_j ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8E8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastSin ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8A0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastSin_c ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8B0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastSin_cd ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8F0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastSin_d ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8D0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastSin_h ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8E0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.lastSin_i ""  
+    FLOAT64_IEEE speedgoat_test_SN5659_R2021b_IO612_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0029A8C0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A960
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable_b ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A970
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable_h ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A96C
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable_i ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A968
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable_p ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A964
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable_py ""  
+    SLONG speedgoat_test_SN5659_R2021b_IO612_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x0029A974
+  /end MEASUREMENT 
+
+  /begin COMPU_METHOD speedgoat_test_SN5659_R2021b_IO612_CM_double ""  
+    IDENTICAL "%15.10" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD speedgoat_test_SN5659_R2021b_IO612_CM_int32 ""  
+    IDENTICAL "%10.0" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD speedgoat_test_SN5659_R2021b_IO612_CM_int_T ""  
+    IDENTICAL "customformat" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD speedgoat_test_SN5659_R2021b_IO612_CM_logical ""  
+    IDENTICAL "%1.0" ""  
+  /end COMPU_METHOD
+
+  /begin  RECORD_LAYOUT Scalar_BOOLEAN
+    FNC_VALUES 1 UBYTE COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin  RECORD_LAYOUT Scalar_FLOAT64_IEEE
+    FNC_VALUES 1 FLOAT64_IEEE COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin  RECORD_LAYOUT Scalar_SLONG
+    FNC_VALUES 1 SLONG COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin GROUP speedgoat_test_SN5659_R2021b_IO612 "speedgoat_test_SN5659_R2021b_IO612" ROOT  
+    /begin SUB_GROUP
+      speedgoat_test_SN5659_R2021b_IO612_IO612
+    /end SUB_GROUP
+  /end GROUP
+
+  /begin GROUP speedgoat_test_SN5659_R2021b_IO612_IO612 "speedgoat_test_SN5659_R2021b_IO612/IO612"  
+    /begin SUB_GROUP
+      speedgoat_test_SN5659_R2021b_IO612_IO612_CAN_Read_Loop___Port_3
+      speedgoat_test_SN5659_R2021b_IO612_IO612_CAN_Read_Loop___Port_4
+    /end SUB_GROUP
+    /begin REF_CHARACTERISTIC
+      speedgoat_test_SN5659__cal_impl.CANSetup_P1
+      speedgoat_test_SN5659__cal_impl.CANSetup_P10
+      speedgoat_test_SN5659__cal_impl.CANSetup_P11
+      speedgoat_test_SN5659__cal_impl.CANSetup_P12
+      speedgoat_test_SN5659__cal_impl.CANSetup_P13
+      speedgoat_test_SN5659__cal_impl.CANSetup_P14
+      speedgoat_test_SN5659__cal_impl.CANSetup_P15
+      speedgoat_test_SN5659__cal_impl.CANSetup_P16
+      speedgoat_test_SN5659__cal_impl.CANSetup_P17
+      speedgoat_test_SN5659__cal_impl.CANSetup_P18
+      speedgoat_test_SN5659__cal_impl.CANSetup_P19
+      speedgoat_test_SN5659__cal_impl.CANSetup_P2
+      speedgoat_test_SN5659__cal_impl.CANSetup_P20
+      speedgoat_test_SN5659__cal_impl.CANSetup_P21
+      speedgoat_test_SN5659__cal_impl.CANSetup_P22
+      speedgoat_test_SN5659__cal_impl.CANSetup_P23
+      speedgoat_test_SN5659__cal_impl.CANSetup_P24
+      speedgoat_test_SN5659__cal_impl.CANSetup_P25
+      speedgoat_test_SN5659__cal_impl.CANSetup_P26
+      speedgoat_test_SN5659__cal_impl.CANSetup_P27
+      speedgoat_test_SN5659__cal_impl.CANSetup_P28
+      speedgoat_test_SN5659__cal_impl.CANSetup_P29
+      speedgoat_test_SN5659__cal_impl.CANSetup_P3
+      speedgoat_test_SN5659__cal_impl.CANSetup_P30
+      speedgoat_test_SN5659__cal_impl.CANSetup_P31
+      speedgoat_test_SN5659__cal_impl.CANSetup_P4
+      speedgoat_test_SN5659__cal_impl.CANSetup_P5
+      speedgoat_test_SN5659__cal_impl.CANSetup_P6
+      speedgoat_test_SN5659__cal_impl.CANSetup_P7
+      speedgoat_test_SN5659__cal_impl.CANSetup_P8
+      speedgoat_test_SN5659__cal_impl.CANSetup_P9
+      speedgoat_test_SN5659__cal_impl.CANWrite1_P1
+      speedgoat_test_SN5659__cal_impl.CANWrite1_P2
+      speedgoat_test_SN5659__cal_impl.CANWrite1_P3
+      speedgoat_test_SN5659__cal_impl.CANWrite1_P4
+      speedgoat_test_SN5659__cal_impl.CANWrite1_P5
+      speedgoat_test_SN5659__cal_impl.CANWrite1_P6
+      speedgoat_test_SN5659__cal_impl.CANWrite1_P7
+      speedgoat_test_SN5659__cal_impl.CANWrite1_P8
+      speedgoat_test_SN5659__cal_impl.CANWrite2_P1
+      speedgoat_test_SN5659__cal_impl.CANWrite2_P2
+      speedgoat_test_SN5659__cal_impl.CANWrite2_P3
+      speedgoat_test_SN5659__cal_impl.CANWrite2_P4
+      speedgoat_test_SN5659__cal_impl.CANWrite2_P5
+      speedgoat_test_SN5659__cal_impl.CANWrite2_P6
+      speedgoat_test_SN5659__cal_impl.CANWrite2_P7
+      speedgoat_test_SN5659__cal_impl.CANWrite2_P8
+      speedgoat_test_SN5659__cal_impl.CANWrite3_P1
+      speedgoat_test_SN5659__cal_impl.CANWrite3_P2
+      speedgoat_test_SN5659__cal_impl.CANWrite3_P3
+      speedgoat_test_SN5659__cal_impl.CANWrite3_P4
+      speedgoat_test_SN5659__cal_impl.CANWrite3_P5
+      speedgoat_test_SN5659__cal_impl.CANWrite3_P6
+      speedgoat_test_SN5659__cal_impl.CANWrite3_P7
+      speedgoat_test_SN5659__cal_impl.CANWrite3_P8
+      speedgoat_test_SN5659__cal_impl.CANWrite4_P1
+      speedgoat_test_SN5659__cal_impl.CANWrite4_P2
+      speedgoat_test_SN5659__cal_impl.CANWrite4_P3
+      speedgoat_test_SN5659__cal_impl.CANWrite4_P4
+      speedgoat_test_SN5659__cal_impl.CANWrite4_P5
+      speedgoat_test_SN5659__cal_impl.CANWrite4_P6
+      speedgoat_test_SN5659__cal_impl.CANWrite4_P7
+      speedgoat_test_SN5659__cal_impl.CANWrite4_P8
+      speedgoat_test_SN5659__cal_impl.CANWrite5_P1
+      speedgoat_test_SN5659__cal_impl.CANWrite5_P2
+      speedgoat_test_SN5659__cal_impl.CANWrite5_P3
+      speedgoat_test_SN5659__cal_impl.CANWrite5_P4
+      speedgoat_test_SN5659__cal_impl.CANWrite5_P5
+      speedgoat_test_SN5659__cal_impl.CANWrite5_P6
+      speedgoat_test_SN5659__cal_impl.CANWrite5_P7
+      speedgoat_test_SN5659__cal_impl.CANWrite5_P8
+      speedgoat_test_SN5659__cal_impl.CANWrite_P1
+      speedgoat_test_SN5659__cal_impl.CANWrite_P2
+      speedgoat_test_SN5659__cal_impl.CANWrite_P3
+      speedgoat_test_SN5659__cal_impl.CANWrite_P4
+      speedgoat_test_SN5659__cal_impl.CANWrite_P5
+      speedgoat_test_SN5659__cal_impl.CANWrite_P6
+      speedgoat_test_SN5659__cal_impl.CANWrite_P7
+      speedgoat_test_SN5659__cal_impl.CANWrite_P8
+      speedgoat_test_SN5659__cal_impl.RXSampleTime1_Value
+      speedgoat_test_SN5659__cal_impl.RXSampleTime_Value
+      speedgoat_test_SN5659__cal_impl.SineWave1_Amp
+      speedgoat_test_SN5659__cal_impl.SineWave1_Bias
+      speedgoat_test_SN5659__cal_impl.SineWave1_Freq
+      speedgoat_test_SN5659__cal_impl.SineWave1_HCos
+      speedgoat_test_SN5659__cal_impl.SineWave1_Hsin
+      speedgoat_test_SN5659__cal_impl.SineWave1_PCos
+      speedgoat_test_SN5659__cal_impl.SineWave1_PSin
+      speedgoat_test_SN5659__cal_impl.SineWave2_Amp
+      speedgoat_test_SN5659__cal_impl.SineWave2_Bias
+      speedgoat_test_SN5659__cal_impl.SineWave2_Freq
+      speedgoat_test_SN5659__cal_impl.SineWave2_HCos
+      speedgoat_test_SN5659__cal_impl.SineWave2_Hsin
+      speedgoat_test_SN5659__cal_impl.SineWave2_PCos
+      speedgoat_test_SN5659__cal_impl.SineWave2_PSin
+      speedgoat_test_SN5659__cal_impl.SineWave3_Amp
+      speedgoat_test_SN5659__cal_impl.SineWave3_Bias
+      speedgoat_test_SN5659__cal_impl.SineWave3_Freq
+      speedgoat_test_SN5659__cal_impl.SineWave3_HCos
+      speedgoat_test_SN5659__cal_impl.SineWave3_Hsin
+      speedgoat_test_SN5659__cal_impl.SineWave3_PCos
+      speedgoat_test_SN5659__cal_impl.SineWave3_PSin
+      speedgoat_test_SN5659__cal_impl.SineWave4_Amp
+      speedgoat_test_SN5659__cal_impl.SineWave4_Bias
+      speedgoat_test_SN5659__cal_impl.SineWave4_Freq
+      speedgoat_test_SN5659__cal_impl.SineWave4_HCos
+      speedgoat_test_SN5659__cal_impl.SineWave4_Hsin
+      speedgoat_test_SN5659__cal_impl.SineWave4_PCos
+      speedgoat_test_SN5659__cal_impl.SineWave4_PSin
+      speedgoat_test_SN5659__cal_impl.SineWave5_Amp
+      speedgoat_test_SN5659__cal_impl.SineWave5_Bias
+      speedgoat_test_SN5659__cal_impl.SineWave5_Freq
+      speedgoat_test_SN5659__cal_impl.SineWave5_HCos
+      speedgoat_test_SN5659__cal_impl.SineWave5_Hsin
+      speedgoat_test_SN5659__cal_impl.SineWave5_PCos
+      speedgoat_test_SN5659__cal_impl.SineWave5_PSin
+      speedgoat_test_SN5659__cal_impl.SineWave_Amp
+      speedgoat_test_SN5659__cal_impl.SineWave_Bias
+      speedgoat_test_SN5659__cal_impl.SineWave_Freq
+      speedgoat_test_SN5659__cal_impl.SineWave_HCos
+      speedgoat_test_SN5659__cal_impl.SineWave_Hsin
+      speedgoat_test_SN5659__cal_impl.SineWave_PCos
+      speedgoat_test_SN5659__cal_impl.SineWave_PSin
+    /end REF_CHARACTERISTIC
+    /begin REF_MEASUREMENT
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack1
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack1_o
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack2
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack2_j
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack_c
+      speedgoat_test_SN5659_R2021b_IO612_B.RXSampleTime
+      speedgoat_test_SN5659_R2021b_IO612_B.RXSampleTime1
+      speedgoat_test_SN5659_R2021b_IO612_B.SineWave
+      speedgoat_test_SN5659_R2021b_IO612_B.SineWave1
+      speedgoat_test_SN5659_R2021b_IO612_B.SineWave2
+      speedgoat_test_SN5659_R2021b_IO612_B.SineWave3
+      speedgoat_test_SN5659_R2021b_IO612_B.SineWave4
+      speedgoat_test_SN5659_R2021b_IO612_B.SineWave5
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANPack1_ModeSignalID
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANPack2_ModeSignalID
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANPack3_ModeSignalID
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANPack4_ModeSignalID
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANPack5_ModeSignalID
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANPack_ModeSignalID
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANWrite1_PWORK
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANWrite2_PWORK
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANWrite3_PWORK
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANWrite4_PWORK
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANWrite5_PWORK
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANWrite_PWORK
+      speedgoat_test_SN5659_R2021b_IO612_DW.Scope_PWORK
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastCos
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastCos_b
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastCos_c
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastCos_g
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastCos_i
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastCos_j
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastSin
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastSin_c
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastSin_cd
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastSin_d
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastSin_h
+      speedgoat_test_SN5659_R2021b_IO612_DW.lastSin_i
+      speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable
+      speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable_b
+      speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable_h
+      speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable_i
+      speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable_p
+      speedgoat_test_SN5659_R2021b_IO612_DW.systemEnable_py
+    /end REF_MEASUREMENT
+  /end GROUP
+
+  /begin GROUP speedgoat_test_SN5659_R2021b_IO612_IO612_CAN_Read_Loop___Port_3 "speedgoat_test_SN5659_R2021b_IO612/IO612/CAN Read Loop - Port 3"  
+    /begin REF_CHARACTERISTIC
+      speedgoat_test_SN5659__cal_impl.CANRead_P1
+      speedgoat_test_SN5659__cal_impl.CANRead_P2
+      speedgoat_test_SN5659__cal_impl.CANRead_P3
+      speedgoat_test_SN5659__cal_impl.CANRead_P4
+      speedgoat_test_SN5659__cal_impl.CANRead_P5
+      speedgoat_test_SN5659__cal_impl.CANRead_P6
+      speedgoat_test_SN5659__cal_impl.CANRead_P7
+      speedgoat_test_SN5659__cal_impl.ID100_Signal1_Y0
+      speedgoat_test_SN5659__cal_impl.ID101_Signal1_Y0
+      speedgoat_test_SN5659__cal_impl.ID102_Signal1_Y0
+    /end REF_CHARACTERISTIC
+    /begin REF_MEASUREMENT
+      speedgoat_test_SN5659_R2021b_IO612_B.CANRead_o1
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack1_o
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack2_j
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack_c
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack1_ModeSignalID_i
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack1_StatusPortID_o
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack2_ModeSignalID_g
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack2_StatusPortID_m
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack_ModeSignalID_b
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack_StatusPortID_g
+    /end REF_MEASUREMENT
+  /end GROUP
+
+  /begin GROUP speedgoat_test_SN5659_R2021b_IO612_IO612_CAN_Read_Loop___Port_4 "speedgoat_test_SN5659_R2021b_IO612/IO612/CAN Read Loop - Port 4"  
+    /begin REF_CHARACTERISTIC
+      speedgoat_test_SN5659__cal_impl.CANRead1_P1
+      speedgoat_test_SN5659__cal_impl.CANRead1_P2
+      speedgoat_test_SN5659__cal_impl.CANRead1_P3
+      speedgoat_test_SN5659__cal_impl.CANRead1_P4
+      speedgoat_test_SN5659__cal_impl.CANRead1_P5
+      speedgoat_test_SN5659__cal_impl.CANRead1_P6
+      speedgoat_test_SN5659__cal_impl.CANRead1_P7
+      speedgoat_test_SN5659__cal_impl.ID100_Signal1_Y0_j
+      speedgoat_test_SN5659__cal_impl.ID101_Signal1_Y0_o
+      speedgoat_test_SN5659__cal_impl.ID102_Signal1_Y0_i
+    /end REF_CHARACTERISTIC
+    /begin REF_MEASUREMENT
+      speedgoat_test_SN5659_R2021b_IO612_B.CANRead1_o1
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack1
+      speedgoat_test_SN5659_R2021b_IO612_B.CANUnpack2
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack1_ModeSignalID
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack1_StatusPortID
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack2_ModeSignalID
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack2_StatusPortID
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack_ModeSignalID
+      speedgoat_test_SN5659_R2021b_IO612_DW.CANUnpack_StatusPortID
+    /end REF_MEASUREMENT
+  /end GROUP
+
+  /end MODULE
+
+/end PROJECT
+
