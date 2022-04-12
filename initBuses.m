@@ -10,3 +10,8 @@ FCC1_ACExxxA_C1_A = strcat(envFolder,'FCC1_ACExxxA_C1_A.mat');
 FCC2_ACExxxA_M_A = strcat(envFolder,'FCC2_ACExxxA_M_A.mat');
 % Loading design buses
 COCKPIT_INCEPTORS = strcat(designFolder,'COCKPIT_INCEPTORS.mat');
+ACTUATION_STATE = strcat(designFolder,'ACTUATION_STATE.mat');
+FCC1_SEMACEx_OUTER_C1 = strcat(designFolder,'FCC1_SEMACEx_OUTER_C1.mat');
+FCC1_SEMACEx_INNER_C1 = strcat(designFolder,'FCC1_SEMACEx_INNER_C1.mat');
+FCC2_SEMACEx_OUTER_M = strcat(designFolder,'FCC2_SEMACEx_OUTER_M.mat');
+FCC2_SEMACEx_INNER_M = strcat(designFolder,'FCC2_SEMACEx_INNER_M.mat');
