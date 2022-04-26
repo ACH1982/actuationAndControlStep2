@@ -21,6 +21,12 @@ AEMACE10_TEST = strcat(designFolder,'AEMACE10_TEST.mat');
 AEMACE10_OUTPUT = strcat(designFolder,'AEMACE10_OUTPUT.mat');
 SEMACE1_TEST = strcat(designFolder,'SEMACE1_TEST.mat');
 SEMACE1_OUTPUT = strcat(designFolder,'SEMACE1_OUTPUT.mat');
+SEMACE2_TEST = strcat(designFolder,'SEMACE2_TEST.mat');
+SEMACE2_OUTPUT = strcat(designFolder,'SEMACE2_OUTPUT.mat');
+SEMACE3_TEST = strcat(designFolder,'SEMACE3_TEST.mat');
+SEMACE3_OUTPUT = strcat(designFolder,'SEMACE3_OUTPUT.mat');
+SEMACE4_TEST = strcat(designFolder,'SEMACE4_TEST.mat');
+SEMACE4_OUTPUT = strcat(designFolder,'SEMACE4_OUTPUT.mat');
 % Loading environment buses
 load(ACE9C_ACE8x_9C);
 load(ACE11C_ACE10x_11C);
@@ -42,4 +48,10 @@ load(AEMACE10_TEST);
 load(AEMACE10_OUTPUT);
 load(SEMACE1_TEST);
 load(SEMACE1_OUTPUT);
+load(SEMACE2_TEST);
+load(SEMACE2_OUTPUT);
+load(SEMACE3_TEST);
+load(SEMACE3_OUTPUT);
+load(SEMACE4_TEST);
+load(SEMACE4_OUTPUT);
 % -------------------------------------------------------------------------
