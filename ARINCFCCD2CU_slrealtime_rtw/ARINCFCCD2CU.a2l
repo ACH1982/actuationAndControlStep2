@@ -1,0 +1,2877 @@
+﻿/******************************************************************************
+ *
+ *  ASAP2 file:     ARINCFCCD2CU.a2l
+ *
+ * 
+ *
+ * Code generation for model "ARINCFCCD2CU".
+ *
+ * Model version              : 1.38
+ * Simulink Coder version : 10.4 R2021b
+ * C source code generated on : Tue May 17 10:44:47 2022
+ *
+ * Target selection: slrealtime.tlc
+ * Embedded hardware selection: Intel->x86-64 (Linux 64)
+ * Code generation objectives: Unspecified
+ * Validation result: Not run
+ *
+ * (add additional file header information here)
+ *
+ ******************************************************************************/
+ASAP2_VERSION  1 71  
+/begin PROJECT ProjectName "Project Comment Goes Here"
+
+  /begin HEADER "Header Comments go here"
+
+  /end HEADER
+
+  /begin MODULE ModuleName  "Module Comment Goes Here"
+
+    /begin A2ML
+
+      struct Protocol_Layer {
+        uint;  /* XCP protocol layer version, current 0x100 */
+        uint;  /* T1 [ms] */
+        uint;  /* T2 [ms] */
+        uint;  /* T3 [ms] */
+        uint;  /* T4 [ms] */
+        uint;  /* T5 [ms] */
+        uint;  /* T6 [ms] */
+        uint;  /* T7 [ms] */
+        uchar;  /* MAX_CTO */
+        uint;  /* MAX_DTO */
+        enum {
+          "BYTE_ORDER_MSB_LAST" = 0,
+          "BYTE_ORDER_MSB_FIRST" = 1
+        };
+        enum {
+          "ADDRESS_GRANULARITY_BYTE" = 1,
+          "ADDRESS_GRANULARITY_WORD" = 2,
+          "ADDRESS_GRANULARITY_DWORD" = 4
+        };
+        taggedstruct {
+          ("OPTIONAL_CMD" enum {
+            "GET_COMM_MODE_INFO" = 251,
+            "GET_ID" = 250,
+            "SET_REQUEST" = 249,
+            "GET_SEED" = 248,
+            "UNLOCK" = 247,
+            "SET_MTA" = 246,
+            "UPLOAD" = 245,
+            "SHORT_UPLOAD" = 244,
+            "BUILD_CHECKSUM" = 243,
+            "TRANSPORT_LAYER_CMD" = 242,
+            "USER_CMD" = 241,
+            "DOWNLOAD" = 240,
+            "DOWNLOAD_NEXT" = 239,
+            "DOWNLOAD_MAX" = 238,
+            "SHORT_DOWNLOAD" = 237,
+            "MODIFY_BITS" = 236,
+            "SET_CAL_PAGE" = 235,
+            "GET_CAL_PAGE" = 234,
+            "GET_PAG_PROCESSOR_INFO" = 233,
+            "GET_SEGMENT_INFO" = 232,
+            "GET_PAGE_INFO" = 231,
+            "SET_SEGMENT_MODE" = 230,
+            "GET_SEGMENT_MODE" = 229,
+            "COPY_CAL_PAGE" = 228,
+            "CLEAR_DAQ_LIST" = 227,
+            "SET_DAQ_PTR" = 226,
+            "WRITE_DAQ" = 225,
+            "SET_DAQ_LIST_MODE" = 224,
+            "GET_DAQ_LIST_MODE" = 223,
+            "START_STOP_DAQ_LIST" = 222,
+            "START_STOP_SYNCH" = 221,
+            "GET_DAQ_CLOCK" = 220,
+            "READ_DAQ" = 219,
+            "GET_DAQ_PROCESSOR_INFO" = 218,
+            "GET_DAQ_RESOLUTION_INFO" = 217,
+            "GET_DAQ_LIST_INFO" = 216,
+            "GET_DAQ_EVENT_INFO" = 215,
+            "FREE_DAQ" = 214,
+            "ALLOC_DAQ" = 213,
+            "ALLOC_ODT" = 212,
+            "ALLOC_ODT_ENTRY" = 211,
+            "PROGRAM_START" = 210,
+            "PROGRAM_CLEAR" = 209,
+            "PROGRAM" = 208,
+            "PROGRAM_RESET" = 207,
+            "GET_PGM_PROCESSOR_INFO" = 206,
+            "GET_SECTOR_INFO" = 205,
+            "PROGRAM_PREPARE" = 204,
+            "PROGRAM_FORMAT" = 203,
+            "PROGRAM_NEXT" = 202,
+            "PROGRAM_MAX" = 201,
+            "PROGRAM_VERIFY" = 200
+          })*;
+          "COMMUNICATION_MODE_SUPPORTED" taggedunion {
+            "BLOCK" taggedstruct {
+              "SLAVE" ;
+              "MASTER" struct {
+                uchar;  /* MAX_BS */
+                uchar;  /* MIN_ST */
+              };
+            };
+            "INTERLEAVED" uchar;  /* QUEUE_SIZE */
+          };
+          "SEED_AND_KEY_EXTERNAL_FUNCTION" char[256];  /* Name of the Seed&Key function */
+        };
+      };
+
+      struct Daq {
+        enum {
+          "STATIC" = 0,
+          "DYNAMIC" = 1
+        };
+        uint;  /* MAX_DAQ */
+        uint;  /* MAX_EVENT_CHANNEL */
+        uchar;  /* MIN_DAQ */
+        enum {
+          "OPTIMISATION_TYPE_DEFAULT" = 0,
+          "OPTIMISATION_TYPE_ODT_TYPE_16" = 1,
+          "OPTIMISATION_TYPE_ODT_TYPE_32" = 2,
+          "OPTIMISATION_TYPE_ODT_TYPE_64" = 3,
+          "OPTIMISATION_TYPE_ODT_TYPE_ALIGNMENT" = 4,
+          "OPTIMISATION_TYPE_MAX_ENTRY_SIZE" = 5
+        };
+        enum {
+          "ADDRESS_EXTENSION_FREE" = 0,
+          "ADDRESS_EXTENSION_ODT" = 1,
+          "ADDRESS_EXTENSION_DAQ" = 3
+        };
+        enum {
+          "IDENTIFICATION_FIELD_TYPE_ABSOLUTE" = 0,
+          "IDENTIFICATION_FIELD_TYPE_RELATIVE_BYTE" = 1,
+          "IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD" = 2,
+          "IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED" = 3
+        };
+        enum {
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE" = 1,
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_WORD" = 2,
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_DWORD" = 4,
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_DLONG" = 8
+        };
+        uchar;  /* MAX_ODT_ENTRY_SIZE_DAQ */
+        enum {
+          "NO_OVERLOAD_INDICATION" = 0,
+          "OVERLOAD_INDICATION_PID" = 1,
+          "OVERLOAD_INDICATION_EVENT" = 2
+        };
+        taggedstruct {
+          "PRESCALER_SUPPORTED" ;
+          "RESUME_SUPPORTED" ;
+          block "STIM" struct {
+            enum {
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE" = 1,
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_WORD" = 2,
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_DWORD" = 4,
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_DLONG" = 8
+            };
+            uchar;  /* MAX_ODT_ENTRY_SIZE_STIM */
+            taggedstruct {
+              "BIT_STIM_SUPPORTED" ;
+            };
+          };
+          block "TIMESTAMP_SUPPORTED" struct {
+            uint;  /* TIMESTAMP_TICKS */
+            enum {
+              "NO_TIME_STAMP" = 0,
+              "SIZE_BYTE" = 1,
+              "SIZE_WORD" = 2,
+              "SIZE_DWORD" = 4
+            };
+            enum {
+              "UNIT_1NS" = 0,
+              "UNIT_10NS" = 1,
+              "UNIT_100NS" = 2,
+              "UNIT_1US" = 3,
+              "UNIT_10US" = 4,
+              "UNIT_100US" = 5,
+              "UNIT_1MS" = 6,
+              "UNIT_10MS" = 7,
+              "UNIT_100MS" = 8,
+              "UNIT_1S" = 9
+            };
+            taggedstruct {
+              "TIMESTAMP_FIXED" ;
+            };
+          };
+          "PID_OFF_SUPPORTED" ;
+          (block "DAQ_LIST" struct {
+            uint;  /* DAQ_LIST_NUMBER */
+            taggedstruct {
+              "DAQ_LIST_TYPE" enum {
+                "DAQ" = 1,
+                "STIM" = 2,
+                "DAQ_STIM" = 3
+              };
+              "MAX_ODT" uchar;
+              "MAX_ODT_ENTRIES" uchar;
+              "FIRST_PID" uchar;
+              "EVENT_FIXED" uint;
+              block "PREDEFINED" taggedstruct {
+                (block "ODT" struct {
+                  uchar;  /* ODT number */
+                  taggedstruct {
+                    ("ODT_ENTRY" struct {
+                      uchar;  /* ODT_ENTRY number */
+                      ulong;  /* address of element */
+                      uchar;  /* address extension of element */
+                      uchar;  /* size of element [AG] */
+                      uchar;  /* BIT_OFFSET */
+                    })*;
+                  };
+                })*;
+              };
+            };
+          })*;
+          (block "EVENT" struct {
+            char[101];  /* EVENT_CHANNEL_NAME       */
+            char[9];  /* EVENT_CHANNEL_SHORT_NAME */
+            uint;  /* EVENT_CHANNEL_NUMBER     */
+            enum {
+              "DAQ" = 1,
+              "STIM" = 2,
+              "DAQ_STIM" = 3
+            };
+            uchar;  /* MAX_DAQ_LIST */
+            uchar;  /* TIME_CYCLE   */
+            uchar;  /* TIME_UNIT    */
+            uchar;  /* PRIORITY     */
+          })*;
+        };
+      };
+
+      taggedunion Daq_Event {
+        "FIXED_EVENT_LIST" taggedstruct {
+          ("EVENT" uint)*;
+        };
+        "VARIABLE" taggedstruct {
+          block "AVAILABLE_EVENT_LIST" taggedstruct {
+            ("EVENT" uint)*;
+          };
+          block "DEFAULT_EVENT_LIST" taggedstruct {
+            ("EVENT" uint)*;
+          };
+        };
+      };
+
+      struct Pag {
+        uchar;  /* MAX_SEGMENTS */
+        taggedstruct {
+          "FREEZE_SUPPORTED" ;
+        };
+      };
+
+      struct Pgm {
+        enum {
+          "PGM_MODE_ABSOLUTE" = 1,
+          "PGM_MODE_FUNCTIONAL" = 2,
+          "PGM_MODE_ABSOLUTE_AND_FUNCTIONAL" = 3
+        };
+        uchar;  /* MAX_SECTORS */
+        uchar;  /* MAX_CTO_PGM */
+        taggedstruct {
+          (block "SECTOR" struct {
+            char[101];  /* SECTOR_NAME */
+            uchar;  /* SECTOR_NUMBER */
+            ulong;  /* Address */
+            ulong;  /* Length  */
+            uchar;  /* CLEAR_SEQUENCE_NUMBER */
+            uchar;  /* PROGRAM_SEQUENCE_NUMBER */
+            uchar;  /* PROGRAM_METHOD */
+          })*;
+          "COMMUNICATION_MODE_SUPPORTED" taggedunion {
+            "BLOCK" taggedstruct {
+              "SLAVE" ;
+              "MASTER" struct {
+                uchar;  /* MAX_BS_PGM */
+                uchar;  /* MIN_ST_PGM */
+              };
+            };
+            "INTERLEAVED" uchar;  /* QUEUE_SIZE_PGM */
+          };
+        };
+      };
+
+      struct Segment {
+        uchar;  /* SEGMENT_NUMBER */
+        uchar;  /* number of pages */
+        uchar;  /* ADDRESS_EXTENSION */
+        uchar;  /* COMPRESSION_METHOD */
+        uchar;  /* ENCRYPTION_METHOD */
+        taggedstruct {
+          block "CHECKSUM" struct {
+            enum {
+              "XCP_ADD_11" = 1,
+              "XCP_ADD_12" = 2,
+              "XCP_ADD_14" = 3,
+              "XCP_ADD_22" = 4,
+              "XCP_ADD_24" = 5,
+              "XCP_ADD_44" = 6,
+              "XCP_CRC_16" = 7,
+              "XCP_CRC_16_CITT" = 8,
+              "XCP_CRC_32" = 9,
+              "XCP_USER_DEFINED" = 255
+            };
+            taggedstruct {
+              "MAX_BLOCK_SIZE" ulong;
+              "EXTERNAL_FUNCTION" char[256];  /* Name of the Checksum.DLL */
+            };
+          };
+          (block "PAGE" struct {
+            uchar;  /* PAGE_NUMBER */
+            enum {
+              "ECU_ACCESS_NOT_ALLOWED" = 0,
+              "ECU_ACCESS_WITHOUT_XCP_ONLY" = 1,
+              "ECU_ACCESS_WITH_XCP_ONLY" = 2,
+              "ECU_ACCESS_DONT_CARE" = 3
+            };
+            enum {
+              "XCP_READ_ACCESS_NOT_ALLOWED" = 0,
+              "XCP_READ_ACCESS_WITHOUT_ECU_ONLY" = 1,
+              "XCP_READ_ACCESS_WITH_ECU_ONLY" = 2,
+              "XCP_READ_ACCESS_DONT_CARE" = 3
+            };
+            enum {
+              "XCP_WRITE_ACCESS_NOT_ALLOWED" = 0,
+              "XCP_WRITE_ACCESS_WITHOUT_ECU_ONLY" = 1,
+              "XCP_WRITE_ACCESS_WITH_ECU_ONLY" = 2,
+              "XCP_WRITE_ACCESS_DONT_CARE" = 3
+            };
+            taggedstruct {
+              "INIT_SEGMENT" uchar;  /* references segment that initialises this page */
+            };
+          })*;
+          (block "ADDRESS_MAPPING" struct {
+            ulong;  /* source address */
+            ulong;  /* destination address */
+            ulong;  /* length */
+          })*;
+          "PGM_VERIFY" ulong;  /* verification value for PGM */
+        };
+      };
+
+      taggedstruct Common_Parameters {
+        block "PROTOCOL_LAYER" struct Protocol_Layer;
+        block "SEGMENT" struct Segment;
+        block "DAQ" struct Daq;
+        block "PAG" struct Pag;
+        block "PGM" struct Pgm;
+        block "DAQ_EVENT" taggedunion Daq_Event;
+      };
+
+      struct CAN_Parameters {
+        uint;  /* XCP on CAN version, currentl 0x0100 */
+        taggedstruct {
+          "CAN_ID_BROADCAST" ulong;  /* Auto-detection CAN-ID */
+          "CAN_ID_MASTER" ulong;  /* CMD/STIM CAN-ID */
+          "CAN_ID_SLAVE" ulong;  /* RES/ERR/EV/SERV/DAQ CAN-ID */
+          "BAUDRATE" ulong;  /* Baudrate in Hz */
+          "SAMPLE_POINT" uchar;  /* Sample point in  of bit time */
+          "SAMPLE_RATE" enum {
+            "SINGLE" = 1,
+            "TRIPLE" = 3
+          };
+          "BTL_CYCLES" uchar;  /* slots per bit time */
+          "SJW" uchar;
+          "SYNC_EDGE" enum {
+            "SINGLE" = 1,
+            "DUAL" = 2
+          };
+          "MAX_DLC_REQUIRED" ;  /* master to slave frames */
+          (block "DAQ_LIST_CAN_ID" struct {
+            uint;  /* reference to DAQ_LIST_NUMBER */
+            taggedstruct {
+              "VARIABLE" ;
+              "FIXED" ulong;  /* this DAQ_LIST always on this CAN_ID */
+            };
+          })*;
+        };
+      };
+
+      struct SxI_Parameters {
+        uint;  /* XCP on SxI version, currently 0x0100 */
+        ulong;  /* BAUDRATE [Hz] */
+        taggedstruct {
+          "ASYNCH_FULL_DUPLEX_MODE" struct {
+            enum {
+              "PARITY_NONE" = 0,
+              "PARITY_ODD" = 1,
+              "PARITY_EVEN" = 2
+            };
+            enum {
+              "ONE_STOP_BIT" = 1,
+              "TWO_STOP_BITS" = 2
+            };
+          };
+          "SYNCH_FULL_DUPLEX_MODE_BYTE" ;
+          "SYNCH_FULL_DUPLEX_MODE_WORD" ;
+          "SYNCH_FULL_DUPLEX_MODE_DWORD" ;
+          "SYNCH_MASTER_SLAVE_MODE_BYTE" ;
+          "SYNCH_MASTER_SLAVE_MODE_WORD" ;
+          "SYNCH_MASTER_SLAVE_MODE_DWORD" ;
+        };
+        enum {
+          "HEADER_LEN_BYTE" = 0,
+          "HEADER_LEN_CTR_BYTE" = 1,
+          "HEADER_LEN_FILL_BYTE" = 2,
+          "HEADER_LEN_WORD" = 3,
+          "HEADER_LEN_CTR_WORD" = 4,
+          "HEADER_LEN_FILL_WORD" = 5
+        };
+        enum {
+          "NO_CHECKSUM" = 0,
+          "CHECKSUM_BYTE" = 1,
+          "CHECKSUM_WORD" = 2
+        };
+      };
+
+      struct TCP_IP_Parameters {
+        uint;  /* XCP on TCP_IP version, currently 0x0100 */
+        uint;  /* PORT */
+        taggedunion {
+          "HOST_NAME" char[256];
+          "ADDRESS" char[15];
+        };
+      };
+
+      struct UDP_Parameters {
+        uint;  /* XCP on UDP version, currently 0x0100 */
+        uint;  /* PORT */
+        taggedunion {
+          "HOST_NAME" char[256];
+          "ADDRESS" char[15];
+        };
+      };
+
+      struct ep_parameters {
+        uchar;  /* ENDPOINT_NUMBER, not endpoint address */
+        enum {
+          "BULK_TRANSFER" = 2,
+          "INTERRUPT_TRANSFER" = 3
+        };
+        uint;  /* wMaxPacketSize: Maximum packet  
+ size of endpoint in bytes       */
+        uchar;  /* bInterval: polling of endpoint  */
+        enum {
+          "MESSAGE_PACKING_SINGLE" = 0,
+          "MESSAGE_PACKING_MULTIPLE" = 1,
+          "MESSAGE_PACKING_STREAMING" = 2
+        };
+        enum {
+          "ALIGNMENT_8_BIT" = 0,
+          "ALIGNMENT_16_BIT" = 1,
+          "ALIGNMENT_32_BIT" = 2,
+          "ALIGNMENT_64_BIT" = 3
+        };
+        taggedstruct {
+          "RECOMMENDED_HOST_BUFSIZE" uint;  /* Recommended size for the host 
+ buffer size. The size is defined
+ as multiple of wMaxPacketSize.  */
+        };
+      };  /* end of ep_parameters */
+
+      struct USB_Parameters {
+        uint;  /* XCP on USB version  
+ e.g. "1.0" = 0x0100 */
+        uint;  /* Vendor ID                       */
+        uint;  /* Product ID                      */
+        uchar;  /* Number of interface             */
+        enum {
+          "HEADER_LEN_BYTE" = 0,
+          "HEADER_LEN_CTR_BYTE" = 1,
+          "HEADER_LEN_FILL_BYTE" = 2,
+          "HEADER_LEN_WORD" = 3,
+          "HEADER_LEN_CTR_WORD" = 4,
+          "HEADER_LEN_FILL_WORD" = 5
+        };
+        taggedunion {
+          block "OUT_EP_CMD_STIM" struct ep_parameters;
+        };
+        taggedunion {
+          block "IN_EP_RESERR_DAQ_EVSERV" struct ep_parameters;
+        };
+        taggedstruct {
+          "ALTERNATE_SETTING_NO" uchar;  /* Number of alternate setting   */
+          "INTERFACE_STRING_DESCRIPTOR" char[101];
+          (block "OUT_EP_ONLY_STIM" struct ep_parameters)*;
+          (block "IN_EP_ONLY_DAQ" struct ep_parameters)*;
+          block "IN_EP_ONLY_EVSERV" struct ep_parameters;
+          (block "DAQ_LIST_USB_ENDPOINT" struct {
+            uint;  /* reference to DAQ_LIST_NUMBER          */
+            taggedstruct {
+              "FIXED_IN" uchar;  /* this DAQ list always                
+ ENDPOINT_NUMBER, not endpoint address */
+              "FIXED_OUT" uchar;  /* this STIM list always               
+ ENDPOINT_NUMBER, not endpoint address */
+            };
+          })*;  /* end of DAQ_LIST_USB_ENDPOINT */
+        };  /* end of optional */
+      };
+
+      struct SIMULINK_Parameters {
+        taggedstruct {
+          "MODEL_NAME" char[64];
+        };
+      };
+
+      enum packet_assignment_type {
+        "NOT_ALLOWED" = 0,
+        "FIXED" = 1,
+        "VARIABLE_INITIALISED" = 2,
+        "VARIABLE" = 3
+      };  /* end of packet_assignment_type */
+
+      struct buffer {
+        uchar;  /* FLX_BUF */
+        taggedstruct {
+          "MAX_FLX_LEN_BUF" taggedunion {
+            "FIXED" uchar;  /* constant value */
+            "VARIABLE" uchar;  /* initial value */
+          };  /* end of MAX_FLX_LEN_BUF */
+          block "LPDU_ID" taggedstruct {
+            "FLX_SLOT_ID" taggedunion {
+              "FIXED" uint;
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" uint;
+              };
+            };  /* end of FLX_SLOT_ID */
+            "OFFSET" taggedunion {
+              "FIXED" uchar;
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" uchar;
+              };
+            };  /* end of OFFSET */
+            "CYCLE_REPETITION" taggedunion {
+              "FIXED" uchar;
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" uchar;
+              };
+            };  /* end of CYCLE_REPETITION */
+            "CHANNEL" taggedunion {
+              "FIXED" enum {
+                "A" = 0,
+                "B" = 1
+              };
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" enum {
+                  "A" = 0,
+                  "B" = 1
+                };
+              };
+            };  /* end of CHANNEL */
+          };  /* end of LPDU_ID */
+          block "XCP_PACKET" taggedstruct {
+            "CMD" enum packet_assignment_type;  /* end of CMD     */
+            "RES_ERR" enum packet_assignment_type;  /* end of RES_ERR */
+            "EV_SERV" enum packet_assignment_type;  /* end of EV_SERV */
+            "DAQ" enum packet_assignment_type;  /* end of DAQ     */
+            "STIM" enum packet_assignment_type;  /* end of STIM    */
+          };  /* end of XCP_PACKET */
+        };
+      };  /* end of buffer */
+
+      struct FLX_Parameters {
+
+        uint;              /* XCP on FlexRay version  */
+                           /* e.g. "1.0" = 0x0100 */
+
+        uint;              /* T1_FLX [ms] */
+
+        char[256];         /* FIBEX-file */
+                           /* including CHI information */
+                           /* including extension */
+                           /* without path */
+
+        char[256];         /* Cluster-ID */
+
+        uchar;             /* NAX */
+
+        enum { 
+          "HEADER_NAX"              = 0,
+          "HEADER_NAX_FILL"         = 1,
+          "HEADER_NAX_CTR"          = 2,
+          "HEADER_NAX_FILL3"        = 3,
+          "HEADER_NAX_CTR_FILL2"    = 4,
+          "HEADER_NAX_LEN"          = 5,
+          "HEADER_NAX_CTR_LEN"      = 6,
+          "HEADER_NAX_FILL2_LEN"    = 7,
+          "HEADER_NAX_CTR_FILL_LEN" = 8
+        };
+        enum {
+          "PACKET_ALIGNMENT_8" = 0,
+          "PACKET_ALIGNMENT_16" = 1,
+          "PACKET_ALIGNMENT_32" = 2
+        };
+        taggedunion {
+          block "INITIAL_CMD_BUFFER" struct buffer;
+        };
+        taggedunion {
+          block "INITIAL_RES_ERR_BUFFER" struct buffer;
+        };
+        taggedstruct {
+          (block "POOL_BUFFER" struct buffer)*;
+        };
+      };
+
+      block "IF_DATA" taggedunion if_data {
+
+        "CANAPE_EXT" struct {
+          int;             /* version number */
+          taggedstruct {
+            "LINK_MAP" struct {
+              char[256];   /* segment name */
+              long;        /* base address of the segment */
+              uint;        /* address extension of the segment */
+              uint;        /* flag: address is relative to DS */
+              long;        /* offset of the segment address */
+              uint;        /* datatypValid */
+              uint;        /* enum datatyp */
+              uint;        /* bit offset of the segment */
+            };
+            "DISPLAY" struct {
+              long;        /* display color */
+              double;      /* minimal display value (phys)*/
+              double;      /* maximal display value (phys)*/
+            };
+            "VIRTUAL_CONVERSION" struct {
+              char[256];   /* name of the conversion formula */
+            };
+          };
+        };
+        "CANAPE_MODULE" struct {
+          taggedstruct {
+            ("RECORD_LAYOUT_STEPSIZE" struct {
+              char[256];   /* name of record layout*/
+              uint;        /* stepsize for FNC_VALUES */
+              uint;        /* stepsize for AXIS_PTS_X */
+              uint;        /* stepsize for AXIS_PTS_Y */
+              uint;        /* stepsize for AXIS_PTS_Z */
+              uint;        /* stepsize for AXIS_PTS_4 */
+              uint;        /* stepsize for AXIS_PTS_5 */
+            })*;
+          };
+        };
+        /*********************************************************/
+        /*   XCP                                                 */
+        /*********************************************************/
+        "XCP" struct {
+          taggedstruct Common_Parameters;  /* default parameters */
+          taggedstruct {
+            block "XCP_ON_CAN" struct {
+              struct CAN_Parameters;  /* specific for CAN */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_SxI" struct {
+              struct SxI_Parameters;  /* specific for SxI */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_TCP_IP" struct {
+              struct TCP_IP_Parameters;  /* specific for TCP_IP */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_UDP_IP" struct {
+              struct UDP_Parameters;  /* specific for UDP */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_USB" struct {
+              struct USB_Parameters;  /* specific for USB      */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_FLX" struct {
+              struct FLX_Parameters;  /* specific for FlexRay  */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+          };
+        };
+      };
+
+    /end A2ML
+
+
+
+    /begin IF_DATA XCP
+      
+      
+      /begin PROTOCOL_LAYER
+        0x0100
+        0x03E8
+        0x00C8
+        0x0000
+        0x0000
+        0x0000
+        0x0000
+        0x0000
+        0xFC
+        0x0578
+        BYTE_ORDER_MSB_LAST
+        ADDRESS_GRANULARITY_BYTE
+        OPTIONAL_CMD ALLOC_ODT_ENTRY
+        OPTIONAL_CMD ALLOC_ODT
+        OPTIONAL_CMD ALLOC_DAQ
+        OPTIONAL_CMD FREE_DAQ
+        OPTIONAL_CMD GET_DAQ_RESOLUTION_INFO
+        OPTIONAL_CMD GET_DAQ_PROCESSOR_INFO
+        OPTIONAL_CMD START_STOP_SYNCH
+        OPTIONAL_CMD START_STOP_DAQ_LIST
+        OPTIONAL_CMD SET_DAQ_LIST_MODE
+        OPTIONAL_CMD WRITE_DAQ
+        OPTIONAL_CMD SET_DAQ_PTR
+        OPTIONAL_CMD GET_CAL_PAGE
+        OPTIONAL_CMD SET_CAL_PAGE
+        OPTIONAL_CMD COPY_CAL_PAGE
+        OPTIONAL_CMD SHORT_DOWNLOAD
+        OPTIONAL_CMD DOWNLOAD_MAX
+        OPTIONAL_CMD DOWNLOAD
+        OPTIONAL_CMD SHORT_UPLOAD
+        OPTIONAL_CMD UPLOAD
+        OPTIONAL_CMD SET_MTA
+      /end PROTOCOL_LAYER
+
+      
+      /begin DAQ
+        DYNAMIC
+        0x0000
+        0x0080
+        0x00
+        OPTIMISATION_TYPE_DEFAULT
+        ADDRESS_EXTENSION_FREE
+        IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED
+        GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE
+        0xFF
+        OVERLOAD_INDICATION_PID
+        PRESCALER_SUPPORTED 
+        
+        /begin STIM
+          GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE
+          0xFF
+          
+        /end STIM
+
+        /begin TIMESTAMP_SUPPORTED
+          0x0001
+          SIZE_DWORD
+          UNIT_1US
+          TIMESTAMP_FIXED 
+        /end TIMESTAMP_SUPPORTED
+
+        
+        /begin EVENT
+          "8 ms"
+          "8 ms"
+          0x0000
+          DAQ
+          0xFF
+          0x08
+          0x06
+          0x00
+        /end EVENT
+
+        
+        /begin EVENT
+          "16 ms"
+          "16 ms"
+          0x0001
+          DAQ
+          0xFF
+          0x10
+          0x06
+          0x00
+        /end EVENT
+
+        
+        /begin EVENT
+          "64 ms"
+          "64 ms"
+          0x0002
+          DAQ
+          0xFF
+          0x40
+          0x06
+          0x00
+        /end EVENT
+
+      /end DAQ
+
+      
+      /begin XCP_ON_UDP_IP
+        0x0100
+        0x15B3
+        ADDRESS "192.168.7.2"
+      /end XCP_ON_UDP_IP
+
+    /end IF_DATA
+
+
+
+    /begin MOD_PAR "MOD PAR Comment Goes Here"
+
+       /begin MEMORY_SEGMENT ARINCFCCD2CU_cal_impl
+       "ARINCFCCD2CU_cal_impl"
+       DATA
+       FLASH
+       INTERN
+       0x0080A020
+       0x11D0
+       -1 -1 -1 -1 -1
+       /begin IF_DATA XCP
+         /begin SEGMENT
+            0x00
+            0x02
+            0x00
+            0x00
+            0x00
+            /begin PAGE
+              0x00
+              ECU_ACCESS_DONT_CARE
+              XCP_READ_ACCESS_DONT_CARE
+              XCP_WRITE_ACCESS_NOT_ALLOWED
+            /end PAGE
+            /begin PAGE
+              0x01
+              ECU_ACCESS_DONT_CARE
+              XCP_READ_ACCESS_DONT_CARE
+              XCP_WRITE_ACCESS_DONT_CARE
+            /end PAGE
+          /end SEGMENT
+        /end IF_DATA
+        /end MEMORY_SEGMENT
+
+    /end MOD_PAR
+
+    /begin MOD_COMMON  "Mod Common Comment Here"
+      BYTE_ORDER     MSB_LAST
+      ALIGNMENT_BYTE 1
+      ALIGNMENT_WORD 2
+      ALIGNMENT_LONG 4
+      ALIGNMENT_FLOAT32_IEEE 4
+      ALIGNMENT_FLOAT64_IEEE 8
+      ALIGNMENT_INT64 8
+    /end MOD_COMMON
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock1_P1 ""  
+    VALUE 0x0080A6F8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock1_P2 ""  
+    VALUE 0x0080A700 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock1_P3 ""  
+    VALUE 0x0080B1D8 Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock1_P4 ""  
+    VALUE 0x0080B1D9 Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock1_P5 ""  
+    VALUE 0x0080B1BC Scalar_ULONG 0 ARINCFCCD2CU_CM_uint32 0 2147483646  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock2_P1 ""  
+    VALUE 0x0080A708 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock2_P2 ""  
+    VALUE 0x0080A710 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock2_P3 ""  
+    VALUE 0x0080B1DA Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock2_P4 ""  
+    VALUE 0x0080B1DB Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock2_P5 ""  
+    VALUE 0x0080B1C0 Scalar_ULONG 0 ARINCFCCD2CU_CM_uint32 0 2147483646  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock3_P1 ""  
+    VALUE 0x0080A718 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock3_P2 ""  
+    VALUE 0x0080A720 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock3_P3 ""  
+    VALUE 0x0080B1DC Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock3_P4 ""  
+    VALUE 0x0080B1DD Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.CCCodeBlock3_P5 ""  
+    VALUE 0x0080B1C4 Scalar_ULONG 0 ARINCFCCD2CU_CM_uint32 0 2147483646  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Constant1_Value ""  
+    VALUE 0x0080B1C8 Scalar_ULONG 0 ARINCFCCD2CU_CM_uint32 0 2147483646  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Constant2_Value ""  
+    VALUE 0x0080B1CC Scalar_ULONG 0 ARINCFCCD2CU_CM_uint32 0 2147483646  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Constant6_Value ""  
+    VALUE 0x0080AFF8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Delay1_InitialCondition ""  
+    VALUE 0x0080B1D2 Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Delay2_InitialCondition ""  
+    VALUE 0x0080B1D6 Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Delay3_InitialCondition ""  
+    VALUE 0x0080B1D7 Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Delay4_InitialCondition ""  
+    VALUE 0x0080B1D3 Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Delay5_InitialCondition ""  
+    VALUE 0x0080B1D4 Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Delay6_InitialCondition ""  
+    VALUE 0x0080B1D5 Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Delay7_InitialCondition ""  
+    VALUE 0x0080B1D0 Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Delay_InitialCondition ""  
+    VALUE 0x0080B1D1 Scalar_BOOLEAN 0 ARINCFCCD2CU_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P1 ""  
+    VALUE 0x0080AE90 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P10 ""  
+    VALUE 0x0080AF68 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P11 ""  
+    VAL_BLK 0x0080AF80 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P12 ""  
+    VALUE 0x0080AFA0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P13 ""  
+    VALUE 0x0080AFB8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P14 ""  
+    VALUE 0x0080AFD0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P15 ""  
+    VALUE 0x0080AFE8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P2 ""  
+    VALUE 0x0080AEA8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P3 ""  
+    VALUE 0x0080AEC0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P4 ""  
+    VALUE 0x0080AED8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P5 ""  
+    VALUE 0x0080AEF0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P6 ""  
+    VALUE 0x0080AF08 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P7 ""  
+    VALUE 0x0080AF20 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P8 ""  
+    VALUE 0x0080AF38 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev21_P9 ""  
+    VALUE 0x0080AF50 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P1 ""  
+    VALUE 0x0080A738 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P10 ""  
+    VALUE 0x0080A810 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P11 ""  
+    VAL_BLK 0x0080A828 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P12 ""  
+    VALUE 0x0080A848 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P13 ""  
+    VALUE 0x0080A860 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P14 ""  
+    VALUE 0x0080A878 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P15 ""  
+    VALUE 0x0080A890 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P2 ""  
+    VALUE 0x0080A750 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P3 ""  
+    VALUE 0x0080A768 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P4 ""  
+    VALUE 0x0080A780 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P5 ""  
+    VALUE 0x0080A798 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P6 ""  
+    VALUE 0x0080A7B0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P7 ""  
+    VALUE 0x0080A7C8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P8 ""  
+    VALUE 0x0080A7E0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev22_P9 ""  
+    VALUE 0x0080A7F8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P1 ""  
+    VALUE 0x0080A8A8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P10 ""  
+    VALUE 0x0080A980 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P11 ""  
+    VAL_BLK 0x0080A998 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P12 ""  
+    VALUE 0x0080A9B8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P13 ""  
+    VALUE 0x0080A9D0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P14 ""  
+    VALUE 0x0080A9E8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P15 ""  
+    VALUE 0x0080AA00 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P2 ""  
+    VALUE 0x0080A8C0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P3 ""  
+    VALUE 0x0080A8D8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P4 ""  
+    VALUE 0x0080A8F0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P5 ""  
+    VALUE 0x0080A908 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P6 ""  
+    VALUE 0x0080A920 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P7 ""  
+    VALUE 0x0080A938 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P8 ""  
+    VALUE 0x0080A950 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev23_P9 ""  
+    VALUE 0x0080A968 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P1 ""  
+    VALUE 0x0080AA18 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P10 ""  
+    VALUE 0x0080AAF0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P11 ""  
+    VAL_BLK 0x0080AB08 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P12 ""  
+    VALUE 0x0080AB28 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P13 ""  
+    VALUE 0x0080AB40 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P14 ""  
+    VALUE 0x0080AB58 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P15 ""  
+    VALUE 0x0080AB70 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P2 ""  
+    VALUE 0x0080AA30 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P3 ""  
+    VALUE 0x0080AA48 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P4 ""  
+    VALUE 0x0080AA60 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P5 ""  
+    VALUE 0x0080AA78 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P6 ""  
+    VALUE 0x0080AA90 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P7 ""  
+    VALUE 0x0080AAA8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P8 ""  
+    VALUE 0x0080AAC0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev24_P9 ""  
+    VALUE 0x0080AAD8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P1 ""  
+    VALUE 0x0080AB88 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P10 ""  
+    VALUE 0x0080AC60 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P11 ""  
+    VAL_BLK 0x0080AC78 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P12 ""  
+    VALUE 0x0080AC98 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P13 ""  
+    VALUE 0x0080ACB0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P14 ""  
+    VALUE 0x0080ACC8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P15 ""  
+    VALUE 0x0080ACE0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P2 ""  
+    VALUE 0x0080ABA0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P3 ""  
+    VALUE 0x0080ABB8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P4 ""  
+    VALUE 0x0080ABD0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P5 ""  
+    VALUE 0x0080ABE8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P6 ""  
+    VALUE 0x0080AC00 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P7 ""  
+    VALUE 0x0080AC18 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P8 ""  
+    VALUE 0x0080AC30 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev25_P9 ""  
+    VALUE 0x0080AC48 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P1 ""  
+    VALUE 0x0080AD18 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P10 ""  
+    VALUE 0x0080ADF0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P11 ""  
+    VAL_BLK 0x0080AE08 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P12 ""  
+    VALUE 0x0080AE28 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P13 ""  
+    VALUE 0x0080AE40 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P14 ""  
+    VALUE 0x0080AE58 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P15 ""  
+    VALUE 0x0080AE70 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P2 ""  
+    VALUE 0x0080AD30 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P3 ""  
+    VALUE 0x0080AD48 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P4 ""  
+    VALUE 0x0080AD60 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P5 ""  
+    VALUE 0x0080AD78 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P6 ""  
+    VALUE 0x0080AD90 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P7 ""  
+    VALUE 0x0080ADA8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P8 ""  
+    VALUE 0x0080ADC0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Encodev2_P9 ""  
+    VALUE 0x0080ADD8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain10_Gain ""  
+    VALUE 0x0080B1E5 Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_En2 0.0 63.75  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain11_Gain ""  
+    VALUE 0x0080B1E4 Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_En1 0.0 127.5  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain12_Gain ""  
+    VALUE 0x0080B1E2 Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_E7 0.0 32640  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain13_Gain ""  
+    VALUE 0x0080B1E3 Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_E8 0.0 65280  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain14_Gain ""  
+    VALUE 0x0080B1EA Scalar_UBYTE 0 ARINCFCCD2CU_CM_uint8 0 255  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain15_Gain ""  
+    VALUE 0x0080B1E6 Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_En3 0.0 31.875  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain1_Gain ""  
+    VALUE 0x0080B1E8 Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_En7 0.0 1.9922  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain2_Gain ""  
+    VALUE 0x0080B1B0 Scalar_ULONG 0 ARINCFCCD2CU_CM_ufix32_En21 0.0 2048  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain3_Gain ""  
+    VALUE 0x0080B1B8 Scalar_ULONG 0 ARINCFCCD2CU_CM_ufix32_En30 0.0 4  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain4_Gain ""  
+    VALUE 0x0080B1B4 Scalar_ULONG 0 ARINCFCCD2CU_CM_ufix32_En29 0.0 8  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain5_Gain ""  
+    VALUE 0x0080B1DE Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_E1 0.0 510  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain6_Gain ""  
+    VALUE 0x0080B1E1 Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_E2 0.0 1020  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain7_Gain ""  
+    VALUE 0x0080B1E9 Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_En7 0.0 1.9922  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain8_Gain ""  
+    VALUE 0x0080B1E7 Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_En3 0.0 31.875  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain9_Gain ""  
+    VALUE 0x0080B1DF Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_E1 0.0 510  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Gain_Gain ""  
+    VALUE 0x0080B1E0 Scalar_UBYTE 0 ARINCFCCD2CU_CM_ufix8_E2 0.0 1020  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.PulseGenerator_Amp ""  
+    VALUE 0x0080A550 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.PulseGenerator_Duty ""  
+    VALUE 0x0080A560 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.PulseGenerator_Period ""  
+    VALUE 0x0080A558 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.PulseGenerator_PhaseDelay ""  
+    VALUE 0x0080A568 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.RateTransition1_InitialConditio ""  
+    VALUE 0x0080ACF0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.RateTransition2_InitialConditio ""  
+    VALUE 0x0080ACF8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.RateTransition3_InitialConditio ""  
+    VALUE 0x0080AD00 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.RateTransition4_InitialConditio ""  
+    VALUE 0x0080AFF0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.RateTransition5_InitialConditio ""  
+    VALUE 0x0080AE78 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.RateTransition_InitialCondition ""  
+    VALUE 0x0080ACE8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv31_P1 ""  
+    VALUE 0x0080B178 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv31_P2 ""  
+    VALUE 0x0080B190 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv31_P3 ""  
+    VALUE 0x0080B1A8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv32_P1 ""  
+    VALUE 0x0080B010 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv32_P2 ""  
+    VALUE 0x0080B028 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv32_P3 ""  
+    VALUE 0x0080B040 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv33_P1 ""  
+    VALUE 0x0080B058 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv33_P2 ""  
+    VALUE 0x0080B070 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv33_P3 ""  
+    VALUE 0x0080B088 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv34_P1 ""  
+    VALUE 0x0080B0A0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv34_P2 ""  
+    VALUE 0x0080B0B8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv34_P3 ""  
+    VALUE 0x0080B0D0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv35_P1 ""  
+    VALUE 0x0080B0E8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv35_P2 ""  
+    VALUE 0x0080B100 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv35_P3 ""  
+    VALUE 0x0080B118 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv3_P1 ""  
+    VALUE 0x0080B130 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv3_P2 ""  
+    VALUE 0x0080B148 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Sendv3_P3 ""  
+    VALUE 0x0080B160 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Setupv21_P1 ""  
+    VALUE 0x0080A030 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Setupv21_P2 ""  
+    VALUE 0x0080A048 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Setupv21_P3 ""  
+    VALUE 0x0080A060 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Setupv21_P4 ""  
+    VALUE 0x0080A078 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Setupv21_P5 ""  
+    VALUE 0x0080A090 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Setupv21_P6 ""  
+    VALUE 0x0080A0A8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Setupv21_P7 ""  
+    VAL_BLK 0x0080A0C0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        5 16 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.Setupv21_P8 ""  
+    VAL_BLK 0x0080A350 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        4 16 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave1_Amp ""  
+    VALUE 0x0080A570 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave1_Bias ""  
+    VALUE 0x0080A578 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave1_Freq ""  
+    VALUE 0x0080A580 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave1_HCos ""  
+    VALUE 0x0080A590 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave1_Hsin ""  
+    VALUE 0x0080A588 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave1_PCos ""  
+    VALUE 0x0080A5A0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave1_PSin ""  
+    VALUE 0x0080A598 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave3_Amp ""  
+    VALUE 0x0080A5A8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave3_Bias ""  
+    VALUE 0x0080A5B0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave3_Freq ""  
+    VALUE 0x0080A5B8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave3_HCos ""  
+    VALUE 0x0080A5C8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave3_Hsin ""  
+    VALUE 0x0080A5C0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave3_PCos ""  
+    VALUE 0x0080A5D8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave3_PSin ""  
+    VALUE 0x0080A5D0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave4_Amp ""  
+    VALUE 0x0080A650 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave4_Bias ""  
+    VALUE 0x0080A658 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave4_Freq ""  
+    VALUE 0x0080A660 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave4_HCos ""  
+    VALUE 0x0080A670 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave4_Hsin ""  
+    VALUE 0x0080A668 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave4_PCos ""  
+    VALUE 0x0080A680 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave4_PSin ""  
+    VALUE 0x0080A678 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave5_Amp ""  
+    VALUE 0x0080A618 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave5_Bias ""  
+    VALUE 0x0080A620 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave5_Freq ""  
+    VALUE 0x0080A628 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave5_HCos ""  
+    VALUE 0x0080A638 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave5_Hsin ""  
+    VALUE 0x0080A630 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave5_PCos ""  
+    VALUE 0x0080A648 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave5_PSin ""  
+    VALUE 0x0080A640 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave7_Amp ""  
+    VALUE 0x0080A6C0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave7_Bias ""  
+    VALUE 0x0080A6C8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave7_Freq ""  
+    VALUE 0x0080A6D0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave7_HCos ""  
+    VALUE 0x0080A6E0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave7_Hsin ""  
+    VALUE 0x0080A6D8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave7_PCos ""  
+    VALUE 0x0080A6F0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave7_PSin ""  
+    VALUE 0x0080A6E8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave8_Amp ""  
+    VALUE 0x0080A688 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave8_Bias ""  
+    VALUE 0x0080A690 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave8_Freq ""  
+    VALUE 0x0080A698 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave8_HCos ""  
+    VALUE 0x0080A6A8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave8_Hsin ""  
+    VALUE 0x0080A6A0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave8_PCos ""  
+    VALUE 0x0080A6B8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave8_PSin ""  
+    VALUE 0x0080A6B0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave_Amp ""  
+    VALUE 0x0080A5E0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave_Bias ""  
+    VALUE 0x0080A5E8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave_Freq ""  
+    VALUE 0x0080A5F0 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave_HCos ""  
+    VALUE 0x0080A600 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave_Hsin ""  
+    VALUE 0x0080A5F8 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave_PCos ""  
+    VALUE 0x0080A610 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  ARINCFCCD2CU_cal_impl.SineWave_PSin ""  
+    VALUE 0x0080A608 Scalar_FLOAT64_IEEE 0 ARINCFCCD2CU_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Add ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811ED8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Add1 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EFC
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Add2 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811F0C
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.CCCodeBlock1 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EC0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.CCCodeBlock2 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811ECC
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.CCCodeBlock3 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811F10
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Constant1 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811F18
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Constant2 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811F1C
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Constant6 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E88
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.DataTypeConversion ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E40
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.DataTypeConversion1 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E48
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.DataTypeConversion10 ""  
+    UBYTE ARINCFCCD2CU_CM_uint8       0             0       0 255  
+    ECU_ADDRESS                       0x00811F2E
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.DataTypeConversion11 ""  
+    UBYTE ARINCFCCD2CU_CM_uint8       0             0       0 255  
+    ECU_ADDRESS                       0x00811F2C
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.DataTypeConversion2 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E50
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.DataTypeConversion3 ""  
+    FLOAT32_IEEE ARINCFCCD2CU_CM_single       0             0       -3.4E+38 3.4E+38  
+    ECU_ADDRESS                       0x00811F28
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.DataTypeConversion4 ""  
+    UBYTE ARINCFCCD2CU_CM_uint8       0             0       0 255  
+    ECU_ADDRESS                       0x00811F2D
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.DataTypeConversion5 ""  
+    UBYTE ARINCFCCD2CU_CM_uint8       0             0       0 255  
+    ECU_ADDRESS                       0x00811F2F
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.DataTypeConversion6 ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811F31
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.DataTypeConversion7 ""  
+    FLOAT32_IEEE ARINCFCCD2CU_CM_single       0             0       -3.4E+38 3.4E+38  
+    ECU_ADDRESS                       0x00811F20
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.DataTypeConversion9 ""  
+    FLOAT32_IEEE ARINCFCCD2CU_CM_single       0             0       -3.4E+38 3.4E+38  
+    ECU_ADDRESS                       0x00811F24
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Delay ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811F32
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Delay1 ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811F33
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Delay2 ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811F37
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Delay3 ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811F38
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Delay4 ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811F34
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Delay5 ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811F35
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Delay6 ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811F36
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Delay7 ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811F30
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Encodev2 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E78
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Encodev21 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E80
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Encodev22 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E58
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Encodev23 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E60
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Encodev24 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E68
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Encodev25 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E70
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EC8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain1 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811ED4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain10 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EDC
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain11 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EE0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain12 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EE4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain13 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EE8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain14 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EEC
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain15 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EF8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain2 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EC4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain3 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811ED0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain4 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811F14
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain5 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EF4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain6 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811EF0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain7 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811F00
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain8 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811F04
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.Gain9 ""  
+    ULONG ARINCFCCD2CU_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x00811F08
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.PulseGenerator ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E00
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.RateTransition ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811EA0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.RateTransition1 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811EA8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.RateTransition2 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E98
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.RateTransition3 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E90
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.RateTransition4 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811EB8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.RateTransition5 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811EB0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.SineWave ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E18
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.SineWave1 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E08
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.SineWave3 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E10
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.SineWave4 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E28
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.SineWave5 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E20
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.SineWave7 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E38
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_B.SineWave8 ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811E30
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.Delay1_DSTATE ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811DE4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.Delay2_DSTATE ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811DEC
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.Delay3_DSTATE ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811DEE
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.Delay4_DSTATE ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811DE6
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.Delay5_DSTATE ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811DE8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.Delay6_DSTATE ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811DEA
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.Delay7_DSTATE ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811DE0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.Delay_DSTATE ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811DE2
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition1_Buf ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811C80
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition1_RdBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DF2
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition1_WrBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DF3
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition2_Buf ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811C90
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition2_RdBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DF4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition2_WrBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DF5
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition3_Buf ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811CA0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition3_RdBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DF6
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition3_WrBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DF7
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition4_Buf ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811CC0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition4_RdBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DFA
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition4_WrBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DFB
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition5_Buf ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811CB0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition5_RdBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DF8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition5_WrBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DF9
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition_Buf ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        2 
+    ECU_ADDRESS                       0x00811C70
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition_RdBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DF0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.RateTransition_WrBufIdx ""  
+    SBYTE ARINCFCCD2CU_CM_int8       0             0       -128 127  
+    ECU_ADDRESS                       0x00811DF1
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.clockTickCounter ""  
+    SLONG ARINCFCCD2CU_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x00811DC0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastCos ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C08
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastCos_e ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C18
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastCos_eb ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C48
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastCos_f ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C58
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastCos_g ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C28
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastCos_h ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C68
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastCos_n ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C38
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastSin ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C00
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastSin_c ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C60
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastSin_l ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C30
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastSin_n ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C20
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastSin_ns ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C50
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastSin_nv ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C40
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.lastSin_p ""  
+    FLOAT64_IEEE ARINCFCCD2CU_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x00811C10
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.systemEnable ""  
+    SLONG ARINCFCCD2CU_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x00811DC4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.systemEnable_g ""  
+    SLONG ARINCFCCD2CU_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x00811DD0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.systemEnable_j ""  
+    SLONG ARINCFCCD2CU_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x00811DD4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.systemEnable_k ""  
+    SLONG ARINCFCCD2CU_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x00811DC8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.systemEnable_ky ""  
+    SLONG ARINCFCCD2CU_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x00811DDC
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.systemEnable_l ""  
+    SLONG ARINCFCCD2CU_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x00811DCC
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_DW.systemEnable_m ""  
+    SLONG ARINCFCCD2CU_CM_int32       0             0       -2147483648 2147483647  
+    ECU_ADDRESS                       0x00811DD8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.ACE8_MODE ""  
+    UBYTE ARINCFCCD2CU_CM_uint8       0             0       0 255  
+    ECU_ADDRESS                       0x00811BF3
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.ACE9_MODE ""  
+    UBYTE ARINCFCCD2CU_CM_uint8       0             0       0 255  
+    ECU_ADDRESS                       0x00811BF4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.ACE_ID ""  
+    UBYTE ARINCFCCD2CU_CM_uint8       0             0       0 255  
+    ECU_ADDRESS                       0x00811BF2
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.ARINC1_ERR ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811BF8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.ARINC3_ERR ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811BF7
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.ARINC5_ERR ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811BF5
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.ARINC6_ERR ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811BF6
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.ARINC9_ERR ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811BF9
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.GEARING_APPLIED ""  
+    FLOAT32_IEEE ARINCFCCD2CU_CM_single       0             0       -3.4E+38 3.4E+38  
+    ECU_ADDRESS                       0x00811BEC
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.PS ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811BE0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.RAM_POS ""  
+    FLOAT32_IEEE ARINCFCCD2CU_CM_single       0             0       -3.4E+38 3.4E+38  
+    ECU_ADDRESS                       0x00811BE4
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.RAM_POS_FAILURE ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811BE1
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.ROLL_POS ""  
+    FLOAT32_IEEE ARINCFCCD2CU_CM_single       0             0       -3.4E+38 3.4E+38  
+    ECU_ADDRESS                       0x00811BE8
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.ROLL_POS_FAILURE ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811BE2
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.SPD ""  
+    UBYTE ARINCFCCD2CU_CM_uint8       0             0       0 255  
+    ECU_ADDRESS                       0x00811BF0
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  ARINCFCCD2CU_U.In1.SPD_FAILURE ""  
+    UBYTE ARINCFCCD2CU_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x00811BF1
+  /end MEASUREMENT 
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_double ""  
+    IDENTICAL "%15.10" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_int32 ""  
+    IDENTICAL "%10.0" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_int8 ""  
+    IDENTICAL "%3.0" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_logical ""  
+    IDENTICAL "%1.0" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_single ""  
+    IDENTICAL "%8.6" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_ufix32_En21 ""  
+    LINEAR "%20.16" ""  
+    COEFFS_LINEAR 4.76837e-07 0.000000  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_ufix32_En29 ""  
+    LINEAR "%17.16" ""  
+    COEFFS_LINEAR 1.86265e-09 0.000000  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_ufix32_En30 ""  
+    LINEAR "%17.16" ""  
+    COEFFS_LINEAR 9.31323e-10 0.000000  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_ufix8_E1 ""  
+    LINEAR "%3.0" ""  
+    COEFFS_LINEAR 2.00000 0.000000  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_ufix8_E2 ""  
+    LINEAR "%4.0" ""  
+    COEFFS_LINEAR 4.00000 0.000000  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_ufix8_E7 ""  
+    LINEAR "%5.0" ""  
+    COEFFS_LINEAR 128.000 0.000000  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_ufix8_E8 ""  
+    LINEAR "%5.0" ""  
+    COEFFS_LINEAR 256.000 0.000000  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_ufix8_En1 ""  
+    LINEAR "%4.1" ""  
+    COEFFS_LINEAR 0.500000 0.000000  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_ufix8_En2 ""  
+    LINEAR "%4.2" ""  
+    COEFFS_LINEAR 0.250000 0.000000  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_ufix8_En3 ""  
+    LINEAR "%5.3" ""  
+    COEFFS_LINEAR 0.125000 0.000000  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_ufix8_En7 ""  
+    LINEAR "%8.7" ""  
+    COEFFS_LINEAR 0.00781250 0.000000  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_uint32 ""  
+    IDENTICAL "%10.0" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD ARINCFCCD2CU_CM_uint8 ""  
+    IDENTICAL "%3.0" ""  
+  /end COMPU_METHOD
+
+  /begin  RECORD_LAYOUT Scalar_BOOLEAN
+    FNC_VALUES 1 UBYTE COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin  RECORD_LAYOUT Scalar_FLOAT32_IEEE
+    FNC_VALUES 1 FLOAT32_IEEE COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin  RECORD_LAYOUT Scalar_FLOAT64_IEEE
+    FNC_VALUES 1 FLOAT64_IEEE COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin  RECORD_LAYOUT Scalar_SBYTE
+    FNC_VALUES 1 SBYTE COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin  RECORD_LAYOUT Scalar_SLONG
+    FNC_VALUES 1 SLONG COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin  RECORD_LAYOUT Scalar_UBYTE
+    FNC_VALUES 1 UBYTE COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin  RECORD_LAYOUT Scalar_ULONG
+    FNC_VALUES 1 ULONG COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin GROUP ARINCFCCD2CU "ARINCFCCD2CU" ROOT  
+    /begin SUB_GROUP
+      ARINCFCCD2CU_U.In1
+    /end SUB_GROUP
+    /begin REF_CHARACTERISTIC
+      ARINCFCCD2CU_cal_impl.CCCodeBlock1_P1
+      ARINCFCCD2CU_cal_impl.CCCodeBlock1_P2
+      ARINCFCCD2CU_cal_impl.CCCodeBlock1_P3
+      ARINCFCCD2CU_cal_impl.CCCodeBlock1_P4
+      ARINCFCCD2CU_cal_impl.CCCodeBlock1_P5
+      ARINCFCCD2CU_cal_impl.CCCodeBlock2_P1
+      ARINCFCCD2CU_cal_impl.CCCodeBlock2_P2
+      ARINCFCCD2CU_cal_impl.CCCodeBlock2_P3
+      ARINCFCCD2CU_cal_impl.CCCodeBlock2_P4
+      ARINCFCCD2CU_cal_impl.CCCodeBlock2_P5
+      ARINCFCCD2CU_cal_impl.CCCodeBlock3_P1
+      ARINCFCCD2CU_cal_impl.CCCodeBlock3_P2
+      ARINCFCCD2CU_cal_impl.CCCodeBlock3_P3
+      ARINCFCCD2CU_cal_impl.CCCodeBlock3_P4
+      ARINCFCCD2CU_cal_impl.CCCodeBlock3_P5
+      ARINCFCCD2CU_cal_impl.Constant1_Value
+      ARINCFCCD2CU_cal_impl.Constant2_Value
+      ARINCFCCD2CU_cal_impl.Constant6_Value
+      ARINCFCCD2CU_cal_impl.Delay1_InitialCondition
+      ARINCFCCD2CU_cal_impl.Delay2_InitialCondition
+      ARINCFCCD2CU_cal_impl.Delay3_InitialCondition
+      ARINCFCCD2CU_cal_impl.Delay4_InitialCondition
+      ARINCFCCD2CU_cal_impl.Delay5_InitialCondition
+      ARINCFCCD2CU_cal_impl.Delay6_InitialCondition
+      ARINCFCCD2CU_cal_impl.Delay7_InitialCondition
+      ARINCFCCD2CU_cal_impl.Delay_InitialCondition
+      ARINCFCCD2CU_cal_impl.Encodev21_P1
+      ARINCFCCD2CU_cal_impl.Encodev21_P10
+      ARINCFCCD2CU_cal_impl.Encodev21_P11
+      ARINCFCCD2CU_cal_impl.Encodev21_P12
+      ARINCFCCD2CU_cal_impl.Encodev21_P13
+      ARINCFCCD2CU_cal_impl.Encodev21_P14
+      ARINCFCCD2CU_cal_impl.Encodev21_P15
+      ARINCFCCD2CU_cal_impl.Encodev21_P2
+      ARINCFCCD2CU_cal_impl.Encodev21_P3
+      ARINCFCCD2CU_cal_impl.Encodev21_P4
+      ARINCFCCD2CU_cal_impl.Encodev21_P5
+      ARINCFCCD2CU_cal_impl.Encodev21_P6
+      ARINCFCCD2CU_cal_impl.Encodev21_P7
+      ARINCFCCD2CU_cal_impl.Encodev21_P8
+      ARINCFCCD2CU_cal_impl.Encodev21_P9
+      ARINCFCCD2CU_cal_impl.Encodev22_P1
+      ARINCFCCD2CU_cal_impl.Encodev22_P10
+      ARINCFCCD2CU_cal_impl.Encodev22_P11
+      ARINCFCCD2CU_cal_impl.Encodev22_P12
+      ARINCFCCD2CU_cal_impl.Encodev22_P13
+      ARINCFCCD2CU_cal_impl.Encodev22_P14
+      ARINCFCCD2CU_cal_impl.Encodev22_P15
+      ARINCFCCD2CU_cal_impl.Encodev22_P2
+      ARINCFCCD2CU_cal_impl.Encodev22_P3
+      ARINCFCCD2CU_cal_impl.Encodev22_P4
+      ARINCFCCD2CU_cal_impl.Encodev22_P5
+      ARINCFCCD2CU_cal_impl.Encodev22_P6
+      ARINCFCCD2CU_cal_impl.Encodev22_P7
+      ARINCFCCD2CU_cal_impl.Encodev22_P8
+      ARINCFCCD2CU_cal_impl.Encodev22_P9
+      ARINCFCCD2CU_cal_impl.Encodev23_P1
+      ARINCFCCD2CU_cal_impl.Encodev23_P10
+      ARINCFCCD2CU_cal_impl.Encodev23_P11
+      ARINCFCCD2CU_cal_impl.Encodev23_P12
+      ARINCFCCD2CU_cal_impl.Encodev23_P13
+      ARINCFCCD2CU_cal_impl.Encodev23_P14
+      ARINCFCCD2CU_cal_impl.Encodev23_P15
+      ARINCFCCD2CU_cal_impl.Encodev23_P2
+      ARINCFCCD2CU_cal_impl.Encodev23_P3
+      ARINCFCCD2CU_cal_impl.Encodev23_P4
+      ARINCFCCD2CU_cal_impl.Encodev23_P5
+      ARINCFCCD2CU_cal_impl.Encodev23_P6
+      ARINCFCCD2CU_cal_impl.Encodev23_P7
+      ARINCFCCD2CU_cal_impl.Encodev23_P8
+      ARINCFCCD2CU_cal_impl.Encodev23_P9
+      ARINCFCCD2CU_cal_impl.Encodev24_P1
+      ARINCFCCD2CU_cal_impl.Encodev24_P10
+      ARINCFCCD2CU_cal_impl.Encodev24_P11
+      ARINCFCCD2CU_cal_impl.Encodev24_P12
+      ARINCFCCD2CU_cal_impl.Encodev24_P13
+      ARINCFCCD2CU_cal_impl.Encodev24_P14
+      ARINCFCCD2CU_cal_impl.Encodev24_P15
+      ARINCFCCD2CU_cal_impl.Encodev24_P2
+      ARINCFCCD2CU_cal_impl.Encodev24_P3
+      ARINCFCCD2CU_cal_impl.Encodev24_P4
+      ARINCFCCD2CU_cal_impl.Encodev24_P5
+      ARINCFCCD2CU_cal_impl.Encodev24_P6
+      ARINCFCCD2CU_cal_impl.Encodev24_P7
+      ARINCFCCD2CU_cal_impl.Encodev24_P8
+      ARINCFCCD2CU_cal_impl.Encodev24_P9
+      ARINCFCCD2CU_cal_impl.Encodev25_P1
+      ARINCFCCD2CU_cal_impl.Encodev25_P10
+      ARINCFCCD2CU_cal_impl.Encodev25_P11
+      ARINCFCCD2CU_cal_impl.Encodev25_P12
+      ARINCFCCD2CU_cal_impl.Encodev25_P13
+      ARINCFCCD2CU_cal_impl.Encodev25_P14
+      ARINCFCCD2CU_cal_impl.Encodev25_P15
+      ARINCFCCD2CU_cal_impl.Encodev25_P2
+      ARINCFCCD2CU_cal_impl.Encodev25_P3
+      ARINCFCCD2CU_cal_impl.Encodev25_P4
+      ARINCFCCD2CU_cal_impl.Encodev25_P5
+      ARINCFCCD2CU_cal_impl.Encodev25_P6
+      ARINCFCCD2CU_cal_impl.Encodev25_P7
+      ARINCFCCD2CU_cal_impl.Encodev25_P8
+      ARINCFCCD2CU_cal_impl.Encodev25_P9
+      ARINCFCCD2CU_cal_impl.Encodev2_P1
+      ARINCFCCD2CU_cal_impl.Encodev2_P10
+      ARINCFCCD2CU_cal_impl.Encodev2_P11
+      ARINCFCCD2CU_cal_impl.Encodev2_P12
+      ARINCFCCD2CU_cal_impl.Encodev2_P13
+      ARINCFCCD2CU_cal_impl.Encodev2_P14
+      ARINCFCCD2CU_cal_impl.Encodev2_P15
+      ARINCFCCD2CU_cal_impl.Encodev2_P2
+      ARINCFCCD2CU_cal_impl.Encodev2_P3
+      ARINCFCCD2CU_cal_impl.Encodev2_P4
+      ARINCFCCD2CU_cal_impl.Encodev2_P5
+      ARINCFCCD2CU_cal_impl.Encodev2_P6
+      ARINCFCCD2CU_cal_impl.Encodev2_P7
+      ARINCFCCD2CU_cal_impl.Encodev2_P8
+      ARINCFCCD2CU_cal_impl.Encodev2_P9
+      ARINCFCCD2CU_cal_impl.Gain10_Gain
+      ARINCFCCD2CU_cal_impl.Gain11_Gain
+      ARINCFCCD2CU_cal_impl.Gain12_Gain
+      ARINCFCCD2CU_cal_impl.Gain13_Gain
+      ARINCFCCD2CU_cal_impl.Gain14_Gain
+      ARINCFCCD2CU_cal_impl.Gain15_Gain
+      ARINCFCCD2CU_cal_impl.Gain1_Gain
+      ARINCFCCD2CU_cal_impl.Gain2_Gain
+      ARINCFCCD2CU_cal_impl.Gain3_Gain
+      ARINCFCCD2CU_cal_impl.Gain4_Gain
+      ARINCFCCD2CU_cal_impl.Gain5_Gain
+      ARINCFCCD2CU_cal_impl.Gain6_Gain
+      ARINCFCCD2CU_cal_impl.Gain7_Gain
+      ARINCFCCD2CU_cal_impl.Gain8_Gain
+      ARINCFCCD2CU_cal_impl.Gain9_Gain
+      ARINCFCCD2CU_cal_impl.Gain_Gain
+      ARINCFCCD2CU_cal_impl.PulseGenerator_Amp
+      ARINCFCCD2CU_cal_impl.PulseGenerator_Duty
+      ARINCFCCD2CU_cal_impl.PulseGenerator_Period
+      ARINCFCCD2CU_cal_impl.PulseGenerator_PhaseDelay
+      ARINCFCCD2CU_cal_impl.RateTransition1_InitialConditio
+      ARINCFCCD2CU_cal_impl.RateTransition2_InitialConditio
+      ARINCFCCD2CU_cal_impl.RateTransition3_InitialConditio
+      ARINCFCCD2CU_cal_impl.RateTransition4_InitialConditio
+      ARINCFCCD2CU_cal_impl.RateTransition5_InitialConditio
+      ARINCFCCD2CU_cal_impl.RateTransition_InitialCondition
+      ARINCFCCD2CU_cal_impl.Sendv31_P1
+      ARINCFCCD2CU_cal_impl.Sendv31_P2
+      ARINCFCCD2CU_cal_impl.Sendv31_P3
+      ARINCFCCD2CU_cal_impl.Sendv32_P1
+      ARINCFCCD2CU_cal_impl.Sendv32_P2
+      ARINCFCCD2CU_cal_impl.Sendv32_P3
+      ARINCFCCD2CU_cal_impl.Sendv33_P1
+      ARINCFCCD2CU_cal_impl.Sendv33_P2
+      ARINCFCCD2CU_cal_impl.Sendv33_P3
+      ARINCFCCD2CU_cal_impl.Sendv34_P1
+      ARINCFCCD2CU_cal_impl.Sendv34_P2
+      ARINCFCCD2CU_cal_impl.Sendv34_P3
+      ARINCFCCD2CU_cal_impl.Sendv35_P1
+      ARINCFCCD2CU_cal_impl.Sendv35_P2
+      ARINCFCCD2CU_cal_impl.Sendv35_P3
+      ARINCFCCD2CU_cal_impl.Sendv3_P1
+      ARINCFCCD2CU_cal_impl.Sendv3_P2
+      ARINCFCCD2CU_cal_impl.Sendv3_P3
+      ARINCFCCD2CU_cal_impl.Setupv21_P1
+      ARINCFCCD2CU_cal_impl.Setupv21_P2
+      ARINCFCCD2CU_cal_impl.Setupv21_P3
+      ARINCFCCD2CU_cal_impl.Setupv21_P4
+      ARINCFCCD2CU_cal_impl.Setupv21_P5
+      ARINCFCCD2CU_cal_impl.Setupv21_P6
+      ARINCFCCD2CU_cal_impl.Setupv21_P7
+      ARINCFCCD2CU_cal_impl.Setupv21_P8
+      ARINCFCCD2CU_cal_impl.SineWave1_Amp
+      ARINCFCCD2CU_cal_impl.SineWave1_Bias
+      ARINCFCCD2CU_cal_impl.SineWave1_Freq
+      ARINCFCCD2CU_cal_impl.SineWave1_HCos
+      ARINCFCCD2CU_cal_impl.SineWave1_Hsin
+      ARINCFCCD2CU_cal_impl.SineWave1_PCos
+      ARINCFCCD2CU_cal_impl.SineWave1_PSin
+      ARINCFCCD2CU_cal_impl.SineWave3_Amp
+      ARINCFCCD2CU_cal_impl.SineWave3_Bias
+      ARINCFCCD2CU_cal_impl.SineWave3_Freq
+      ARINCFCCD2CU_cal_impl.SineWave3_HCos
+      ARINCFCCD2CU_cal_impl.SineWave3_Hsin
+      ARINCFCCD2CU_cal_impl.SineWave3_PCos
+      ARINCFCCD2CU_cal_impl.SineWave3_PSin
+      ARINCFCCD2CU_cal_impl.SineWave4_Amp
+      ARINCFCCD2CU_cal_impl.SineWave4_Bias
+      ARINCFCCD2CU_cal_impl.SineWave4_Freq
+      ARINCFCCD2CU_cal_impl.SineWave4_HCos
+      ARINCFCCD2CU_cal_impl.SineWave4_Hsin
+      ARINCFCCD2CU_cal_impl.SineWave4_PCos
+      ARINCFCCD2CU_cal_impl.SineWave4_PSin
+      ARINCFCCD2CU_cal_impl.SineWave5_Amp
+      ARINCFCCD2CU_cal_impl.SineWave5_Bias
+      ARINCFCCD2CU_cal_impl.SineWave5_Freq
+      ARINCFCCD2CU_cal_impl.SineWave5_HCos
+      ARINCFCCD2CU_cal_impl.SineWave5_Hsin
+      ARINCFCCD2CU_cal_impl.SineWave5_PCos
+      ARINCFCCD2CU_cal_impl.SineWave5_PSin
+      ARINCFCCD2CU_cal_impl.SineWave7_Amp
+      ARINCFCCD2CU_cal_impl.SineWave7_Bias
+      ARINCFCCD2CU_cal_impl.SineWave7_Freq
+      ARINCFCCD2CU_cal_impl.SineWave7_HCos
+      ARINCFCCD2CU_cal_impl.SineWave7_Hsin
+      ARINCFCCD2CU_cal_impl.SineWave7_PCos
+      ARINCFCCD2CU_cal_impl.SineWave7_PSin
+      ARINCFCCD2CU_cal_impl.SineWave8_Amp
+      ARINCFCCD2CU_cal_impl.SineWave8_Bias
+      ARINCFCCD2CU_cal_impl.SineWave8_Freq
+      ARINCFCCD2CU_cal_impl.SineWave8_HCos
+      ARINCFCCD2CU_cal_impl.SineWave8_Hsin
+      ARINCFCCD2CU_cal_impl.SineWave8_PCos
+      ARINCFCCD2CU_cal_impl.SineWave8_PSin
+      ARINCFCCD2CU_cal_impl.SineWave_Amp
+      ARINCFCCD2CU_cal_impl.SineWave_Bias
+      ARINCFCCD2CU_cal_impl.SineWave_Freq
+      ARINCFCCD2CU_cal_impl.SineWave_HCos
+      ARINCFCCD2CU_cal_impl.SineWave_Hsin
+      ARINCFCCD2CU_cal_impl.SineWave_PCos
+      ARINCFCCD2CU_cal_impl.SineWave_PSin
+    /end REF_CHARACTERISTIC
+    /begin REF_MEASUREMENT
+      ARINCFCCD2CU_B.Add
+      ARINCFCCD2CU_B.Add1
+      ARINCFCCD2CU_B.Add2
+      ARINCFCCD2CU_B.CCCodeBlock1
+      ARINCFCCD2CU_B.CCCodeBlock2
+      ARINCFCCD2CU_B.CCCodeBlock3
+      ARINCFCCD2CU_B.Constant1
+      ARINCFCCD2CU_B.Constant2
+      ARINCFCCD2CU_B.DataTypeConversion
+      ARINCFCCD2CU_B.DataTypeConversion1
+      ARINCFCCD2CU_B.DataTypeConversion10
+      ARINCFCCD2CU_B.DataTypeConversion11
+      ARINCFCCD2CU_B.DataTypeConversion2
+      ARINCFCCD2CU_B.DataTypeConversion3
+      ARINCFCCD2CU_B.DataTypeConversion4
+      ARINCFCCD2CU_B.DataTypeConversion5
+      ARINCFCCD2CU_B.DataTypeConversion6
+      ARINCFCCD2CU_B.DataTypeConversion7
+      ARINCFCCD2CU_B.DataTypeConversion9
+      ARINCFCCD2CU_B.Delay
+      ARINCFCCD2CU_B.Delay1
+      ARINCFCCD2CU_B.Delay2
+      ARINCFCCD2CU_B.Delay3
+      ARINCFCCD2CU_B.Delay4
+      ARINCFCCD2CU_B.Delay5
+      ARINCFCCD2CU_B.Delay6
+      ARINCFCCD2CU_B.Delay7
+      ARINCFCCD2CU_B.Encodev2
+      ARINCFCCD2CU_B.Encodev21
+      ARINCFCCD2CU_B.Encodev22
+      ARINCFCCD2CU_B.Encodev23
+      ARINCFCCD2CU_B.Encodev24
+      ARINCFCCD2CU_B.Encodev25
+      ARINCFCCD2CU_B.Gain
+      ARINCFCCD2CU_B.Gain1
+      ARINCFCCD2CU_B.Gain10
+      ARINCFCCD2CU_B.Gain11
+      ARINCFCCD2CU_B.Gain12
+      ARINCFCCD2CU_B.Gain13
+      ARINCFCCD2CU_B.Gain14
+      ARINCFCCD2CU_B.Gain15
+      ARINCFCCD2CU_B.Gain2
+      ARINCFCCD2CU_B.Gain3
+      ARINCFCCD2CU_B.Gain4
+      ARINCFCCD2CU_B.Gain5
+      ARINCFCCD2CU_B.Gain6
+      ARINCFCCD2CU_B.Gain7
+      ARINCFCCD2CU_B.Gain8
+      ARINCFCCD2CU_B.Gain9
+      ARINCFCCD2CU_B.PulseGenerator
+      ARINCFCCD2CU_B.RateTransition
+      ARINCFCCD2CU_B.RateTransition1
+      ARINCFCCD2CU_B.RateTransition2
+      ARINCFCCD2CU_B.RateTransition3
+      ARINCFCCD2CU_B.RateTransition4
+      ARINCFCCD2CU_B.RateTransition5
+      ARINCFCCD2CU_B.SineWave
+      ARINCFCCD2CU_B.SineWave1
+      ARINCFCCD2CU_B.SineWave3
+      ARINCFCCD2CU_B.SineWave4
+      ARINCFCCD2CU_B.SineWave5
+      ARINCFCCD2CU_B.SineWave7
+      ARINCFCCD2CU_B.SineWave8
+      ARINCFCCD2CU_DW.Delay1_DSTATE
+      ARINCFCCD2CU_DW.Delay2_DSTATE
+      ARINCFCCD2CU_DW.Delay3_DSTATE
+      ARINCFCCD2CU_DW.Delay4_DSTATE
+      ARINCFCCD2CU_DW.Delay5_DSTATE
+      ARINCFCCD2CU_DW.Delay6_DSTATE
+      ARINCFCCD2CU_DW.Delay7_DSTATE
+      ARINCFCCD2CU_DW.Delay_DSTATE
+      ARINCFCCD2CU_DW.RateTransition1_Buf
+      ARINCFCCD2CU_DW.RateTransition1_RdBufIdx
+      ARINCFCCD2CU_DW.RateTransition1_WrBufIdx
+      ARINCFCCD2CU_DW.RateTransition2_Buf
+      ARINCFCCD2CU_DW.RateTransition2_RdBufIdx
+      ARINCFCCD2CU_DW.RateTransition2_WrBufIdx
+      ARINCFCCD2CU_DW.RateTransition3_Buf
+      ARINCFCCD2CU_DW.RateTransition3_RdBufIdx
+      ARINCFCCD2CU_DW.RateTransition3_WrBufIdx
+      ARINCFCCD2CU_DW.RateTransition4_Buf
+      ARINCFCCD2CU_DW.RateTransition4_RdBufIdx
+      ARINCFCCD2CU_DW.RateTransition4_WrBufIdx
+      ARINCFCCD2CU_DW.RateTransition5_Buf
+      ARINCFCCD2CU_DW.RateTransition5_RdBufIdx
+      ARINCFCCD2CU_DW.RateTransition5_WrBufIdx
+      ARINCFCCD2CU_DW.RateTransition_Buf
+      ARINCFCCD2CU_DW.RateTransition_RdBufIdx
+      ARINCFCCD2CU_DW.RateTransition_WrBufIdx
+      ARINCFCCD2CU_DW.Sendv31_PWORK
+      ARINCFCCD2CU_DW.Sendv32_PWORK
+      ARINCFCCD2CU_DW.Sendv33_PWORK
+      ARINCFCCD2CU_DW.Sendv34_PWORK
+      ARINCFCCD2CU_DW.Sendv35_PWORK
+      ARINCFCCD2CU_DW.Sendv3_PWORK
+      ARINCFCCD2CU_DW.Setupv21_PWORK
+      ARINCFCCD2CU_DW.clockTickCounter
+      ARINCFCCD2CU_DW.lastCos
+      ARINCFCCD2CU_DW.lastCos_e
+      ARINCFCCD2CU_DW.lastCos_eb
+      ARINCFCCD2CU_DW.lastCos_f
+      ARINCFCCD2CU_DW.lastCos_g
+      ARINCFCCD2CU_DW.lastCos_h
+      ARINCFCCD2CU_DW.lastCos_n
+      ARINCFCCD2CU_DW.lastSin
+      ARINCFCCD2CU_DW.lastSin_c
+      ARINCFCCD2CU_DW.lastSin_l
+      ARINCFCCD2CU_DW.lastSin_n
+      ARINCFCCD2CU_DW.lastSin_ns
+      ARINCFCCD2CU_DW.lastSin_nv
+      ARINCFCCD2CU_DW.lastSin_p
+      ARINCFCCD2CU_DW.systemEnable
+      ARINCFCCD2CU_DW.systemEnable_g
+      ARINCFCCD2CU_DW.systemEnable_j
+      ARINCFCCD2CU_DW.systemEnable_k
+      ARINCFCCD2CU_DW.systemEnable_ky
+      ARINCFCCD2CU_DW.systemEnable_l
+      ARINCFCCD2CU_DW.systemEnable_m
+    /end REF_MEASUREMENT
+  /end GROUP
+
+  /begin GROUP ARINCFCCD2CU_U.In1 ""  
+    /begin REF_MEASUREMENT
+      ARINCFCCD2CU_U.In1.PS
+      ARINCFCCD2CU_U.In1.RAM_POS_FAILURE
+      ARINCFCCD2CU_U.In1.ROLL_POS_FAILURE
+      ARINCFCCD2CU_U.In1.RAM_POS
+      ARINCFCCD2CU_U.In1.ROLL_POS
+      ARINCFCCD2CU_U.In1.GEARING_APPLIED
+      ARINCFCCD2CU_U.In1.SPD
+      ARINCFCCD2CU_U.In1.SPD_FAILURE
+      ARINCFCCD2CU_U.In1.ACE_ID
+      ARINCFCCD2CU_U.In1.ACE8_MODE
+      ARINCFCCD2CU_U.In1.ACE9_MODE
+      ARINCFCCD2CU_U.In1.ARINC5_ERR
+      ARINCFCCD2CU_U.In1.ARINC6_ERR
+      ARINCFCCD2CU_U.In1.ARINC3_ERR
+      ARINCFCCD2CU_U.In1.ARINC1_ERR
+      ARINCFCCD2CU_U.In1.ARINC9_ERR
+    /end REF_MEASUREMENT
+  /end GROUP
+
+  /end MODULE
+
+/end PROJECT
+
