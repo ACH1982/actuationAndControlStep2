@@ -1,0 +1,1689 @@
+﻿/******************************************************************************
+ *
+ *  ASAP2 file:     FCC2ARINC.a2l
+ *
+ * 
+ *
+ * Code generation for model "FCC2ARINC".
+ *
+ * Model version              : 1.33
+ * Simulink Coder version : 10.4 R2021b
+ * C source code generated on : Tue May 17 11:53:07 2022
+ *
+ * Target selection: slrealtime.tlc
+ * Embedded hardware selection: Intel->x86-64 (Linux 64)
+ * Code generation objectives: Unspecified
+ * Validation result: Not run
+ *
+ * (add additional file header information here)
+ *
+ ******************************************************************************/
+ASAP2_VERSION  1 71  
+/begin PROJECT ProjectName "Project Comment Goes Here"
+
+  /begin HEADER "Header Comments go here"
+
+  /end HEADER
+
+  /begin MODULE ModuleName  "Module Comment Goes Here"
+
+    /begin A2ML
+
+      struct Protocol_Layer {
+        uint;  /* XCP protocol layer version, current 0x100 */
+        uint;  /* T1 [ms] */
+        uint;  /* T2 [ms] */
+        uint;  /* T3 [ms] */
+        uint;  /* T4 [ms] */
+        uint;  /* T5 [ms] */
+        uint;  /* T6 [ms] */
+        uint;  /* T7 [ms] */
+        uchar;  /* MAX_CTO */
+        uint;  /* MAX_DTO */
+        enum {
+          "BYTE_ORDER_MSB_LAST" = 0,
+          "BYTE_ORDER_MSB_FIRST" = 1
+        };
+        enum {
+          "ADDRESS_GRANULARITY_BYTE" = 1,
+          "ADDRESS_GRANULARITY_WORD" = 2,
+          "ADDRESS_GRANULARITY_DWORD" = 4
+        };
+        taggedstruct {
+          ("OPTIONAL_CMD" enum {
+            "GET_COMM_MODE_INFO" = 251,
+            "GET_ID" = 250,
+            "SET_REQUEST" = 249,
+            "GET_SEED" = 248,
+            "UNLOCK" = 247,
+            "SET_MTA" = 246,
+            "UPLOAD" = 245,
+            "SHORT_UPLOAD" = 244,
+            "BUILD_CHECKSUM" = 243,
+            "TRANSPORT_LAYER_CMD" = 242,
+            "USER_CMD" = 241,
+            "DOWNLOAD" = 240,
+            "DOWNLOAD_NEXT" = 239,
+            "DOWNLOAD_MAX" = 238,
+            "SHORT_DOWNLOAD" = 237,
+            "MODIFY_BITS" = 236,
+            "SET_CAL_PAGE" = 235,
+            "GET_CAL_PAGE" = 234,
+            "GET_PAG_PROCESSOR_INFO" = 233,
+            "GET_SEGMENT_INFO" = 232,
+            "GET_PAGE_INFO" = 231,
+            "SET_SEGMENT_MODE" = 230,
+            "GET_SEGMENT_MODE" = 229,
+            "COPY_CAL_PAGE" = 228,
+            "CLEAR_DAQ_LIST" = 227,
+            "SET_DAQ_PTR" = 226,
+            "WRITE_DAQ" = 225,
+            "SET_DAQ_LIST_MODE" = 224,
+            "GET_DAQ_LIST_MODE" = 223,
+            "START_STOP_DAQ_LIST" = 222,
+            "START_STOP_SYNCH" = 221,
+            "GET_DAQ_CLOCK" = 220,
+            "READ_DAQ" = 219,
+            "GET_DAQ_PROCESSOR_INFO" = 218,
+            "GET_DAQ_RESOLUTION_INFO" = 217,
+            "GET_DAQ_LIST_INFO" = 216,
+            "GET_DAQ_EVENT_INFO" = 215,
+            "FREE_DAQ" = 214,
+            "ALLOC_DAQ" = 213,
+            "ALLOC_ODT" = 212,
+            "ALLOC_ODT_ENTRY" = 211,
+            "PROGRAM_START" = 210,
+            "PROGRAM_CLEAR" = 209,
+            "PROGRAM" = 208,
+            "PROGRAM_RESET" = 207,
+            "GET_PGM_PROCESSOR_INFO" = 206,
+            "GET_SECTOR_INFO" = 205,
+            "PROGRAM_PREPARE" = 204,
+            "PROGRAM_FORMAT" = 203,
+            "PROGRAM_NEXT" = 202,
+            "PROGRAM_MAX" = 201,
+            "PROGRAM_VERIFY" = 200
+          })*;
+          "COMMUNICATION_MODE_SUPPORTED" taggedunion {
+            "BLOCK" taggedstruct {
+              "SLAVE" ;
+              "MASTER" struct {
+                uchar;  /* MAX_BS */
+                uchar;  /* MIN_ST */
+              };
+            };
+            "INTERLEAVED" uchar;  /* QUEUE_SIZE */
+          };
+          "SEED_AND_KEY_EXTERNAL_FUNCTION" char[256];  /* Name of the Seed&Key function */
+        };
+      };
+
+      struct Daq {
+        enum {
+          "STATIC" = 0,
+          "DYNAMIC" = 1
+        };
+        uint;  /* MAX_DAQ */
+        uint;  /* MAX_EVENT_CHANNEL */
+        uchar;  /* MIN_DAQ */
+        enum {
+          "OPTIMISATION_TYPE_DEFAULT" = 0,
+          "OPTIMISATION_TYPE_ODT_TYPE_16" = 1,
+          "OPTIMISATION_TYPE_ODT_TYPE_32" = 2,
+          "OPTIMISATION_TYPE_ODT_TYPE_64" = 3,
+          "OPTIMISATION_TYPE_ODT_TYPE_ALIGNMENT" = 4,
+          "OPTIMISATION_TYPE_MAX_ENTRY_SIZE" = 5
+        };
+        enum {
+          "ADDRESS_EXTENSION_FREE" = 0,
+          "ADDRESS_EXTENSION_ODT" = 1,
+          "ADDRESS_EXTENSION_DAQ" = 3
+        };
+        enum {
+          "IDENTIFICATION_FIELD_TYPE_ABSOLUTE" = 0,
+          "IDENTIFICATION_FIELD_TYPE_RELATIVE_BYTE" = 1,
+          "IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD" = 2,
+          "IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED" = 3
+        };
+        enum {
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE" = 1,
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_WORD" = 2,
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_DWORD" = 4,
+          "GRANULARITY_ODT_ENTRY_SIZE_DAQ_DLONG" = 8
+        };
+        uchar;  /* MAX_ODT_ENTRY_SIZE_DAQ */
+        enum {
+          "NO_OVERLOAD_INDICATION" = 0,
+          "OVERLOAD_INDICATION_PID" = 1,
+          "OVERLOAD_INDICATION_EVENT" = 2
+        };
+        taggedstruct {
+          "PRESCALER_SUPPORTED" ;
+          "RESUME_SUPPORTED" ;
+          block "STIM" struct {
+            enum {
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE" = 1,
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_WORD" = 2,
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_DWORD" = 4,
+              "GRANULARITY_ODT_ENTRY_SIZE_STIM_DLONG" = 8
+            };
+            uchar;  /* MAX_ODT_ENTRY_SIZE_STIM */
+            taggedstruct {
+              "BIT_STIM_SUPPORTED" ;
+            };
+          };
+          block "TIMESTAMP_SUPPORTED" struct {
+            uint;  /* TIMESTAMP_TICKS */
+            enum {
+              "NO_TIME_STAMP" = 0,
+              "SIZE_BYTE" = 1,
+              "SIZE_WORD" = 2,
+              "SIZE_DWORD" = 4
+            };
+            enum {
+              "UNIT_1NS" = 0,
+              "UNIT_10NS" = 1,
+              "UNIT_100NS" = 2,
+              "UNIT_1US" = 3,
+              "UNIT_10US" = 4,
+              "UNIT_100US" = 5,
+              "UNIT_1MS" = 6,
+              "UNIT_10MS" = 7,
+              "UNIT_100MS" = 8,
+              "UNIT_1S" = 9
+            };
+            taggedstruct {
+              "TIMESTAMP_FIXED" ;
+            };
+          };
+          "PID_OFF_SUPPORTED" ;
+          (block "DAQ_LIST" struct {
+            uint;  /* DAQ_LIST_NUMBER */
+            taggedstruct {
+              "DAQ_LIST_TYPE" enum {
+                "DAQ" = 1,
+                "STIM" = 2,
+                "DAQ_STIM" = 3
+              };
+              "MAX_ODT" uchar;
+              "MAX_ODT_ENTRIES" uchar;
+              "FIRST_PID" uchar;
+              "EVENT_FIXED" uint;
+              block "PREDEFINED" taggedstruct {
+                (block "ODT" struct {
+                  uchar;  /* ODT number */
+                  taggedstruct {
+                    ("ODT_ENTRY" struct {
+                      uchar;  /* ODT_ENTRY number */
+                      ulong;  /* address of element */
+                      uchar;  /* address extension of element */
+                      uchar;  /* size of element [AG] */
+                      uchar;  /* BIT_OFFSET */
+                    })*;
+                  };
+                })*;
+              };
+            };
+          })*;
+          (block "EVENT" struct {
+            char[101];  /* EVENT_CHANNEL_NAME       */
+            char[9];  /* EVENT_CHANNEL_SHORT_NAME */
+            uint;  /* EVENT_CHANNEL_NUMBER     */
+            enum {
+              "DAQ" = 1,
+              "STIM" = 2,
+              "DAQ_STIM" = 3
+            };
+            uchar;  /* MAX_DAQ_LIST */
+            uchar;  /* TIME_CYCLE   */
+            uchar;  /* TIME_UNIT    */
+            uchar;  /* PRIORITY     */
+          })*;
+        };
+      };
+
+      taggedunion Daq_Event {
+        "FIXED_EVENT_LIST" taggedstruct {
+          ("EVENT" uint)*;
+        };
+        "VARIABLE" taggedstruct {
+          block "AVAILABLE_EVENT_LIST" taggedstruct {
+            ("EVENT" uint)*;
+          };
+          block "DEFAULT_EVENT_LIST" taggedstruct {
+            ("EVENT" uint)*;
+          };
+        };
+      };
+
+      struct Pag {
+        uchar;  /* MAX_SEGMENTS */
+        taggedstruct {
+          "FREEZE_SUPPORTED" ;
+        };
+      };
+
+      struct Pgm {
+        enum {
+          "PGM_MODE_ABSOLUTE" = 1,
+          "PGM_MODE_FUNCTIONAL" = 2,
+          "PGM_MODE_ABSOLUTE_AND_FUNCTIONAL" = 3
+        };
+        uchar;  /* MAX_SECTORS */
+        uchar;  /* MAX_CTO_PGM */
+        taggedstruct {
+          (block "SECTOR" struct {
+            char[101];  /* SECTOR_NAME */
+            uchar;  /* SECTOR_NUMBER */
+            ulong;  /* Address */
+            ulong;  /* Length  */
+            uchar;  /* CLEAR_SEQUENCE_NUMBER */
+            uchar;  /* PROGRAM_SEQUENCE_NUMBER */
+            uchar;  /* PROGRAM_METHOD */
+          })*;
+          "COMMUNICATION_MODE_SUPPORTED" taggedunion {
+            "BLOCK" taggedstruct {
+              "SLAVE" ;
+              "MASTER" struct {
+                uchar;  /* MAX_BS_PGM */
+                uchar;  /* MIN_ST_PGM */
+              };
+            };
+            "INTERLEAVED" uchar;  /* QUEUE_SIZE_PGM */
+          };
+        };
+      };
+
+      struct Segment {
+        uchar;  /* SEGMENT_NUMBER */
+        uchar;  /* number of pages */
+        uchar;  /* ADDRESS_EXTENSION */
+        uchar;  /* COMPRESSION_METHOD */
+        uchar;  /* ENCRYPTION_METHOD */
+        taggedstruct {
+          block "CHECKSUM" struct {
+            enum {
+              "XCP_ADD_11" = 1,
+              "XCP_ADD_12" = 2,
+              "XCP_ADD_14" = 3,
+              "XCP_ADD_22" = 4,
+              "XCP_ADD_24" = 5,
+              "XCP_ADD_44" = 6,
+              "XCP_CRC_16" = 7,
+              "XCP_CRC_16_CITT" = 8,
+              "XCP_CRC_32" = 9,
+              "XCP_USER_DEFINED" = 255
+            };
+            taggedstruct {
+              "MAX_BLOCK_SIZE" ulong;
+              "EXTERNAL_FUNCTION" char[256];  /* Name of the Checksum.DLL */
+            };
+          };
+          (block "PAGE" struct {
+            uchar;  /* PAGE_NUMBER */
+            enum {
+              "ECU_ACCESS_NOT_ALLOWED" = 0,
+              "ECU_ACCESS_WITHOUT_XCP_ONLY" = 1,
+              "ECU_ACCESS_WITH_XCP_ONLY" = 2,
+              "ECU_ACCESS_DONT_CARE" = 3
+            };
+            enum {
+              "XCP_READ_ACCESS_NOT_ALLOWED" = 0,
+              "XCP_READ_ACCESS_WITHOUT_ECU_ONLY" = 1,
+              "XCP_READ_ACCESS_WITH_ECU_ONLY" = 2,
+              "XCP_READ_ACCESS_DONT_CARE" = 3
+            };
+            enum {
+              "XCP_WRITE_ACCESS_NOT_ALLOWED" = 0,
+              "XCP_WRITE_ACCESS_WITHOUT_ECU_ONLY" = 1,
+              "XCP_WRITE_ACCESS_WITH_ECU_ONLY" = 2,
+              "XCP_WRITE_ACCESS_DONT_CARE" = 3
+            };
+            taggedstruct {
+              "INIT_SEGMENT" uchar;  /* references segment that initialises this page */
+            };
+          })*;
+          (block "ADDRESS_MAPPING" struct {
+            ulong;  /* source address */
+            ulong;  /* destination address */
+            ulong;  /* length */
+          })*;
+          "PGM_VERIFY" ulong;  /* verification value for PGM */
+        };
+      };
+
+      taggedstruct Common_Parameters {
+        block "PROTOCOL_LAYER" struct Protocol_Layer;
+        block "SEGMENT" struct Segment;
+        block "DAQ" struct Daq;
+        block "PAG" struct Pag;
+        block "PGM" struct Pgm;
+        block "DAQ_EVENT" taggedunion Daq_Event;
+      };
+
+      struct CAN_Parameters {
+        uint;  /* XCP on CAN version, currentl 0x0100 */
+        taggedstruct {
+          "CAN_ID_BROADCAST" ulong;  /* Auto-detection CAN-ID */
+          "CAN_ID_MASTER" ulong;  /* CMD/STIM CAN-ID */
+          "CAN_ID_SLAVE" ulong;  /* RES/ERR/EV/SERV/DAQ CAN-ID */
+          "BAUDRATE" ulong;  /* Baudrate in Hz */
+          "SAMPLE_POINT" uchar;  /* Sample point in  of bit time */
+          "SAMPLE_RATE" enum {
+            "SINGLE" = 1,
+            "TRIPLE" = 3
+          };
+          "BTL_CYCLES" uchar;  /* slots per bit time */
+          "SJW" uchar;
+          "SYNC_EDGE" enum {
+            "SINGLE" = 1,
+            "DUAL" = 2
+          };
+          "MAX_DLC_REQUIRED" ;  /* master to slave frames */
+          (block "DAQ_LIST_CAN_ID" struct {
+            uint;  /* reference to DAQ_LIST_NUMBER */
+            taggedstruct {
+              "VARIABLE" ;
+              "FIXED" ulong;  /* this DAQ_LIST always on this CAN_ID */
+            };
+          })*;
+        };
+      };
+
+      struct SxI_Parameters {
+        uint;  /* XCP on SxI version, currently 0x0100 */
+        ulong;  /* BAUDRATE [Hz] */
+        taggedstruct {
+          "ASYNCH_FULL_DUPLEX_MODE" struct {
+            enum {
+              "PARITY_NONE" = 0,
+              "PARITY_ODD" = 1,
+              "PARITY_EVEN" = 2
+            };
+            enum {
+              "ONE_STOP_BIT" = 1,
+              "TWO_STOP_BITS" = 2
+            };
+          };
+          "SYNCH_FULL_DUPLEX_MODE_BYTE" ;
+          "SYNCH_FULL_DUPLEX_MODE_WORD" ;
+          "SYNCH_FULL_DUPLEX_MODE_DWORD" ;
+          "SYNCH_MASTER_SLAVE_MODE_BYTE" ;
+          "SYNCH_MASTER_SLAVE_MODE_WORD" ;
+          "SYNCH_MASTER_SLAVE_MODE_DWORD" ;
+        };
+        enum {
+          "HEADER_LEN_BYTE" = 0,
+          "HEADER_LEN_CTR_BYTE" = 1,
+          "HEADER_LEN_FILL_BYTE" = 2,
+          "HEADER_LEN_WORD" = 3,
+          "HEADER_LEN_CTR_WORD" = 4,
+          "HEADER_LEN_FILL_WORD" = 5
+        };
+        enum {
+          "NO_CHECKSUM" = 0,
+          "CHECKSUM_BYTE" = 1,
+          "CHECKSUM_WORD" = 2
+        };
+      };
+
+      struct TCP_IP_Parameters {
+        uint;  /* XCP on TCP_IP version, currently 0x0100 */
+        uint;  /* PORT */
+        taggedunion {
+          "HOST_NAME" char[256];
+          "ADDRESS" char[15];
+        };
+      };
+
+      struct UDP_Parameters {
+        uint;  /* XCP on UDP version, currently 0x0100 */
+        uint;  /* PORT */
+        taggedunion {
+          "HOST_NAME" char[256];
+          "ADDRESS" char[15];
+        };
+      };
+
+      struct ep_parameters {
+        uchar;  /* ENDPOINT_NUMBER, not endpoint address */
+        enum {
+          "BULK_TRANSFER" = 2,
+          "INTERRUPT_TRANSFER" = 3
+        };
+        uint;  /* wMaxPacketSize: Maximum packet  
+ size of endpoint in bytes       */
+        uchar;  /* bInterval: polling of endpoint  */
+        enum {
+          "MESSAGE_PACKING_SINGLE" = 0,
+          "MESSAGE_PACKING_MULTIPLE" = 1,
+          "MESSAGE_PACKING_STREAMING" = 2
+        };
+        enum {
+          "ALIGNMENT_8_BIT" = 0,
+          "ALIGNMENT_16_BIT" = 1,
+          "ALIGNMENT_32_BIT" = 2,
+          "ALIGNMENT_64_BIT" = 3
+        };
+        taggedstruct {
+          "RECOMMENDED_HOST_BUFSIZE" uint;  /* Recommended size for the host 
+ buffer size. The size is defined
+ as multiple of wMaxPacketSize.  */
+        };
+      };  /* end of ep_parameters */
+
+      struct USB_Parameters {
+        uint;  /* XCP on USB version  
+ e.g. "1.0" = 0x0100 */
+        uint;  /* Vendor ID                       */
+        uint;  /* Product ID                      */
+        uchar;  /* Number of interface             */
+        enum {
+          "HEADER_LEN_BYTE" = 0,
+          "HEADER_LEN_CTR_BYTE" = 1,
+          "HEADER_LEN_FILL_BYTE" = 2,
+          "HEADER_LEN_WORD" = 3,
+          "HEADER_LEN_CTR_WORD" = 4,
+          "HEADER_LEN_FILL_WORD" = 5
+        };
+        taggedunion {
+          block "OUT_EP_CMD_STIM" struct ep_parameters;
+        };
+        taggedunion {
+          block "IN_EP_RESERR_DAQ_EVSERV" struct ep_parameters;
+        };
+        taggedstruct {
+          "ALTERNATE_SETTING_NO" uchar;  /* Number of alternate setting   */
+          "INTERFACE_STRING_DESCRIPTOR" char[101];
+          (block "OUT_EP_ONLY_STIM" struct ep_parameters)*;
+          (block "IN_EP_ONLY_DAQ" struct ep_parameters)*;
+          block "IN_EP_ONLY_EVSERV" struct ep_parameters;
+          (block "DAQ_LIST_USB_ENDPOINT" struct {
+            uint;  /* reference to DAQ_LIST_NUMBER          */
+            taggedstruct {
+              "FIXED_IN" uchar;  /* this DAQ list always                
+ ENDPOINT_NUMBER, not endpoint address */
+              "FIXED_OUT" uchar;  /* this STIM list always               
+ ENDPOINT_NUMBER, not endpoint address */
+            };
+          })*;  /* end of DAQ_LIST_USB_ENDPOINT */
+        };  /* end of optional */
+      };
+
+      struct SIMULINK_Parameters {
+        taggedstruct {
+          "MODEL_NAME" char[64];
+        };
+      };
+
+      enum packet_assignment_type {
+        "NOT_ALLOWED" = 0,
+        "FIXED" = 1,
+        "VARIABLE_INITIALISED" = 2,
+        "VARIABLE" = 3
+      };  /* end of packet_assignment_type */
+
+      struct buffer {
+        uchar;  /* FLX_BUF */
+        taggedstruct {
+          "MAX_FLX_LEN_BUF" taggedunion {
+            "FIXED" uchar;  /* constant value */
+            "VARIABLE" uchar;  /* initial value */
+          };  /* end of MAX_FLX_LEN_BUF */
+          block "LPDU_ID" taggedstruct {
+            "FLX_SLOT_ID" taggedunion {
+              "FIXED" uint;
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" uint;
+              };
+            };  /* end of FLX_SLOT_ID */
+            "OFFSET" taggedunion {
+              "FIXED" uchar;
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" uchar;
+              };
+            };  /* end of OFFSET */
+            "CYCLE_REPETITION" taggedunion {
+              "FIXED" uchar;
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" uchar;
+              };
+            };  /* end of CYCLE_REPETITION */
+            "CHANNEL" taggedunion {
+              "FIXED" enum {
+                "A" = 0,
+                "B" = 1
+              };
+              "VARIABLE" taggedstruct {
+                "INITIAL_VALUE" enum {
+                  "A" = 0,
+                  "B" = 1
+                };
+              };
+            };  /* end of CHANNEL */
+          };  /* end of LPDU_ID */
+          block "XCP_PACKET" taggedstruct {
+            "CMD" enum packet_assignment_type;  /* end of CMD     */
+            "RES_ERR" enum packet_assignment_type;  /* end of RES_ERR */
+            "EV_SERV" enum packet_assignment_type;  /* end of EV_SERV */
+            "DAQ" enum packet_assignment_type;  /* end of DAQ     */
+            "STIM" enum packet_assignment_type;  /* end of STIM    */
+          };  /* end of XCP_PACKET */
+        };
+      };  /* end of buffer */
+
+      struct FLX_Parameters {
+
+        uint;              /* XCP on FlexRay version  */
+                           /* e.g. "1.0" = 0x0100 */
+
+        uint;              /* T1_FLX [ms] */
+
+        char[256];         /* FIBEX-file */
+                           /* including CHI information */
+                           /* including extension */
+                           /* without path */
+
+        char[256];         /* Cluster-ID */
+
+        uchar;             /* NAX */
+
+        enum { 
+          "HEADER_NAX"              = 0,
+          "HEADER_NAX_FILL"         = 1,
+          "HEADER_NAX_CTR"          = 2,
+          "HEADER_NAX_FILL3"        = 3,
+          "HEADER_NAX_CTR_FILL2"    = 4,
+          "HEADER_NAX_LEN"          = 5,
+          "HEADER_NAX_CTR_LEN"      = 6,
+          "HEADER_NAX_FILL2_LEN"    = 7,
+          "HEADER_NAX_CTR_FILL_LEN" = 8
+        };
+        enum {
+          "PACKET_ALIGNMENT_8" = 0,
+          "PACKET_ALIGNMENT_16" = 1,
+          "PACKET_ALIGNMENT_32" = 2
+        };
+        taggedunion {
+          block "INITIAL_CMD_BUFFER" struct buffer;
+        };
+        taggedunion {
+          block "INITIAL_RES_ERR_BUFFER" struct buffer;
+        };
+        taggedstruct {
+          (block "POOL_BUFFER" struct buffer)*;
+        };
+      };
+
+      block "IF_DATA" taggedunion if_data {
+
+        "CANAPE_EXT" struct {
+          int;             /* version number */
+          taggedstruct {
+            "LINK_MAP" struct {
+              char[256];   /* segment name */
+              long;        /* base address of the segment */
+              uint;        /* address extension of the segment */
+              uint;        /* flag: address is relative to DS */
+              long;        /* offset of the segment address */
+              uint;        /* datatypValid */
+              uint;        /* enum datatyp */
+              uint;        /* bit offset of the segment */
+            };
+            "DISPLAY" struct {
+              long;        /* display color */
+              double;      /* minimal display value (phys)*/
+              double;      /* maximal display value (phys)*/
+            };
+            "VIRTUAL_CONVERSION" struct {
+              char[256];   /* name of the conversion formula */
+            };
+          };
+        };
+        "CANAPE_MODULE" struct {
+          taggedstruct {
+            ("RECORD_LAYOUT_STEPSIZE" struct {
+              char[256];   /* name of record layout*/
+              uint;        /* stepsize for FNC_VALUES */
+              uint;        /* stepsize for AXIS_PTS_X */
+              uint;        /* stepsize for AXIS_PTS_Y */
+              uint;        /* stepsize for AXIS_PTS_Z */
+              uint;        /* stepsize for AXIS_PTS_4 */
+              uint;        /* stepsize for AXIS_PTS_5 */
+            })*;
+          };
+        };
+        /*********************************************************/
+        /*   XCP                                                 */
+        /*********************************************************/
+        "XCP" struct {
+          taggedstruct Common_Parameters;  /* default parameters */
+          taggedstruct {
+            block "XCP_ON_CAN" struct {
+              struct CAN_Parameters;  /* specific for CAN */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_SxI" struct {
+              struct SxI_Parameters;  /* specific for SxI */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_TCP_IP" struct {
+              struct TCP_IP_Parameters;  /* specific for TCP_IP */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_UDP_IP" struct {
+              struct UDP_Parameters;  /* specific for UDP */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_USB" struct {
+              struct USB_Parameters;  /* specific for USB      */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+            block "XCP_ON_FLX" struct {
+              struct FLX_Parameters;  /* specific for FlexRay  */
+              taggedstruct Common_Parameters;  /* overruling of default */
+            };
+          };
+        };
+      };
+
+    /end A2ML
+
+
+
+    /begin IF_DATA XCP
+      
+      
+      /begin PROTOCOL_LAYER
+        0x0100
+        0x03E8
+        0x00C8
+        0x0000
+        0x0000
+        0x0000
+        0x0000
+        0x0000
+        0xFC
+        0x0578
+        BYTE_ORDER_MSB_LAST
+        ADDRESS_GRANULARITY_BYTE
+        OPTIONAL_CMD ALLOC_ODT_ENTRY
+        OPTIONAL_CMD ALLOC_ODT
+        OPTIONAL_CMD ALLOC_DAQ
+        OPTIONAL_CMD FREE_DAQ
+        OPTIONAL_CMD GET_DAQ_RESOLUTION_INFO
+        OPTIONAL_CMD GET_DAQ_PROCESSOR_INFO
+        OPTIONAL_CMD START_STOP_SYNCH
+        OPTIONAL_CMD START_STOP_DAQ_LIST
+        OPTIONAL_CMD SET_DAQ_LIST_MODE
+        OPTIONAL_CMD WRITE_DAQ
+        OPTIONAL_CMD SET_DAQ_PTR
+        OPTIONAL_CMD GET_CAL_PAGE
+        OPTIONAL_CMD SET_CAL_PAGE
+        OPTIONAL_CMD COPY_CAL_PAGE
+        OPTIONAL_CMD SHORT_DOWNLOAD
+        OPTIONAL_CMD DOWNLOAD_MAX
+        OPTIONAL_CMD DOWNLOAD
+        OPTIONAL_CMD SHORT_UPLOAD
+        OPTIONAL_CMD UPLOAD
+        OPTIONAL_CMD SET_MTA
+      /end PROTOCOL_LAYER
+
+      
+      /begin DAQ
+        DYNAMIC
+        0x0000
+        0x0080
+        0x00
+        OPTIMISATION_TYPE_DEFAULT
+        ADDRESS_EXTENSION_FREE
+        IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED
+        GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE
+        0xFF
+        OVERLOAD_INDICATION_PID
+        PRESCALER_SUPPORTED 
+        
+        /begin STIM
+          GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE
+          0xFF
+          
+        /end STIM
+
+        /begin TIMESTAMP_SUPPORTED
+          0x0001
+          SIZE_DWORD
+          UNIT_1US
+          TIMESTAMP_FIXED 
+        /end TIMESTAMP_SUPPORTED
+
+        
+        /begin EVENT
+          "8 ms"
+          "8 ms"
+          0x0000
+          DAQ
+          0xFF
+          0x08
+          0x06
+          0x00
+        /end EVENT
+
+      /end DAQ
+
+      
+      /begin XCP_ON_UDP_IP
+        0x0100
+        0x15B3
+        ADDRESS "192.168.7.2"
+      /end XCP_ON_UDP_IP
+
+    /end IF_DATA
+
+
+
+    /begin MOD_PAR "MOD PAR Comment Goes Here"
+
+       /begin MEMORY_SEGMENT FCC2ARINC_cal_impl
+       "FCC2ARINC_cal_impl"
+       DATA
+       FLASH
+       INTERN
+       0x00808020
+       0x1068
+       -1 -1 -1 -1 -1
+       /begin IF_DATA XCP
+         /begin SEGMENT
+            0x00
+            0x02
+            0x00
+            0x00
+            0x00
+            /begin PAGE
+              0x00
+              ECU_ACCESS_DONT_CARE
+              XCP_READ_ACCESS_DONT_CARE
+              XCP_WRITE_ACCESS_NOT_ALLOWED
+            /end PAGE
+            /begin PAGE
+              0x01
+              ECU_ACCESS_DONT_CARE
+              XCP_READ_ACCESS_DONT_CARE
+              XCP_WRITE_ACCESS_DONT_CARE
+            /end PAGE
+          /end SEGMENT
+        /end IF_DATA
+        /end MEMORY_SEGMENT
+
+    /end MOD_PAR
+
+    /begin MOD_COMMON  "Mod Common Comment Here"
+      BYTE_ORDER     MSB_LAST
+      ALIGNMENT_BYTE 1
+      ALIGNMENT_WORD 2
+      ALIGNMENT_LONG 4
+      ALIGNMENT_FLOAT32_IEEE 4
+      ALIGNMENT_FLOAT64_IEEE 8
+      ALIGNMENT_INT64 8
+    /end MOD_COMMON
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.CCCodeBlock4_P1 ""  
+    VALUE 0x008088E8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.CCCodeBlock4_P2 ""  
+    VALUE 0x008088F0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.CCCodeBlock4_P3 ""  
+    VALUE 0x00809082 Scalar_BOOLEAN 0 FCC2ARINC_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.CCCodeBlock4_P4 ""  
+    VALUE 0x00809083 Scalar_BOOLEAN 0 FCC2ARINC_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.CCCodeBlock4_P5 ""  
+    VALUE 0x0080907C Scalar_ULONG 0 FCC2ARINC_CM_uint32 0 2147483646  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.CCCodeBlock_P1 ""  
+    VALUE 0x00808758 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.CCCodeBlock_P2 ""  
+    VALUE 0x00808760 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.CCCodeBlock_P3 ""  
+    VALUE 0x00809080 Scalar_BOOLEAN 0 FCC2ARINC_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.CCCodeBlock_P4 ""  
+    VALUE 0x00809081 Scalar_BOOLEAN 0 FCC2ARINC_CM_logical 0 1  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.CCCodeBlock_P5 ""  
+    VALUE 0x00809078 Scalar_ULONG 0 FCC2ARINC_CM_uint32 0 2147483646  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Constant_Value ""  
+    VALUE 0x00808020 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P1 ""  
+    VALUE 0x008085E0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P10 ""  
+    VAL_BLK 0x008086B8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        2 1 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P11 ""  
+    VALUE 0x008086D8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P12 ""  
+    VALUE 0x008086F0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P13 ""  
+    VALUE 0x00808708 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P14 ""  
+    VALUE 0x00808720 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P15 ""  
+    VALUE 0x00808738 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P16 ""  
+    VALUE 0x00808750 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P2 ""  
+    VALUE 0x008085F8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P3 ""  
+    VALUE 0x00808610 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P4 ""  
+    VALUE 0x00808628 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P5 ""  
+    VALUE 0x00808640 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P6 ""  
+    VALUE 0x00808658 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P7 ""  
+    VALUE 0x00808670 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P8 ""  
+    VALUE 0x00808688 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode1_P9 ""  
+    VALUE 0x008086A0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P1 ""  
+    VALUE 0x00808908 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P10 ""  
+    VALUE 0x008089E0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P11 ""  
+    VALUE 0x008089F8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P12 ""  
+    VALUE 0x00808A10 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P13 ""  
+    VALUE 0x00808A28 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P14 ""  
+    VALUE 0x00808A40 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P15 ""  
+    VALUE 0x00808A58 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P16 ""  
+    VALUE 0x00808A70 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P2 ""  
+    VALUE 0x00808920 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P3 ""  
+    VALUE 0x00808938 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P4 ""  
+    VALUE 0x00808950 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P5 ""  
+    VALUE 0x00808968 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P6 ""  
+    VALUE 0x00808980 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P7 ""  
+    VALUE 0x00808998 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P8 ""  
+    VALUE 0x008089B0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode2_P9 ""  
+    VALUE 0x008089C8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P1 ""  
+    VALUE 0x00808C08 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P10 ""  
+    VALUE 0x00808CE0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P11 ""  
+    VALUE 0x00808CF8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P12 ""  
+    VALUE 0x00808D10 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P13 ""  
+    VALUE 0x00808D28 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P14 ""  
+    VALUE 0x00808D40 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P15 ""  
+    VALUE 0x00808D58 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P16 ""  
+    VALUE 0x00808D70 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P2 ""  
+    VALUE 0x00808C20 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P3 ""  
+    VALUE 0x00808C38 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P4 ""  
+    VALUE 0x00808C50 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P5 ""  
+    VALUE 0x00808C68 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P6 ""  
+    VALUE 0x00808C80 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P7 ""  
+    VALUE 0x00808C98 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P8 ""  
+    VALUE 0x00808CB0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode3_P9 ""  
+    VALUE 0x00808CC8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P1 ""  
+    VALUE 0x00808D88 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P10 ""  
+    VALUE 0x00808E60 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P11 ""  
+    VALUE 0x00808E78 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P12 ""  
+    VALUE 0x00808E90 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P13 ""  
+    VALUE 0x00808EA8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P14 ""  
+    VALUE 0x00808EC0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P15 ""  
+    VALUE 0x00808ED8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P16 ""  
+    VALUE 0x00808EF0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P2 ""  
+    VALUE 0x00808DA0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P3 ""  
+    VALUE 0x00808DB8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P4 ""  
+    VALUE 0x00808DD0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P5 ""  
+    VALUE 0x00808DE8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P6 ""  
+    VALUE 0x00808E00 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P7 ""  
+    VALUE 0x00808E18 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P8 ""  
+    VALUE 0x00808E30 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode4_P9 ""  
+    VALUE 0x00808E48 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P1 ""  
+    VALUE 0x00808778 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P10 ""  
+    VALUE 0x00808850 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P11 ""  
+    VALUE 0x00808868 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P12 ""  
+    VALUE 0x00808880 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P13 ""  
+    VALUE 0x00808898 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P14 ""  
+    VALUE 0x008088B0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P15 ""  
+    VALUE 0x008088C8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P16 ""  
+    VALUE 0x008088E0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P2 ""  
+    VALUE 0x00808790 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P3 ""  
+    VALUE 0x008087A8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P4 ""  
+    VALUE 0x008087C0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P5 ""  
+    VALUE 0x008087D8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P6 ""  
+    VALUE 0x008087F0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P7 ""  
+    VALUE 0x00808808 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P8 ""  
+    VALUE 0x00808820 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode5_P9 ""  
+    VALUE 0x00808838 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P1 ""  
+    VALUE 0x00808A88 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P10 ""  
+    VALUE 0x00808B60 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P11 ""  
+    VALUE 0x00808B78 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P12 ""  
+    VALUE 0x00808B90 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P13 ""  
+    VALUE 0x00808BA8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P14 ""  
+    VALUE 0x00808BC0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P15 ""  
+    VALUE 0x00808BD8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P16 ""  
+    VALUE 0x00808BF0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P2 ""  
+    VALUE 0x00808AA0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P3 ""  
+    VALUE 0x00808AB8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P4 ""  
+    VALUE 0x00808AD0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P5 ""  
+    VALUE 0x00808AE8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P6 ""  
+    VALUE 0x00808B00 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P7 ""  
+    VALUE 0x00808B18 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P8 ""  
+    VALUE 0x00808B30 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode6_P9 ""  
+    VALUE 0x00808B48 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P1 ""  
+    VALUE 0x00808F08 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P10 ""  
+    VALUE 0x00808FE0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P11 ""  
+    VALUE 0x00808FF8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P12 ""  
+    VALUE 0x00809010 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P13 ""  
+    VALUE 0x00809028 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P14 ""  
+    VALUE 0x00809040 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P15 ""  
+    VALUE 0x00809058 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P16 ""  
+    VALUE 0x00809070 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P2 ""  
+    VALUE 0x00808F20 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P3 ""  
+    VALUE 0x00808F38 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P4 ""  
+    VALUE 0x00808F50 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P5 ""  
+    VALUE 0x00808F68 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P6 ""  
+    VALUE 0x00808F80 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P7 ""  
+    VALUE 0x00808F98 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P8 ""  
+    VALUE 0x00808FB0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Decode7_P9 ""  
+    VALUE 0x00808FC8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Receivev2_P1 ""  
+    VALUE 0x00808568 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Receivev2_P2 ""  
+    VALUE 0x00808580 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Receivev2_P3 ""  
+    VALUE 0x00808598 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Receivev2_P4 ""  
+    VALUE 0x008085B0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Receivev2_P5 ""  
+    VALUE 0x008085C8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Setupv2_P1 ""  
+    VALUE 0x00808038 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Setupv2_P2 ""  
+    VALUE 0x00808050 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Setupv2_P3 ""  
+    VALUE 0x00808068 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Setupv2_P4 ""  
+    VALUE 0x00808080 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Setupv2_P5 ""  
+    VALUE 0x00808098 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Setupv2_P6 ""  
+    VALUE 0x008080B0 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Setupv2_P7 ""  
+    VAL_BLK 0x008080C8 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        5 16 
+  /end CHARACTERISTIC 
+
+  /begin CHARACTERISTIC  FCC2ARINC_cal_impl.Setupv2_P8 ""  
+    VAL_BLK 0x00808358 Scalar_FLOAT64_IEEE 0 FCC2ARINC_CM_double -1.7E+308 1.7E+308  
+    MATRIX_DIM                        4 16 
+  /end CHARACTERISTIC 
+
+  /begin MEASUREMENT  FCC2ARINC_B.CCCodeBlock ""  
+    FLOAT64_IEEE FCC2ARINC_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0080E138
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.CCCodeBlock4 ""  
+    FLOAT64_IEEE FCC2ARINC_CM_double       0             0       -1.7E+308 1.7E+308  
+    ECU_ADDRESS                       0x0080E140
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.Compare ""  
+    UBYTE FCC2ARINC_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0080E165
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.Decode1 ""  
+    ULONG FCC2ARINC_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x0080E148
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.Decode2 ""  
+    UBYTE FCC2ARINC_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0080E15C
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.Decode3 ""  
+    UBYTE FCC2ARINC_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0080E15F
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.Decode4 ""  
+    UBYTE FCC2ARINC_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0080E161
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.Decode5 ""  
+    ULONG FCC2ARINC_CM_uint32       0             0       0 2147483646  
+    ECU_ADDRESS                       0x0080E14C
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.Decode6 ""  
+    UBYTE FCC2ARINC_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0080E15D
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.Decode7 ""  
+    UBYTE FCC2ARINC_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0080E163
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.FCC2_ACExxxA_GEARING_ROLL_HB ""  
+    UBYTE FCC2ARINC_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0080E160
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.FCC2_ACExxxA_SUR_POS_2_AIL ""  
+    FLOAT32_IEEE FCC2ARINC_CM_single       0             0       -3.4E+38 3.4E+38  
+    ECU_ADDRESS                       0x0080E154
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.FCC2_ACExxxA_SUR_POS_2_AIL_FAIL ""  
+    UBYTE FCC2ARINC_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0080E15E
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.FCC2_ACExxxA_TBI_HB ""  
+    UBYTE FCC2ARINC_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0080E162
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.FCC2_ACExxxA_TBI_INCREMENTAL_DE ""  
+    UBYTE FCC2ARINC_CM_logical       0             0       0 1  
+    ECU_ADDRESS                       0x0080E164
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.FCC2_ACExxxA_WHEEL_POS_2 ""  
+    FLOAT32_IEEE FCC2ARINC_CM_single       0             0       -3.4E+38 3.4E+38  
+    ECU_ADDRESS                       0x0080E150
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.FCC2_ACExxxA_WHEEL_POS_2_FAIL ""  
+    FLOAT32_IEEE FCC2ARINC_CM_single       0             0       -3.4E+38 3.4E+38  
+    ECU_ADDRESS                       0x0080E158
+  /end MEASUREMENT 
+
+  /begin MEASUREMENT  FCC2ARINC_B.Receivev2 ""  
+    FLOAT64_IEEE FCC2ARINC_CM_double       0             0       -1.7E+308 1.7E+308  
+    LAYOUT                            COLUMN_DIR
+    MATRIX_DIM                        11 
+    ECU_ADDRESS                       0x0080E0E0
+  /end MEASUREMENT 
+
+  /begin COMPU_METHOD FCC2ARINC_CM_double ""  
+    IDENTICAL "%15.10" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD FCC2ARINC_CM_logical ""  
+    IDENTICAL "%1.0" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD FCC2ARINC_CM_single ""  
+    IDENTICAL "%8.6" ""  
+  /end COMPU_METHOD
+
+  /begin COMPU_METHOD FCC2ARINC_CM_uint32 ""  
+    IDENTICAL "%10.0" ""  
+  /end COMPU_METHOD
+
+  /begin  RECORD_LAYOUT Scalar_BOOLEAN
+    FNC_VALUES 1 UBYTE COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin  RECORD_LAYOUT Scalar_FLOAT32_IEEE
+    FNC_VALUES 1 FLOAT32_IEEE COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin  RECORD_LAYOUT Scalar_FLOAT64_IEEE
+    FNC_VALUES 1 FLOAT64_IEEE COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin  RECORD_LAYOUT Scalar_ULONG
+    FNC_VALUES 1 ULONG COLUMN_DIR DIRECT
+  /end  RECORD_LAYOUT 
+
+  /begin GROUP FCC2ARINC "FCC2ARINC" ROOT  
+    /begin SUB_GROUP
+      FCC2ARINC_Decode_Channel_1
+    /end SUB_GROUP
+    /begin REF_CHARACTERISTIC
+      FCC2ARINC_cal_impl.Receivev2_P1
+      FCC2ARINC_cal_impl.Receivev2_P2
+      FCC2ARINC_cal_impl.Receivev2_P3
+      FCC2ARINC_cal_impl.Receivev2_P4
+      FCC2ARINC_cal_impl.Receivev2_P5
+      FCC2ARINC_cal_impl.Setupv2_P1
+      FCC2ARINC_cal_impl.Setupv2_P2
+      FCC2ARINC_cal_impl.Setupv2_P3
+      FCC2ARINC_cal_impl.Setupv2_P4
+      FCC2ARINC_cal_impl.Setupv2_P5
+      FCC2ARINC_cal_impl.Setupv2_P6
+      FCC2ARINC_cal_impl.Setupv2_P7
+      FCC2ARINC_cal_impl.Setupv2_P8
+    /end REF_CHARACTERISTIC
+    /begin REF_MEASUREMENT
+      FCC2ARINC_B.Receivev2
+      FCC2ARINC_DW.Receivev2_PWORK
+      FCC2ARINC_DW.Setupv2_PWORK
+    /end REF_MEASUREMENT
+  /end GROUP
+
+  /begin GROUP FCC2ARINC_Decode_Channel_1 "FCC2ARINC/Decode Channel 1"  
+    /begin SUB_GROUP
+      FCC2ARINC_Decode_Channel_1_Compare_To_Zero
+    /end SUB_GROUP
+    /begin REF_CHARACTERISTIC
+      FCC2ARINC_cal_impl.CCCodeBlock4_P1
+      FCC2ARINC_cal_impl.CCCodeBlock4_P2
+      FCC2ARINC_cal_impl.CCCodeBlock4_P3
+      FCC2ARINC_cal_impl.CCCodeBlock4_P4
+      FCC2ARINC_cal_impl.CCCodeBlock4_P5
+      FCC2ARINC_cal_impl.CCCodeBlock_P1
+      FCC2ARINC_cal_impl.CCCodeBlock_P2
+      FCC2ARINC_cal_impl.CCCodeBlock_P3
+      FCC2ARINC_cal_impl.CCCodeBlock_P4
+      FCC2ARINC_cal_impl.CCCodeBlock_P5
+      FCC2ARINC_cal_impl.Decode1_P1
+      FCC2ARINC_cal_impl.Decode1_P10
+      FCC2ARINC_cal_impl.Decode1_P11
+      FCC2ARINC_cal_impl.Decode1_P12
+      FCC2ARINC_cal_impl.Decode1_P13
+      FCC2ARINC_cal_impl.Decode1_P14
+      FCC2ARINC_cal_impl.Decode1_P15
+      FCC2ARINC_cal_impl.Decode1_P16
+      FCC2ARINC_cal_impl.Decode1_P2
+      FCC2ARINC_cal_impl.Decode1_P3
+      FCC2ARINC_cal_impl.Decode1_P4
+      FCC2ARINC_cal_impl.Decode1_P5
+      FCC2ARINC_cal_impl.Decode1_P6
+      FCC2ARINC_cal_impl.Decode1_P7
+      FCC2ARINC_cal_impl.Decode1_P8
+      FCC2ARINC_cal_impl.Decode1_P9
+      FCC2ARINC_cal_impl.Decode2_P1
+      FCC2ARINC_cal_impl.Decode2_P10
+      FCC2ARINC_cal_impl.Decode2_P11
+      FCC2ARINC_cal_impl.Decode2_P12
+      FCC2ARINC_cal_impl.Decode2_P13
+      FCC2ARINC_cal_impl.Decode2_P14
+      FCC2ARINC_cal_impl.Decode2_P15
+      FCC2ARINC_cal_impl.Decode2_P16
+      FCC2ARINC_cal_impl.Decode2_P2
+      FCC2ARINC_cal_impl.Decode2_P3
+      FCC2ARINC_cal_impl.Decode2_P4
+      FCC2ARINC_cal_impl.Decode2_P5
+      FCC2ARINC_cal_impl.Decode2_P6
+      FCC2ARINC_cal_impl.Decode2_P7
+      FCC2ARINC_cal_impl.Decode2_P8
+      FCC2ARINC_cal_impl.Decode2_P9
+      FCC2ARINC_cal_impl.Decode3_P1
+      FCC2ARINC_cal_impl.Decode3_P10
+      FCC2ARINC_cal_impl.Decode3_P11
+      FCC2ARINC_cal_impl.Decode3_P12
+      FCC2ARINC_cal_impl.Decode3_P13
+      FCC2ARINC_cal_impl.Decode3_P14
+      FCC2ARINC_cal_impl.Decode3_P15
+      FCC2ARINC_cal_impl.Decode3_P16
+      FCC2ARINC_cal_impl.Decode3_P2
+      FCC2ARINC_cal_impl.Decode3_P3
+      FCC2ARINC_cal_impl.Decode3_P4
+      FCC2ARINC_cal_impl.Decode3_P5
+      FCC2ARINC_cal_impl.Decode3_P6
+      FCC2ARINC_cal_impl.Decode3_P7
+      FCC2ARINC_cal_impl.Decode3_P8
+      FCC2ARINC_cal_impl.Decode3_P9
+      FCC2ARINC_cal_impl.Decode4_P1
+      FCC2ARINC_cal_impl.Decode4_P10
+      FCC2ARINC_cal_impl.Decode4_P11
+      FCC2ARINC_cal_impl.Decode4_P12
+      FCC2ARINC_cal_impl.Decode4_P13
+      FCC2ARINC_cal_impl.Decode4_P14
+      FCC2ARINC_cal_impl.Decode4_P15
+      FCC2ARINC_cal_impl.Decode4_P16
+      FCC2ARINC_cal_impl.Decode4_P2
+      FCC2ARINC_cal_impl.Decode4_P3
+      FCC2ARINC_cal_impl.Decode4_P4
+      FCC2ARINC_cal_impl.Decode4_P5
+      FCC2ARINC_cal_impl.Decode4_P6
+      FCC2ARINC_cal_impl.Decode4_P7
+      FCC2ARINC_cal_impl.Decode4_P8
+      FCC2ARINC_cal_impl.Decode4_P9
+      FCC2ARINC_cal_impl.Decode5_P1
+      FCC2ARINC_cal_impl.Decode5_P10
+      FCC2ARINC_cal_impl.Decode5_P11
+      FCC2ARINC_cal_impl.Decode5_P12
+      FCC2ARINC_cal_impl.Decode5_P13
+      FCC2ARINC_cal_impl.Decode5_P14
+      FCC2ARINC_cal_impl.Decode5_P15
+      FCC2ARINC_cal_impl.Decode5_P16
+      FCC2ARINC_cal_impl.Decode5_P2
+      FCC2ARINC_cal_impl.Decode5_P3
+      FCC2ARINC_cal_impl.Decode5_P4
+      FCC2ARINC_cal_impl.Decode5_P5
+      FCC2ARINC_cal_impl.Decode5_P6
+      FCC2ARINC_cal_impl.Decode5_P7
+      FCC2ARINC_cal_impl.Decode5_P8
+      FCC2ARINC_cal_impl.Decode5_P9
+      FCC2ARINC_cal_impl.Decode6_P1
+      FCC2ARINC_cal_impl.Decode6_P10
+      FCC2ARINC_cal_impl.Decode6_P11
+      FCC2ARINC_cal_impl.Decode6_P12
+      FCC2ARINC_cal_impl.Decode6_P13
+      FCC2ARINC_cal_impl.Decode6_P14
+      FCC2ARINC_cal_impl.Decode6_P15
+      FCC2ARINC_cal_impl.Decode6_P16
+      FCC2ARINC_cal_impl.Decode6_P2
+      FCC2ARINC_cal_impl.Decode6_P3
+      FCC2ARINC_cal_impl.Decode6_P4
+      FCC2ARINC_cal_impl.Decode6_P5
+      FCC2ARINC_cal_impl.Decode6_P6
+      FCC2ARINC_cal_impl.Decode6_P7
+      FCC2ARINC_cal_impl.Decode6_P8
+      FCC2ARINC_cal_impl.Decode6_P9
+      FCC2ARINC_cal_impl.Decode7_P1
+      FCC2ARINC_cal_impl.Decode7_P10
+      FCC2ARINC_cal_impl.Decode7_P11
+      FCC2ARINC_cal_impl.Decode7_P12
+      FCC2ARINC_cal_impl.Decode7_P13
+      FCC2ARINC_cal_impl.Decode7_P14
+      FCC2ARINC_cal_impl.Decode7_P15
+      FCC2ARINC_cal_impl.Decode7_P16
+      FCC2ARINC_cal_impl.Decode7_P2
+      FCC2ARINC_cal_impl.Decode7_P3
+      FCC2ARINC_cal_impl.Decode7_P4
+      FCC2ARINC_cal_impl.Decode7_P5
+      FCC2ARINC_cal_impl.Decode7_P6
+      FCC2ARINC_cal_impl.Decode7_P7
+      FCC2ARINC_cal_impl.Decode7_P8
+      FCC2ARINC_cal_impl.Decode7_P9
+    /end REF_CHARACTERISTIC
+    /begin REF_MEASUREMENT
+      FCC2ARINC_B.CCCodeBlock
+      FCC2ARINC_B.CCCodeBlock4
+      FCC2ARINC_B.Decode1
+      FCC2ARINC_B.Decode2
+      FCC2ARINC_B.Decode3
+      FCC2ARINC_B.Decode4
+      FCC2ARINC_B.Decode5
+      FCC2ARINC_B.Decode6
+      FCC2ARINC_B.Decode7
+      FCC2ARINC_B.FCC2_ACExxxA_GEARING_ROLL_HB
+      FCC2ARINC_B.FCC2_ACExxxA_SUR_POS_2_AIL
+      FCC2ARINC_B.FCC2_ACExxxA_SUR_POS_2_AIL_FAIL
+      FCC2ARINC_B.FCC2_ACExxxA_TBI_HB
+      FCC2ARINC_B.FCC2_ACExxxA_TBI_INCREMENTAL_DE
+      FCC2ARINC_B.FCC2_ACExxxA_WHEEL_POS_2
+      FCC2ARINC_B.FCC2_ACExxxA_WHEEL_POS_2_FAIL
+      FCC2ARINC_B.Receivev2
+    /end REF_MEASUREMENT
+  /end GROUP
+
+  /begin GROUP FCC2ARINC_Decode_Channel_1_Compare_To_Zero "FCC2ARINC/Decode Channel 1/Compare
+To Zero"  
+    /begin REF_CHARACTERISTIC
+      FCC2ARINC_cal_impl.Constant_Value
+    /end REF_CHARACTERISTIC
+    /begin REF_MEASUREMENT
+      FCC2ARINC_B.Compare
+      FCC2ARINC_B.Receivev2
+    /end REF_MEASUREMENT
+  /end GROUP
+
+  /end MODULE
+
+/end PROJECT
+
