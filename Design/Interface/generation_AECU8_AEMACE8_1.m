@@ -2,10 +2,82 @@
 % Bus object creation -----------------------------------------------------
 AECU8_AEMACE8_1 = Simulink.Bus;
 % Signals name ------------------------------------------------------------
-
-
+AECU8_AEMACE8_1.Elements(1).Name = 'AECU8_AEMACE8_BRAKE1_CURR';
+AECU8_AEMACE8_1.Elements(2).Name = 'AECU8_AEMACE8_BRAKE1_TEMP';
+AECU8_AEMACE8_1.Elements(3).Name = 'AECU8_AEMACE8_BRAKE1_STATUS';
+AECU8_AEMACE8_1.Elements(4).Name = 'AECU8_AEMACE8_BRAKE2_CURR';
+AECU8_AEMACE8_1.Elements(5).Name = 'AECU8_AEMACE8_BRAKE2_TEMP';
+AECU8_AEMACE8_1.Elements(6).Name = 'AECU8_AEMACE8_BRAKE2_STATUS';
+AECU8_AEMACE8_1.Elements(7).Name = 'AECU8_AEMACE8_BUS_VOLTAGE';
+AECU8_AEMACE8_1.Elements(8).Name = 'AECU8_AEMACE8_BUS_CURR';
+AECU8_AEMACE8_1.Elements(9).Name = 'AECU8_AEMACE8_WINDING_TEMP1';
+AECU8_AEMACE8_1.Elements(10).Name = 'AECU8_AEMACE8_WINDING_TEMP2';
+AECU8_AEMACE8_1.Elements(11).Name = 'AECU8_AEMACE8_ACTUATOR_SPD';
+AECU8_AEMACE8_1.Elements(12).Name = 'AECU8_AEMACE8_ECU_TEMP';
+AECU8_AEMACE8_1.Elements(13).Name = 'AECU8_AEMACE8_EDM_TEMP';
+AECU8_AEMACE8_1.Elements(14).Name = 'AECU8_AEMACE8_EDM_CURR';
+AECU8_AEMACE8_1.Elements(15).Name = 'AECU8_AEMACE8_EDM_STATUS';
+AECU8_AEMACE8_1.Elements(16).Name = 'AECU8_AEMACE8_ACTUATOR_FORCE';
+AECU8_AEMACE8_1.Elements(17).Name = 'AECU8_AEMACE8_ECU_MODE';
+AECU8_AEMACE8_1.Elements(18).Name = 'AECU8_AEMACE8_ECU_SUBMODE';
+AECU8_AEMACE8_1.Elements(19).Name = 'AECU8_AEMACE8_ECU_FUNC_SEL';
+AECU8_AEMACE8_1.Elements(20).Name = 'AECU8_AEMACE8_ECU_ENGINEERING_FUNC';
+AECU8_AEMACE8_1.Elements(21).Name = 'AECU8_AEMACE8_CBIT_RESULT';
+AECU8_AEMACE8_1.Elements(22).Name = 'AECU8_AEMACE8_CBIT_TIMEOUT';
+AECU8_AEMACE8_1.Elements(23).Name = ['AECU8_AEMACE8_CBIT_SYSTEM_FAILURE'];
+AECU8_AEMACE8_1.Elements(24).Name = 'AECU8_AEMACE8_CBIT_OPERATIONAL_FAILURE';
+AECU8_AEMACE8_1.Elements(25).Name = 'AECU8_AEMACE8_CBIT_FUNCTIONAL_FAILURE';
+AECU8_AEMACE8_1.Elements(26).Name = 'AECU8_AEMACE8_CBIT_MINOR_FAILURE';
+AECU8_AEMACE8_1.Elements(27).Name = 'AECU8_AEMACE8_IBIT_RESULT';
+AECU8_AEMACE8_1.Elements(28).Name = 'AECU8_AEMACE8_IBIT_TIMEOUT';
+AECU8_AEMACE8_1.Elements(29).Name = 'AECU8_AEMACE8_IBIT_SYSTEM_FAILURE';
+AECU8_AEMACE8_1.Elements(30).Name = 'AECU8_AEMACE8_IBIT_OPERATIONAL_FAILURE';
+AECU8_AEMACE8_1.Elements(31).Name = 'AECU8_AEMACE8_IBIT_FUNCTIONAL_FAILURE';
+AECU8_AEMACE8_1.Elements(32).Name = 'AECU8_AEMACE8_IBIT_MINOR_FAILURE';
+AECU8_AEMACE8_1.Elements(33).Name = 'AECU8_AEMACE8_PBIT_RESULT';
+AECU8_AEMACE8_1.Elements(34).Name = 'AECU8_AEMACE8_PBIT_TIMEOUT';
+AECU8_AEMACE8_1.Elements(35).Name = 'AECU8_AEMACE8_PBIT_SYSTEM_FAILURE';
+AECU8_AEMACE8_1.Elements(36).Name = 'AECU8_AEMACE8_PBIT_OPERATIONAL_FAILURE';
+AECU8_AEMACE8_1.Elements(37).Name = 'AECU8_AEMACE8_PBIT_FUNCTIONAL_FAILURE';
+AECU8_AEMACE8_1.Elements(38).Name = 'AECU8_AEMACE8_PBIT_MINOR_FAILURE';
 % Signals kind ------------------------------------------------------------
-
-
+AECU8_AEMACE8_1.Elements(1).DataType = 'single';
+AECU8_AEMACE8_1.Elements(2).DataType = 'single';
+AECU8_AEMACE8_1.Elements(3).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(4).DataType = 'single';
+AECU8_AEMACE8_1.Elements(5).DataType = 'single';
+AECU8_AEMACE8_1.Elements(6).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(7).DataType = 'single';
+AECU8_AEMACE8_1.Elements(8).DataType = 'single';
+AECU8_AEMACE8_1.Elements(9).DataType = 'single';
+AECU8_AEMACE8_1.Elements(10).DataType = 'single';
+AECU8_AEMACE8_1.Elements(11).DataType = 'single';
+AECU8_AEMACE8_1.Elements(12).DataType = 'single';
+AECU8_AEMACE8_1.Elements(13).DataType = 'single';
+AECU8_AEMACE8_1.Elements(14).DataType = 'single';
+AECU8_AEMACE8_1.Elements(15).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(16).DataType = 'single';
+AECU8_AEMACE8_1.Elements(17).DataType = 'uint8';
+AECU8_AEMACE8_1.Elements(18).DataType = 'uint8';
+AECU8_AEMACE8_1.Elements(19).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(20).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(21).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(22).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(23).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(24).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(25).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(26).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(27).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(28).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(29).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(30).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(31).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(32).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(33).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(34).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(35).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(36).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(37).DataType = 'boolean';
+AECU8_AEMACE8_1.Elements(38).DataType = 'boolean';
 % Save bus object
 save('AECU8_AEMACE8_1.mat',"AECU8_AEMACE8_1");

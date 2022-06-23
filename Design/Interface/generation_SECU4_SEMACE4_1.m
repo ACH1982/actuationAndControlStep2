@@ -2,10 +2,82 @@
 % Bus object creation -----------------------------------------------------
 SECU4_SEMACE4_1 = Simulink.Bus;
 % Signals name ------------------------------------------------------------
-
-
+SECU4_SEMACE4_1.Elements(1).Name = 'SECU4_SEMACE4_BRAKE1_CURR';
+SECU4_SEMACE4_1.Elements(2).Name = 'SECU4_SEMACE4_BRAKE1_TEMP';
+SECU4_SEMACE4_1.Elements(3).Name = 'SECU4_SEMACE4_BRAKE1_STATUS';
+SECU4_SEMACE4_1.Elements(4).Name = 'SECU4_SEMACE4_BRAKE2_CURR';
+SECU4_SEMACE4_1.Elements(5).Name = 'SECU4_SEMACE4_BRAKE2_TEMP';
+SECU4_SEMACE4_1.Elements(6).Name = 'SECU4_SEMACE4_BRAKE2_STATUS';
+SECU4_SEMACE4_1.Elements(7).Name = 'SECU4_SEMACE4_BUS_VOLTAGE';
+SECU4_SEMACE4_1.Elements(8).Name = 'SECU4_SEMACE4_BUS_CURR';
+SECU4_SEMACE4_1.Elements(9).Name = 'SECU4_SEMACE4_WINDING_TEMP1';
+SECU4_SEMACE4_1.Elements(10).Name = 'SECU4_SEMACE4_WINDING_TEMP2';
+SECU4_SEMACE4_1.Elements(11).Name = 'SECU4_SEMACE4_ACTUATOR_SPD';
+SECU4_SEMACE4_1.Elements(12).Name = 'SECU4_SEMACE4_ECU_TEMP';
+SECU4_SEMACE4_1.Elements(13).Name = 'SECU4_SEMACE4_EDM_TEMP';
+SECU4_SEMACE4_1.Elements(14).Name = 'SECU4_SEMACE4_EDM_CURR';
+SECU4_SEMACE4_1.Elements(15).Name = 'SECU4_SEMACE4_EDM_STATUS';
+SECU4_SEMACE4_1.Elements(16).Name = 'SECU4_SEMACE4_ACTUATOR_FORCE';
+SECU4_SEMACE4_1.Elements(17).Name = 'SECU4_SEMACE4_ECU_MODE';
+SECU4_SEMACE4_1.Elements(18).Name = 'SECU4_SEMACE4_ECU_SUBMODE';
+SECU4_SEMACE4_1.Elements(19).Name = 'SECU4_SEMACE4_ECU_FUNC_SEL';
+SECU4_SEMACE4_1.Elements(20).Name = 'SECU4_SEMACE4_ECU_ENGINEERING_FUNC';
+SECU4_SEMACE4_1.Elements(21).Name = 'SECU4_SEMACE4_CBIT_RESULT';
+SECU4_SEMACE4_1.Elements(22).Name = 'SECU4_SEMACE4_CBIT_TIMEOUT';
+SECU4_SEMACE4_1.Elements(23).Name = ['SECU4_SEMACE4_CBIT_SYSTEM_FAILURE'];
+SECU4_SEMACE4_1.Elements(24).Name = 'SECU4_SEMACE4_CBIT_OPERATIONAL_FAILURE';
+SECU4_SEMACE4_1.Elements(25).Name = 'SECU4_SEMACE4_CBIT_FUNCTIONAL_FAILURE';
+SECU4_SEMACE4_1.Elements(26).Name = 'SECU4_SEMACE4_CBIT_MINOR_FAILURE';
+SECU4_SEMACE4_1.Elements(27).Name = 'SECU4_SEMACE4_IBIT_RESULT';
+SECU4_SEMACE4_1.Elements(28).Name = 'SECU4_SEMACE4_IBIT_TIMEOUT';
+SECU4_SEMACE4_1.Elements(29).Name = 'SECU4_SEMACE4_IBIT_SYSTEM_FAILURE';
+SECU4_SEMACE4_1.Elements(30).Name = 'SECU4_SEMACE4_IBIT_OPERATIONAL_FAILURE';
+SECU4_SEMACE4_1.Elements(31).Name = 'SECU4_SEMACE4_IBIT_FUNCTIONAL_FAILURE';
+SECU4_SEMACE4_1.Elements(32).Name = 'SECU4_SEMACE4_IBIT_MINOR_FAILURE';
+SECU4_SEMACE4_1.Elements(33).Name = 'SECU4_SEMACE4_PBIT_RESULT';
+SECU4_SEMACE4_1.Elements(34).Name = 'SECU4_SEMACE4_PBIT_TIMEOUT';
+SECU4_SEMACE4_1.Elements(35).Name = 'SECU4_SEMACE4_PBIT_SYSTEM_FAILURE';
+SECU4_SEMACE4_1.Elements(36).Name = 'SECU4_SEMACE4_PBIT_OPERATIONAL_FAILURE';
+SECU4_SEMACE4_1.Elements(37).Name = 'SECU4_SEMACE4_PBIT_FUNCTIONAL_FAILURE';
+SECU4_SEMACE4_1.Elements(38).Name = 'SECU4_SEMACE4_PBIT_MINOR_FAILURE';
 % Signals kind ------------------------------------------------------------
-
-
+SECU4_SEMACE4_1.Elements(1).DataType = 'single';
+SECU4_SEMACE4_1.Elements(2).DataType = 'single';
+SECU4_SEMACE4_1.Elements(3).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(4).DataType = 'single';
+SECU4_SEMACE4_1.Elements(5).DataType = 'single';
+SECU4_SEMACE4_1.Elements(6).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(7).DataType = 'single';
+SECU4_SEMACE4_1.Elements(8).DataType = 'single';
+SECU4_SEMACE4_1.Elements(9).DataType = 'single';
+SECU4_SEMACE4_1.Elements(10).DataType = 'single';
+SECU4_SEMACE4_1.Elements(11).DataType = 'single';
+SECU4_SEMACE4_1.Elements(12).DataType = 'single';
+SECU4_SEMACE4_1.Elements(13).DataType = 'single';
+SECU4_SEMACE4_1.Elements(14).DataType = 'single';
+SECU4_SEMACE4_1.Elements(15).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(16).DataType = 'single';
+SECU4_SEMACE4_1.Elements(17).DataType = 'uint8';
+SECU4_SEMACE4_1.Elements(18).DataType = 'uint8';
+SECU4_SEMACE4_1.Elements(19).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(20).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(21).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(22).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(23).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(24).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(25).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(26).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(27).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(28).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(29).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(30).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(31).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(32).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(33).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(34).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(35).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(36).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(37).DataType = 'boolean';
+SECU4_SEMACE4_1.Elements(38).DataType = 'boolean';
 % Save bus object
 save('SECU4_SEMACE4_1.mat',"SECU4_SEMACE4_1");
