@@ -1,0 +1,19 @@
+% Internal buses loading
+run generation_COCKPIT_INCEPTORS.m;
+run generation_COMMANDED_STATE.m;
+run generation_AILERON_ACTUATION_STATE.m;
+run generation_SPOILER_ACTUATION_STATE.m;
+run generation_WINGLET_ACTUATION_STATE.m;
+run generation_AEMACE8_OUTPUT.m;
+run generation_AEMACE10_OUTPUT.m;
+run generation_SEMACE1_OUTPUT.m;
+run generation_SEMACE2_OUTPUT.m;
+run generation_SEMACE3_OUTPUT.m;
+run generation_SEMACE4_OUTPUT.m;
+run generation_AEMACE8_TEST.m;
+run generation_AEMACE10_TEST.m;
+run generation_SEMACE1_TEST.m;
+run generation_SEMACE2_TEST.m;
+run generation_SEMACE3_TEST.m;
+run generation_SEMACE4_TEST.m;
+run generation_VECTOR_FLAG.m;
